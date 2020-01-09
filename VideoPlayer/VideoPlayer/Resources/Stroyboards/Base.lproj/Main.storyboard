@@ -124,7 +124,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qrP-3r-rH5"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Video" id="jLs-Di-RqG"/>
+                    <navigationItem key="navigationItem" title="Video" id="jLs-Di-RqG">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="mNL-Qc-kcb">
+                            <connections>
+                                <action selector="didTapEditButton:" destination="7Ow-lE-MnS" id="PZx-Ec-Ghf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="JvL-gY-Ic4" id="Uv3-m6-Tgw"/>
                     </connections>
