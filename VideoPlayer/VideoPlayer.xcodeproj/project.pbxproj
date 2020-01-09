@@ -8,20 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */; };
-		0BA7407323C71B1F001BBBA4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7407223C71B1F001BBBA4 /* ViewController.swift */; };
 		0BA7407623C71B1F001BBBA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407423C71B1F001BBBA4 /* Main.storyboard */; };
 		0BA7407823C71B20001BBBA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407723C71B20001BBBA4 /* Assets.xcassets */; };
 		0BA7407B23C71B20001BBBA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407923C71B20001BBBA4 /* LaunchScreen.storyboard */; };
+		0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */; };
+		0BA7408523C72C05001BBBA4 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408423C72C05001BBBA4 /* MusicViewController.swift */; };
+		0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408623C72E5E001BBBA4 /* TabBarController.swift */; };
+		0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0BA7406B23C71B1F001BBBA4 /* VideoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0BA7407223C71B1F001BBBA4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0BA7407523C71B1F001BBBA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0BA7407723C71B20001BBBA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0BA7407A23C71B20001BBBA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0BA7407C23C71B20001BBBA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		0BA7408423C72C05001BBBA4 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
+		0BA7408623C72E5E001BBBA4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionFileManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +41,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B8BCB3A23C7463600EDA27F /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		0B8BCB3B23C7464200EDA27F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0BA7408623C72E5E001BBBA4 /* TabBarController.swift */,
+				0BA7408423C72C05001BBBA4 /* MusicViewController.swift */,
+				0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		0B8BCB3C23C7465800EDA27F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0BDEA8D423C750A5003261BB /* Extension */,
+				0B8BCB3D23C7466100EDA27F /* Images */,
+				0B8BCB3E23C7466900EDA27F /* Stroyboards */,
+				0B8BCB3F23C7467200EDA27F /* Plists */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0B8BCB3D23C7466100EDA27F /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				0BA7407723C71B20001BBBA4 /* Assets.xcassets */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		0B8BCB3E23C7466900EDA27F /* Stroyboards */ = {
+			isa = PBXGroup;
+			children = (
+				0BA7407423C71B1F001BBBA4 /* Main.storyboard */,
+				0BA7407923C71B20001BBBA4 /* LaunchScreen.storyboard */,
+			);
+			path = Stroyboards;
+			sourceTree = "<group>";
+		};
+		0B8BCB3F23C7467200EDA27F /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				0BA7407C23C71B20001BBBA4 /* Info.plist */,
+			);
+			path = Plists;
+			sourceTree = "<group>";
+		};
 		0BA7406223C71B1F001BBBA4 = {
 			isa = PBXGroup;
 			children = (
@@ -54,14 +114,19 @@
 		0BA7406D23C71B1F001BBBA4 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */,
-				0BA7407223C71B1F001BBBA4 /* ViewController.swift */,
-				0BA7407423C71B1F001BBBA4 /* Main.storyboard */,
-				0BA7407723C71B20001BBBA4 /* Assets.xcassets */,
-				0BA7407923C71B20001BBBA4 /* LaunchScreen.storyboard */,
-				0BA7407C23C71B20001BBBA4 /* Info.plist */,
+				0B8BCB3A23C7463600EDA27F /* Application */,
+				0B8BCB3B23C7464200EDA27F /* Controllers */,
+				0B8BCB3C23C7465800EDA27F /* Resources */,
 			);
 			path = VideoPlayer;
+			sourceTree = "<group>";
+		};
+		0BDEA8D423C750A5003261BB /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +200,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BA7407323C71B1F001BBBA4 /* ViewController.swift in Sources */,
+				0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */,
+				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,
+				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,
+				0BA7408523C72C05001BBBA4 /* MusicViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +351,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
-				INFOPLIST_FILE = VideoPlayer/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/VideoPlayer/Resources/Plists/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,7 +371,7 @@
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
-				INFOPLIST_FILE = VideoPlayer/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/VideoPlayer/Resources/Plists/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
