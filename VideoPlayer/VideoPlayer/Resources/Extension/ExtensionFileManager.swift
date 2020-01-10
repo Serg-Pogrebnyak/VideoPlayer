@@ -18,4 +18,8 @@ extension FileManager {
         
         return filteredFiles
     }
+    
+    func getURLS() -> URL {
+        return urls(for: FileManager.SearchPathDirectory.documentDirectory, in: .userDomainMask).first!
+    }
 }

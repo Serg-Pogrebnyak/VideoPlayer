@@ -10,32 +10,37 @@ import UIKit
 import AVKit
 
 struct MyVideoClip: Codable {
-    let url: URL
+    var fileName: String
     var position: Int
+    var stoppedTime: Double?
 }
 
 class VideoViewController: UIViewController {
 
     @IBOutlet fileprivate weak var tableView: UITableView!
     
-    var playerController : AVPlayerViewController!
-    
+    fileprivate var playerController : AVPlayerViewController!
     fileprivate var myVideoClipArray = [MyVideoClip]()
+    let userDefaultsKey = "VideoList"
+    let videoExtension = ".mp4"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let data = UserDefaults.standard.value(forKey:"VideoList") as? Data {
+
+        if let data = UserDefaults.standard.value(forKey: userDefaultsKey) as? Data {
             myVideoClipArray = try! PropertyListDecoder().decode(Array<MyVideoClip>.self, from: data)
             return
         }
 
         let videoArray = FileManager.default.getAFilesWithExtension(directory: .documentDirectory,
-                                                                fileExtension: ".mp4") ?? [URL]()
-        for (index, video) in videoArray.enumerated() {
-            let myVideoClip = MyVideoClip(url: video, position: index)
+                                                                    fileExtension: videoExtension) ?? [URL]()
+        
+        for (index, URLofVideo) in videoArray.enumerated() {
+            let myVideoClip = MyVideoClip(fileName: URLofVideo.lastPathComponent, position: index)
             myVideoClipArray.append(myVideoClip)
         }
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey:"VideoList")
+
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: userDefaultsKey)
     }
 
     @IBAction func didTapEditButton(_ sender: Any) {
@@ -43,32 +48,49 @@ class VideoViewController: UIViewController {
             for (index, _) in myVideoClipArray.enumerated() {
                 myVideoClipArray[index].position = index
             }
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey:"VideoList")
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: userDefaultsKey)
         }
         tableView.isEditing = !tableView.isEditing
     }
     
-    @objc func didfinishPlaying(note : NSNotification)  {
-        
+    @objc func didfinishPlaying(_ notification: NSNotification)  {
         playerController.dismiss(animated: true, completion: nil)
-        let alertView = UIAlertController(title: "Finished", message: "Video finished", preferredStyle: .alert)
-        alertView.addAction(UIAlertAction(title: "Okey", style: .default, handler: nil))
-        self.present(alertView, animated: true, completion: nil)
+        notificationHendlerFunction(notification, saveTime: false)
+    }
+    
+    @objc func otherNotification(_ notification : NSNotification)  {
+        notificationHendlerFunction(notification)
+    }
+    
+    //MARK: - Fileprivate func
+    fileprivate func notificationHendlerFunction(_ notification: NSNotification, saveTime: Bool = true) {
+        let currentObject = notification.object as! AVPlayerItem
+        let time = currentObject.currentTime()
+        let timeInSecond = Double(time.value)/Double(time.timescale)
+        let currentFileName = ((currentObject.asset) as? AVURLAsset)?.url.lastPathComponent
+        let indexVideo = myVideoClipArray.firstIndex {$0.fileName == currentFileName}
+        myVideoClipArray[indexVideo!].stoppedTime = saveTime ? timeInSecond : nil
     }
 }
 
 // MARK: - Extension Table view delegate
 extension VideoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        let player = AVPlayer(url: myVideoClipArray[indexPath.row].url)
-        //let playerTimescale = player.currentItem?.asset.duration.timescale ?? 1
-        //let time =  CMTime(seconds: 178.000000, preferredTimescale: playerTimescale)
-        //player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
+        let selectedVideo = myVideoClipArray[indexPath.row]
+        
+        let url = FileManager.default.getURLS().appendingPathComponent(selectedVideo.fileName, isDirectory: false)
+        let player = AVPlayer(url: url)
+        if let stoppedTime = selectedVideo.stoppedTime {
+            let playerTimescale = player.currentItem?.asset.duration.timescale ?? 1
+            let time =  CMTime(seconds: stoppedTime, preferredTimescale: playerTimescale)
+            player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
+        }
         
         playerController = AVPlayerViewController()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(didfinishPlaying(note:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(didfinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(otherNotification), name: NSNotification.Name.AVPlayerItemTimeJumped, object: player.currentItem)
         
         playerController.player = player
         
@@ -91,7 +113,7 @@ extension VideoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath)
-        cell.textLabel?.text = myVideoClipArray[indexPath.row].url.lastPathComponent
+        cell.textLabel?.text = myVideoClipArray[indexPath.row].fileName
         return cell
     }
     
@@ -121,6 +143,5 @@ extension VideoViewController: AVPlayerViewControllerDelegate {
             currentviewController?.present(playerViewController, animated: true, completion: nil)
             
         }
-        
     }
 }
