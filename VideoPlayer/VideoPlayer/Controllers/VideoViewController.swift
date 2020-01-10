@@ -21,13 +21,13 @@ class VideoViewController: UIViewController {
     
     fileprivate var playerController : AVPlayerViewController!
     fileprivate var myVideoClipArray = [MyVideoClip]()
-    let userDefaultsKey = "VideoList"
-    let videoExtension = ".mp4"
+    fileprivate let videoUserDefaultsKey = "VideoList"
+    fileprivate let videoExtension = ".mp4"
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let data = UserDefaults.standard.value(forKey: userDefaultsKey) as? Data {
+        if let data = UserDefaults.standard.value(forKey: videoUserDefaultsKey) as? Data {
             myVideoClipArray = try! PropertyListDecoder().decode(Array<MyVideoClip>.self, from: data)
             return
         }
@@ -47,7 +47,7 @@ class VideoViewController: UIViewController {
             for (index, _) in myVideoClipArray.enumerated() {
                 myVideoClipArray[index].position = index
             }
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: userDefaultsKey)
+            UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: videoUserDefaultsKey)
         }
         tableView.isEditing = !tableView.isEditing
     }
@@ -80,7 +80,7 @@ class VideoViewController: UIViewController {
     
     //MARK: - Fileprivate func
     fileprivate func saveChanges() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: userDefaultsKey)
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: videoUserDefaultsKey)
     }
     
     fileprivate func startPlayVideoAtIndex(_ index: Int, autoPlay: Bool = true) {

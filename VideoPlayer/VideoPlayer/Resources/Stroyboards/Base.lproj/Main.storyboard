@@ -62,7 +62,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="io6-pR-6mA"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Music" id="RLS-8Y-1QB"/>
+                    <navigationItem key="navigationItem" title="Music" id="RLS-8Y-1QB">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="0EE-Q2-G5Z">
+                            <connections>
+                                <action selector="didTapEditButton:" destination="VLc-sN-I3M" id="JvP-gp-TKD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="NcR-Jp-4Tx" id="q96-nz-Qrh"/>
                     </connections>
