@@ -9,81 +9,68 @@
 import UIKit
 import Foundation
 
-struct MusicItem: Codable {
-    let fileName: String
-    let position: Int
-}
-
-class MusicViewController: UIViewController {
+class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     
-    fileprivate var musicArray = [MusicItem]()
+    internal var musicArray = [MusicOrVideoItem]()
     fileprivate let musicUserDefaultsKey = "MusicList"
     fileprivate let musicExtension = ".mp3"
+    fileprivate var customTableViewDelegate: CustomTableViewDelegate!
+    fileprivate var customTableViewDataSource: CustomTableViewDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let data = UserDefaults.standard.value(forKey: musicUserDefaultsKey) as? Data {
-            musicArray = try! PropertyListDecoder().decode(Array<MusicItem>.self, from: data)
-            return
-        }
 
-        let musicURLArray = FileManager.default.getAFilesWithExtension(directory: .documentDirectory,
-                                                                    fileExtension: musicExtension) ?? [URL]()
-        
-        for (index, URLofMusic) in musicURLArray.enumerated() {
-            let musicItem = MusicItem(fileName: URLofMusic.lastPathComponent, position: index)
-            musicArray.append(musicItem)
-        }
-        saveChanges()
+        //configure table view
+        setupTableViewDelegateAndDataSource()
+        let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "MusicCell")
+        //UserDefaults.standard.removeObject(forKey: musicUserDefaultsKey)
+        fetchAllTracksAndUpdateLibrary()
     }
     
     @IBAction func didTapEditButton(_ sender: Any) {
+        if tableView.isEditing {
+             saveChanges()
+         }
         tableView.isEditing = !tableView.isEditing
+    }
+
+    func startPlay(atIndex index: Int) {
+        print("start music")//TODO: add audio logic
     }
     
     //MARK: - Fileprivate func
     fileprivate func saveChanges() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(musicArray), forKey: musicUserDefaultsKey)
     }
-}
 
-// MARK: - Extension Table view delegate
-extension MusicViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        //startPlayVideoAtIndex(indexPath.row)
-    }
-}
+    fileprivate func fetchAllTracksAndUpdateLibrary() {
+        var currentLibrary = [MusicOrVideoItem]()
+        if let data = UserDefaults.standard.value(forKey: musicUserDefaultsKey) as? Data {
+            currentLibrary = try! PropertyListDecoder().decode(Array<MusicOrVideoItem>.self, from: data)
+        }
 
-// MARK: - Extension Table view data source
-extension MusicViewController: UITableViewDataSource {
+        let musicURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
+                                                                         fileExtension: musicExtension) ?? [URL]()
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return musicArray.count
+        for URLofMusic in musicURLArray {
+            let musicItem = MusicOrVideoItem.init(filename: URLofMusic.lastPathComponent)
+            if !currentLibrary.contains(musicItem) {
+                musicItem.isNew = true
+                musicArray.append(musicItem)
+            }
+        }
+        musicArray = musicArray + currentLibrary
+        saveChanges()
+        tableView.reloadData()
     }
 
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath)
-        cell.textLabel?.text = musicArray[indexPath.row].fileName
-        return cell
-    }
-    
-    // MARK: - Table view cell moving
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .delete
-    }
-    
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedMusicItem = musicArray[sourceIndexPath.row]
-        musicArray.remove(at: sourceIndexPath.row)
-        musicArray.insert(movedMusicItem, at: destinationIndexPath.row)
+    fileprivate func setupTableViewDelegateAndDataSource() {
+        customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
+        customTableViewDataSource = CustomTableViewDataSource(protocolObject: self)
+        tableView.delegate = customTableViewDelegate
+        tableView.dataSource = customTableViewDataSource
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 extension FileManager {    
-    func getAFilesWithExtension(directory: FileManager.SearchPathDirectory, skipsHiddenFiles: Bool = true, fileExtension: String) -> [URL]? {
+    func getAllFilesWithExtension(directory: FileManager.SearchPathDirectory, skipsHiddenFiles: Bool = true, fileExtension: String) -> [URL]? {
         let documentsURL = urls(for: directory, in: .userDomainMask)[0]
         let fileURLs = try? contentsOfDirectory(at: documentsURL,
                                                 includingPropertiesForKeys: nil,

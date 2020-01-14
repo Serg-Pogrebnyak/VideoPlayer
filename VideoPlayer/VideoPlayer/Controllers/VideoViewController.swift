@@ -32,8 +32,8 @@ class VideoViewController: UIViewController {
             return
         }
 
-        let videoArray = FileManager.default.getAFilesWithExtension(directory: .documentDirectory,
-                                                                    fileExtension: videoExtension) ?? [URL]()
+        let videoArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
+                                                                      fileExtension: videoExtension) ?? [URL]()
         
         for (index, URLofVideo) in videoArray.enumerated() {
             let myVideoClip = MyVideoClip(fileName: URLofVideo.lastPathComponent, position: index)
@@ -47,7 +47,7 @@ class VideoViewController: UIViewController {
             for (index, _) in myVideoClipArray.enumerated() {
                 myVideoClipArray[index].position = index
             }
-            UserDefaults.standard.set(try? PropertyListEncoder().encode(myVideoClipArray), forKey: videoUserDefaultsKey)
+            saveChanges()
         }
         tableView.isEditing = !tableView.isEditing
     }
