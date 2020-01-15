@@ -37,7 +37,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         tableView.isEditing = !tableView.isEditing
     }
 
-    func startPlay(atIndex index: Int) {
+    func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
         print("start music")//TODO: add audio logic
     }
     
@@ -56,7 +56,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
                                                                          fileExtension: musicExtension) ?? [URL]()
 
         for URLofMusic in musicURLArray {
-            let musicItem = MusicOrVideoItem.init(filename: URLofMusic.lastPathComponent)
+            var musicItem = MusicOrVideoItem.init(fileName: URLofMusic.lastPathComponent)
             if !currentLibrary.contains(musicItem) {
                 musicItem.isNew = true
                 itemsArray.append(musicItem)

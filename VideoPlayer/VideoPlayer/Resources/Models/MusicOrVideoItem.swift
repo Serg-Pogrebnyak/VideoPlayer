@@ -10,16 +10,18 @@ import Foundation
 
 protocol MusicOrVideoArrayProtocol: class {
     var itemsArray: [MusicOrVideoItem] {get set}
-    func startPlay(atIndex index: Int)
+    func startPlay(atIndex index: Int, autoPlay: Bool)
 }
 
-class MusicOrVideoItem: Codable, Equatable {
+struct MusicOrVideoItem: Codable, Equatable {
     let fileName: String
     var isNew: Bool
+    var stoppedTime: Double?
 
-    init(filename: String, isNew: Bool = false) {
-        self.fileName = filename
+    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil) {
+        self.fileName = fileName
         self.isNew = isNew
+        self.stoppedTime = stoppedTime
     }
 
     static func == (lfs:MusicOrVideoItem, rfs:MusicOrVideoItem) -> Bool {
