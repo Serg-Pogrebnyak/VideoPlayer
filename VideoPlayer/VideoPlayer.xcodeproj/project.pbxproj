@@ -20,6 +20,9 @@
 		DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FE623CE0BF300D2F77C /* CustomTableViewDelegate.swift */; };
 		DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FE823CE0D1E00D2F77C /* CustomTableViewDataSource.swift */; };
 		DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FEC23CE30C200D2F77C /* MusicOrVideoItem.swift */; };
+		DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */; };
+		DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC23BA323CF101B007E74FD /* LocalizationManager.swift */; };
+		DEC23BA623CF112E007E74FD /* ApplicationText.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEC23BA523CF112E007E74FD /* ApplicationText.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		DE6C7FE623CE0BF300D2F77C /* CustomTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewDelegate.swift; sourceTree = "<group>"; };
 		DE6C7FE823CE0D1E00D2F77C /* CustomTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewDataSource.swift; sourceTree = "<group>"; };
 		DE6C7FEC23CE30C200D2F77C /* MusicOrVideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicOrVideoItem.swift; sourceTree = "<group>"; };
+		DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		DEC23BA323CF101B007E74FD /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
+		DEC23BA523CF112E007E74FD /* ApplicationText.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = ApplicationText.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +78,7 @@
 		0B8BCB3C23C7465800EDA27F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DEC23BA223CF0FF4007E74FD /* Localization Manager */,
 				DE6C7FEB23CE30AF00D2F77C /* Models */,
 				DE6C7FEA23CE306E00D2F77C /* Table View delegate and data source */,
 				DE6C7FDF23CDD7FD00D2F77C /* nibs */,
@@ -138,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */,
+				DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -166,6 +174,15 @@
 				DE6C7FEC23CE30C200D2F77C /* MusicOrVideoItem.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		DEC23BA223CF0FF4007E74FD /* Localization Manager */ = {
+			isa = PBXGroup;
+			children = (
+				DEC23BA323CF101B007E74FD /* LocalizationManager.swift */,
+				DEC23BA523CF112E007E74FD /* ApplicationText.strings */,
+			);
+			path = "Localization Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +244,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0BA7407B23C71B20001BBBA4 /* LaunchScreen.storyboard in Resources */,
+				DEC23BA623CF112E007E74FD /* ApplicationText.strings in Resources */,
 				DE6C7FE523CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib in Resources */,
 				0BA7407823C71B20001BBBA4 /* Assets.xcassets in Resources */,
 				0BA7407623C71B1F001BBBA4 /* Main.storyboard in Resources */,
@@ -240,8 +258,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */,
 				DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
+				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
 				0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */,
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
 				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,

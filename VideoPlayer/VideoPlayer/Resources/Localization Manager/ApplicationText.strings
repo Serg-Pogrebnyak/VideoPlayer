@@ -1,0 +1,11 @@
+/* 
+  ApplicationText.strings
+  VideoPlayer
+
+  Created by Sergey Pogrebnyak on 15.01.2020.
+  Copyright © 2020 Sergey Pohrebnuak. All rights reserved.
+*/
+
+"Alert.Error.Title" = "Error";
+"Alert.Button.OK" = "OK";
+"Alert.Message.FileNotFound" = "File not found";

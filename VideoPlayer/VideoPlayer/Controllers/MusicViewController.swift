@@ -13,7 +13,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     
-    internal var musicArray = [MusicOrVideoItem]()
+    internal var itemsArray = [MusicOrVideoItem]()
     fileprivate let musicUserDefaultsKey = "MusicList"
     fileprivate let musicExtension = ".mp3"
     fileprivate var customTableViewDelegate: CustomTableViewDelegate!
@@ -43,7 +43,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     //MARK: - Fileprivate func
     fileprivate func saveChanges() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(musicArray), forKey: musicUserDefaultsKey)
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(itemsArray), forKey: musicUserDefaultsKey)
     }
 
     fileprivate func fetchAllTracksAndUpdateLibrary() {
@@ -59,10 +59,10 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
             let musicItem = MusicOrVideoItem.init(filename: URLofMusic.lastPathComponent)
             if !currentLibrary.contains(musicItem) {
                 musicItem.isNew = true
-                musicArray.append(musicItem)
+                itemsArray.append(musicItem)
             }
         }
-        musicArray = musicArray + currentLibrary
+        itemsArray = itemsArray + currentLibrary
         saveChanges()
         tableView.reloadData()
     }

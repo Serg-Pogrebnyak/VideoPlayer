@@ -17,12 +17,12 @@ class CustomTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return musicOrVideoArrayProtocol.musicArray.count
+        return musicOrVideoArrayProtocol.itemsArray.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath) as! VideoAndMusicTableViewCell
-        cell.setDataInCell(item: musicOrVideoArrayProtocol.musicArray[indexPath.row])
+        cell.setDataInCell(item: musicOrVideoArrayProtocol.itemsArray[indexPath.row])
         return cell
     }
 
@@ -36,10 +36,25 @@ class CustomTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedMusicItem = musicOrVideoArrayProtocol.musicArray[sourceIndexPath.row]
-        musicOrVideoArrayProtocol.musicArray.remove(at: sourceIndexPath.row)
+        let movedMusicItem = musicOrVideoArrayProtocol.itemsArray[sourceIndexPath.row]
+        musicOrVideoArrayProtocol.itemsArray.remove(at: sourceIndexPath.row)
         movedMusicItem.isNew = false
-        musicOrVideoArrayProtocol.musicArray.insert(movedMusicItem, at: destinationIndexPath.row)
+        musicOrVideoArrayProtocol.itemsArray.insert(movedMusicItem, at: destinationIndexPath.row)
         tableView.reloadData()
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let path = FileManager.default.getURLS().appendingPathComponent(musicOrVideoArrayProtocol.itemsArray[indexPath.row].fileName, isDirectory: false)
+            do {
+                try FileManager.default.removeItem(at: path)
+                musicOrVideoArrayProtocol.itemsArray.remove(at: indexPath.row)
+                tableView.reloadData()
+            } catch {
+                if let currentViewController = musicOrVideoArrayProtocol as? UIViewController {
+                    currentViewController.showErrorAlertWithMessageByKey("Alert.Message.FileNotFound")
+                }
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MusicOrVideoArrayProtocol: class {
-    var musicArray: [MusicOrVideoItem] {get set}
+    var itemsArray: [MusicOrVideoItem] {get set}
     func startPlay(atIndex index: Int)
 }
 
