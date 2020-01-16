@@ -8,12 +8,16 @@
 
 import UIKit
 import Foundation
+import AVFoundation
+import MediaPlayer
 
 class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     
     internal var itemsArray = [MusicOrVideoItem]()
+    fileprivate var player: AVAudioPlayer?
+    fileprivate var indexOfCurrentItem: Int?
     fileprivate let musicUserDefaultsKey = "MusicList"
     fileprivate let musicExtension = ".mp3"
     fileprivate var customTableViewDelegate: CustomTableViewDelegate!
@@ -28,6 +32,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         tableView.register(nib, forCellReuseIdentifier: "MusicCell")
         //UserDefaults.standard.removeObject(forKey: musicUserDefaultsKey)
         fetchAllTracksAndUpdateLibrary()
+        setupRemoteCommandCenter()
     }
     
     @IBAction func didTapEditButton(_ sender: Any) {
@@ -38,7 +43,20 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
-        print("start music")//TODO: add audio logic
+        indexOfCurrentItem = index
+        let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+        do {
+
+            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+
+            guard let player = player else { return }
+
+            player.play()
+
+            displayMusicInfo(fileUrl: url)
+        } catch let error {
+            print(error.localizedDescription)//TODO
+        }
     }
     
     //MARK: - Fileprivate func
@@ -72,5 +90,68 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         customTableViewDataSource = CustomTableViewDataSource(protocolObject: self)
         tableView.delegate = customTableViewDelegate
         tableView.dataSource = customTableViewDataSource
+    }
+
+    //MARK: setup remote command for display buttons on lock screen and in menu
+    fileprivate func setupRemoteCommandCenter() {
+        let commandCenter = MPRemoteCommandCenter.shared();
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget {event in
+            self.player?.play()
+            return .success
+        }
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget {event in
+            self.player?.pause()
+            return .success
+        }
+        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.addTarget {event in
+            if (self.indexOfCurrentItem ?? -1) + 1 > self.itemsArray.count - 1 {
+                return .noSuchContent
+            } else {
+                self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: false)
+                return .success
+            }
+        }
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.previousTrackCommand.addTarget {event in
+            if (self.indexOfCurrentItem ?? +1) - 1 < 0 {
+                return .noSuchContent
+            } else {
+                self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: false)
+                return .success
+            }
+        }
+    }
+
+    //MARK: setup information about track on lock screen and in menu
+    fileprivate func displayMusicInfo(fileUrl: URL) {
+        var nowPlayingInfo = [String: Any]()
+        let asset = AVAsset(url: fileUrl) as AVAsset
+
+        for metaDataItems in asset.commonMetadata {
+            switch metaDataItems.commonKey!.rawValue {
+            case "title":
+                guard let title = metaDataItems.value as? String else {break}
+                nowPlayingInfo[MPMediaItemPropertyTitle] = title
+            case "artist":
+                guard let artist = metaDataItems.value as? String else {break}
+                nowPlayingInfo[MPMediaItemPropertyArtist] = artist
+            case "albumName":
+                guard let album = metaDataItems.value as? String else {break}
+                nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
+            case "artwork":
+                guard let imageData = metaDataItems.value as? Data else {break}
+                let image = UIImage(data: imageData)!
+                nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(image: image)
+            default:
+                continue
+            }
+        }
+
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.duration
+
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
