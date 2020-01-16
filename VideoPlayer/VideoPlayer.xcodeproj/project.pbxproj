@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0BA7406B23C71B1F001BBBA4 /* VideoPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BA7406B23C71B1F001BBBA4 /* NIXPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NIXPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BA7407523C71B1F001BBBA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0BA7407723C71B20001BBBA4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 		0BA7406C23C71B1F001BBBA4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0BA7406B23C71B1F001BBBA4 /* VideoPlayer.app */,
+				0BA7406B23C71B1F001BBBA4 /* NIXPlayer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -202,7 +202,7 @@
 			);
 			name = VideoPlayer;
 			productName = VideoPlayer;
-			productReference = 0BA7406B23C71B1F001BBBA4 /* VideoPlayer.app */;
+			productReference = 0BA7406B23C71B1F001BBBA4 /* NIXPlayer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -421,7 +421,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nixsolutions.VideoPlayer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NIXPlayer;
 				PROVISIONING_PROFILE_SPECIFIER = "VideoPlayer(dev)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -441,7 +441,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nixsolutions.VideoPlayer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = NIXPlayer;
 				PROVISIONING_PROFILE_SPECIFIER = "VideoPlayer(dev)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
