@@ -14,7 +14,8 @@ import MediaPlayer
 class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
-    
+    @IBOutlet fileprivate weak var buttonsStackView: UIStackView!
+
     internal var itemsArray = [MusicOrVideoItem]()
     fileprivate var player: AVAudioPlayer?
     fileprivate var indexOfCurrentItem: Int?
@@ -25,7 +26,11 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //setup flexible space between buttons
+        let widthOfView = self.view.bounds.width
+        let widthOfButtons = buttonsStackView.bounds.height * CGFloat(buttonsStackView.arrangedSubviews.count)
+        let emptySpaceCount = CGFloat(buttonsStackView.arrangedSubviews.count-1)
+        buttonsStackView.spacing = (widthOfView - widthOfButtons)/emptySpaceCount
         //configure table view
         setupTableViewDelegateAndDataSource()
         let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
