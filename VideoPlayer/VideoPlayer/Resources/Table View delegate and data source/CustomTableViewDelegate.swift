@@ -18,6 +18,6 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: false)
+        musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
     }
 }

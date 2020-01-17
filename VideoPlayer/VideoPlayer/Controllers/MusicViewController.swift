@@ -51,11 +51,13 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
             guard let player = player else { return }
 
-            player.play()
-
+            if autoplay {
+                player.play()
+            }
+            player.delegate = self
             displayMusicInfo(fileUrl: url)
         } catch let error {
-            print(error.localizedDescription)//TODO
+            print(error.localizedDescription)//TODO: handle error
         }
     }
     
@@ -107,20 +109,20 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         }
         commandCenter.nextTrackCommand.isEnabled = true
         commandCenter.nextTrackCommand.addTarget {event in
-            if (self.indexOfCurrentItem ?? -1) + 1 > self.itemsArray.count - 1 {
-                return .noSuchContent
-            } else {
+            if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
                 self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: false)
                 return .success
+            } else {
+                return .noSuchContent
             }
         }
         commandCenter.previousTrackCommand.isEnabled = true
         commandCenter.previousTrackCommand.addTarget {event in
-            if (self.indexOfCurrentItem ?? +1) - 1 < 0 {
-                return .noSuchContent
-            } else {
+            if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
                 self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: false)
                 return .success
+            } else {
+                return .noSuchContent
             }
         }
     }
@@ -150,8 +152,26 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
             }
         }
 
+        if nowPlayingInfo[MPMediaItemPropertyTitle] == nil {
+            nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
+        }
+
+        if nowPlayingInfo[MPMediaItemPropertyArtwork] == nil {
+            //nowPlayingInfo[MPMediaItemPropertyArtwork] = //TODO: add defaulte image
+        }
+
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.duration
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+}
+
+extension MusicViewController: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if indexOfCurrentItem! + 1 <= itemsArray.count - 1 {
+            startPlay(atIndex: indexOfCurrentItem!+1, autoPlay: true)
+        } else {
+            player.stop()
+        }
     }
 }
