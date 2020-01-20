@@ -13,10 +13,19 @@ class VideoAndMusicTableViewCell: UITableViewCell {
 
     @IBOutlet fileprivate weak var fileNameLabel: UILabel!
     @IBOutlet fileprivate weak var newImage: UIImageView!
+    @IBOutlet fileprivate var fromLabelToSuperView: NSLayoutConstraint!
+    @IBOutlet fileprivate var fromLabelToImage: NSLayoutConstraint!
 
     func setDataInCell(item: MusicOrVideoItem) {
         fileNameLabel.text = item.fileName
         newImage.isHidden = !item.isNew
+        if item.isNew {
+            fromLabelToSuperView.isActive = false
+            fromLabelToImage.isActive = true
+        } else {
+            fromLabelToSuperView.isActive = true
+            fromLabelToImage.isActive = false
+        }
     }
 
 }
