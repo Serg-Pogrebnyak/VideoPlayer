@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerView" customModule="NIXPlayer" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="iN0-l3-epB" id="Cpk-6I-3Yn"/>
+                <outlet property="playAndPauseButton" destination="fjF-yH-qGO" id="4tl-7P-fBs"/>
+                <outlet property="playerLabel" destination="2fN-cY-Vbh" id="XmJ-dm-Rkq"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hEt-nt-b4M">
+                    <rect key="frame" x="10" y="44.5" width="394" height="45.5"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3u-Xz-dez">
+                            <rect key="frame" x="0.0" y="0.0" width="67" height="45.5"/>
+                            <state key="normal" image="previous"/>
+                            <connections>
+                                <action selector="previousTrackButton:" destination="-1" eventType="touchUpInside" id="nhv-Yg-pqm"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfg-kF-Wip">
+                            <rect key="frame" x="82" y="0.0" width="66.5" height="45.5"/>
+                            <state key="normal" image="rewind"/>
+                            <connections>
+                                <action selector="backRewind:" destination="-1" eventType="touchUpInside" id="zno-S9-ksR"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjF-yH-qGO">
+                            <rect key="frame" x="163.5" y="0.0" width="67" height="45.5"/>
+                            <state key="normal" image="play"/>
+                            <state key="selected" image="pause"/>
+                            <connections>
+                                <action selector="playAndPauseButton:" destination="-1" eventType="touchUpInside" id="Dlv-tO-UCP"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-Yo-ujn">
+                            <rect key="frame" x="245.5" y="0.0" width="66.5" height="45.5"/>
+                            <state key="normal" image="fast-forward"/>
+                            <connections>
+                                <action selector="forwardRewind:" destination="-1" eventType="touchUpInside" id="oOY-Mm-Zvb"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pk2-UE-sB6">
+                            <rect key="frame" x="327" y="0.0" width="67" height="45.5"/>
+                            <state key="normal" image="next"/>
+                            <connections>
+                                <action selector="nextTrack:" destination="-1" eventType="touchUpInside" id="Euc-EO-yNB"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-cY-Vbh">
+                    <rect key="frame" x="0.0" y="10" width="414" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="hEt-nt-b4M" firstAttribute="top" secondItem="2fN-cY-Vbh" secondAttribute="bottom" constant="14" id="0ML-55-QuZ"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="hEt-nt-b4M" secondAttribute="bottom" constant="10" id="ACM-n2-nw3"/>
+                <constraint firstItem="2fN-cY-Vbh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cq9-iS-Ql1"/>
+                <constraint firstItem="hEt-nt-b4M" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="DjD-Ta-CdM"/>
+                <constraint firstAttribute="trailing" secondItem="2fN-cY-Vbh" secondAttribute="trailing" id="JHs-Hr-Ue2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hEt-nt-b4M" secondAttribute="trailing" constant="10" id="bLe-iE-tDv"/>
+                <constraint firstItem="2fN-cY-Vbh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xl0-AT-Ll4"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="-26" y="289"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="fast-forward" width="18.5" height="18.5"/>
+        <image name="next" width="18.5" height="18.5"/>
+        <image name="pause" width="18.5" height="18.5"/>
+        <image name="play" width="18.5" height="18.5"/>
+        <image name="previous" width="18.5" height="18.5"/>
+        <image name="rewind" width="18.5" height="18.5"/>
+    </resources>
+</document>

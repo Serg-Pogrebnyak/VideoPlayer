@@ -15,6 +15,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate var viewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var playerView: PlayerView!
 
     internal var itemsArray = [MusicOrVideoItem]()
     fileprivate var player: AVAudioPlayer?
@@ -27,6 +28,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewHeightConstraint.constant = 0
+        playerView.delegat = self
         //configure table view
         setupTableViewDelegateAndDataSource()
         let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
@@ -44,6 +46,9 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
+        if viewHeightConstraint.constant == 0 {
+            viewHeightConstraint.constant = 100
+        }
         indexOfCurrentItem = index
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
         do {
@@ -56,6 +61,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
                 player.play()
             }
             player.delegate = self
+            playerView.changePlayButtonIcon(playNow: player.isPlaying)
             displayMusicInfo(fileUrl: url)
         } catch let error {
             print(error.localizedDescription)//TODO: handle error
@@ -100,11 +106,13 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         let commandCenter = MPRemoteCommandCenter.shared();
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget {event in
+            self.playerView.changePlayButtonIcon(playNow: true)
             self.player?.play()
             return .success
         }
         commandCenter.pauseCommand.isEnabled = true
         commandCenter.pauseCommand.addTarget {event in
+            self.playerView.changePlayButtonIcon(playNow: false)
             self.player?.pause()
             return .success
         }
@@ -163,6 +171,8 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.duration
 
+        playerView.updateLabelWithText(nowPlayingInfo[MPMediaItemPropertyTitle] as! String)
+
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
@@ -173,6 +183,42 @@ extension MusicViewController: AVAudioPlayerDelegate {
             startPlay(atIndex: indexOfCurrentItem!+1, autoPlay: true)
         } else {
             player.stop()
+        }
+    }
+}
+
+extension MusicViewController: PlayerViewDelegate {
+    func previousTrackDidTap(sender: PlayerView) {
+        if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
+            self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: false)
+        }
+    }
+
+    func forwardRewindDidTap(sender: PlayerView) {
+        guard player != nil else {return}
+        player!.currentTime = player!.currentTime + TimeInterval.init(15)
+    }
+
+    func playAndPauseDidTap(sender: PlayerView) {
+        guard player != nil else {
+            startPlay(atIndex: 0, autoPlay: true)
+            return
+        }
+        if player!.isPlaying {
+            player!.pause()
+        } else {
+            player!.play()
+        }
+    }
+
+    func backRewindDidTap(sender: PlayerView) {
+        guard player != nil else {return}
+        player!.currentTime = player!.currentTime - TimeInterval.init(15)
+    }
+
+    func nextTrackDidTap(sender: PlayerView) {
+        if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
+            self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: false)
         }
     }
 }

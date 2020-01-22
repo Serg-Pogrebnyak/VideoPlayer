@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -24,6 +24,8 @@
 		DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */; };
 		DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC23BA323CF101B007E74FD /* LocalizationManager.swift */; };
 		DEC23BA623CF112E007E74FD /* ApplicationText.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEC23BA523CF112E007E74FD /* ApplicationText.strings */; };
+		DEC23BA923D5C6C8007E74FD /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEC23BA823D5C6C8007E74FD /* PlayerView.xib */; };
+		DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC23BAA23D5C6E1007E74FD /* PlayerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		DEC23BA323CF101B007E74FD /* LocalizationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationManager.swift; sourceTree = "<group>"; };
 		DEC23BA523CF112E007E74FD /* ApplicationText.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = ApplicationText.strings; sourceTree = "<group>"; };
+		DEC23BA823D5C6C8007E74FD /* PlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
+		DEC23BAA23D5C6E1007E74FD /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +167,6 @@
 				BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */,
 				2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -180,6 +183,8 @@
 			children = (
 				DE6C7FE223CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift */,
 				DE6C7FE323CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib */,
+				DEC23BA823D5C6C8007E74FD /* PlayerView.xib */,
+				DEC23BAA23D5C6E1007E74FD /* PlayerView.swift */,
 			);
 			path = nibs;
 			sourceTree = "<group>";
@@ -276,6 +281,7 @@
 				DE6C7FE523CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib in Resources */,
 				0BA7407823C71B20001BBBA4 /* Assets.xcassets in Resources */,
 				0BA7407623C71B1F001BBBA4 /* Main.storyboard in Resources */,
+				DEC23BA923D5C6C8007E74FD /* PlayerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +354,7 @@
 				DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */,
 				DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
+				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
 				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
 				0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */,
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
