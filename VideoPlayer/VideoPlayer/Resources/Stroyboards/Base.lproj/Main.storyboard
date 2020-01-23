@@ -49,20 +49,20 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AXb-D7-nxD" customClass="PlayerView" customModule="NIXPlayer" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="733" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="733" width="414" height="250"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="Np1-RR-mtS"/>
+                                    <constraint firstAttribute="height" constant="250" id="Np1-RR-mtS"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="NcR-Jp-4Tx" firstAttribute="leading" secondItem="io6-pR-6mA" secondAttribute="leading" id="Ucm-hD-sja"/>
+                            <constraint firstItem="io6-pR-6mA" firstAttribute="bottom" secondItem="AXb-D7-nxD" secondAttribute="top" constant="80" id="V6J-Kq-FQW"/>
                             <constraint firstItem="AXb-D7-nxD" firstAttribute="trailing" secondItem="io6-pR-6mA" secondAttribute="trailing" id="YD9-sS-wHg"/>
                             <constraint firstItem="AXb-D7-nxD" firstAttribute="top" secondItem="NcR-Jp-4Tx" secondAttribute="bottom" constant="8" symbolic="YES" id="bGF-du-jJE"/>
                             <constraint firstItem="NcR-Jp-4Tx" firstAttribute="top" secondItem="io6-pR-6mA" secondAttribute="top" id="nHQ-sb-P7f"/>
-                            <constraint firstItem="AXb-D7-nxD" firstAttribute="bottom" secondItem="io6-pR-6mA" secondAttribute="bottom" id="pOp-nH-oSL"/>
                             <constraint firstItem="AXb-D7-nxD" firstAttribute="leading" secondItem="io6-pR-6mA" secondAttribute="leading" id="sKY-pw-bAm"/>
                             <constraint firstItem="io6-pR-6mA" firstAttribute="trailing" secondItem="NcR-Jp-4Tx" secondAttribute="trailing" id="uj4-Qa-dEQ"/>
                         </constraints>
@@ -76,9 +76,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="fromBottomToTopPlayerViewConstraint" destination="V6J-Kq-FQW" id="jbU-4x-w6W"/>
                         <outlet property="playerView" destination="AXb-D7-nxD" id="z0Y-4f-Xrs"/>
+                        <outlet property="playerViewHeightConstraint" destination="Np1-RR-mtS" id="RnQ-jH-TQU"/>
                         <outlet property="tableView" destination="NcR-Jp-4Tx" id="q96-nz-Qrh"/>
-                        <outlet property="viewHeightConstraint" destination="Np1-RR-mtS" id="Quf-3H-Dek"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W18-Zt-31X" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

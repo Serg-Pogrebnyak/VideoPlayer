@@ -13,32 +13,33 @@
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="Cpk-6I-3Yn"/>
                 <outlet property="playAndPauseButton" destination="fjF-yH-qGO" id="4tl-7P-fBs"/>
                 <outlet property="playerLabel" destination="2fN-cY-Vbh" id="XmJ-dm-Rkq"/>
+                <outlet property="trackImage" destination="gta-ob-exR" id="mjX-gN-cnG"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="393" height="250"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hEt-nt-b4M">
-                    <rect key="frame" x="10" y="44.5" width="394" height="45.5"/>
+                    <rect key="frame" x="10" y="45" width="373" height="25"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3u-Xz-dez">
-                            <rect key="frame" x="0.0" y="0.0" width="67" height="45.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="62.5" height="25"/>
                             <state key="normal" image="previous"/>
                             <connections>
                                 <action selector="previousTrackButton:" destination="-1" eventType="touchUpInside" id="nhv-Yg-pqm"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfg-kF-Wip">
-                            <rect key="frame" x="82" y="0.0" width="66.5" height="45.5"/>
+                            <rect key="frame" x="77.5" y="0.0" width="62.5" height="25"/>
                             <state key="normal" image="rewind"/>
                             <connections>
                                 <action selector="backRewind:" destination="-1" eventType="touchUpInside" id="zno-S9-ksR"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjF-yH-qGO">
-                            <rect key="frame" x="163.5" y="0.0" width="67" height="45.5"/>
+                            <rect key="frame" x="155" y="0.0" width="63" height="25"/>
                             <state key="normal" image="play"/>
                             <state key="selected" image="pause"/>
                             <connections>
@@ -46,23 +47,36 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-Yo-ujn">
-                            <rect key="frame" x="245.5" y="0.0" width="66.5" height="45.5"/>
+                            <rect key="frame" x="233" y="0.0" width="62.5" height="25"/>
                             <state key="normal" image="fast-forward"/>
                             <connections>
                                 <action selector="forwardRewind:" destination="-1" eventType="touchUpInside" id="oOY-Mm-Zvb"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pk2-UE-sB6">
-                            <rect key="frame" x="327" y="0.0" width="67" height="45.5"/>
+                            <rect key="frame" x="310.5" y="0.0" width="62.5" height="25"/>
                             <state key="normal" image="next"/>
                             <connections>
                                 <action selector="nextTrack:" destination="-1" eventType="touchUpInside" id="Euc-EO-yNB"/>
                             </connections>
                         </button>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="25" id="SAU-ar-KZd"/>
+                    </constraints>
                 </stackView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gta-ob-exR">
+                    <rect key="frame" x="116.5" y="80" width="160" height="160"/>
+                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="gta-ob-exR" secondAttribute="height" multiplier="1:1" id="ktT-Zo-tvr"/>
+                    </constraints>
+                </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-cY-Vbh">
-                    <rect key="frame" x="0.0" y="10" width="414" height="20.5"/>
+                    <rect key="frame" x="0.0" y="10" width="393" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="TIi-FU-2Tv"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -70,18 +84,28 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="hEt-nt-b4M" firstAttribute="top" secondItem="2fN-cY-Vbh" secondAttribute="bottom" constant="14" id="0ML-55-QuZ"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="hEt-nt-b4M" secondAttribute="bottom" constant="10" id="ACM-n2-nw3"/>
+                <constraint firstItem="hEt-nt-b4M" firstAttribute="top" secondItem="2fN-cY-Vbh" secondAttribute="bottom" constant="15" id="0ML-55-QuZ"/>
+                <constraint firstItem="gta-ob-exR" firstAttribute="top" secondItem="hEt-nt-b4M" secondAttribute="bottom" constant="10" id="Chg-Db-SdT"/>
                 <constraint firstItem="2fN-cY-Vbh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cq9-iS-Ql1"/>
                 <constraint firstItem="hEt-nt-b4M" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="DjD-Ta-CdM"/>
                 <constraint firstAttribute="trailing" secondItem="2fN-cY-Vbh" secondAttribute="trailing" id="JHs-Hr-Ue2"/>
+                <constraint firstItem="gta-ob-exR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SCc-Tn-jdk"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hEt-nt-b4M" secondAttribute="trailing" constant="10" id="bLe-iE-tDv"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gta-ob-exR" secondAttribute="bottom" constant="10" id="eMr-xh-DAZ"/>
                 <constraint firstItem="2fN-cY-Vbh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xl0-AT-Ll4"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="-26" y="289"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="Jet-2u-TQA" appends="YES" id="ezv-oQ-d4t"/>
+            </connections>
+            <point key="canvasLocation" x="-41.304347826086961" y="400.44642857142856"/>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="Jet-2u-TQA">
+            <connections>
+                <action selector="panGestureRecognizerAction:" destination="-1" id="9SI-kO-z3U"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
     <resources>
         <image name="fast-forward" width="18.5" height="18.5"/>

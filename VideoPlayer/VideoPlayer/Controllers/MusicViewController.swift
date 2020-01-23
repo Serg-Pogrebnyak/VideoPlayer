@@ -14,8 +14,9 @@ import MediaPlayer
 class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
-    @IBOutlet fileprivate var viewHeightConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var playerView: PlayerView!
+    @IBOutlet fileprivate weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var playerViewHeightConstraint: NSLayoutConstraint!
 
     internal var itemsArray = [MusicOrVideoItem]()
     fileprivate var player: AVAudioPlayer?
@@ -27,7 +28,9 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewHeightConstraint.constant = 0
+        //setup player view
+        playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
+                                             notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
         playerView.delegat = self
         //configure table view
         setupTableViewDelegateAndDataSource()
@@ -46,9 +49,6 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
-        if viewHeightConstraint.constant == 0 {
-            viewHeightConstraint.constant = 100
-        }
         indexOfCurrentItem = index
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
         do {
