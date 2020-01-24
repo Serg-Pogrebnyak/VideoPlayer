@@ -18,4 +18,12 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: buttonOK, style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+
+    func showErrorAlertWithMessage(_ message: String) {
+        let title = LocalizationManager.shared.getText("Alert.Error.Title")
+        let buttonOK = LocalizationManager.shared.getText("Alert.Button.OK")
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: buttonOK, style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }

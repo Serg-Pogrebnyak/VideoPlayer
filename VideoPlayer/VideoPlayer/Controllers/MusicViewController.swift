@@ -64,7 +64,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
             playerView.changePlayButtonIcon(playNow: player.isPlaying)
             displayMusicInfo(fileUrl: url)
         } catch let error {
-            print(error.localizedDescription)//TODO: handle error
+            showErrorAlertWithMessage(error.localizedDescription)
         }
     }
     
