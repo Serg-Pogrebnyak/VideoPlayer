@@ -30,8 +30,8 @@ class PlayerView: UIView {
     @IBOutlet fileprivate weak var playAndPauseButton: UIButton!
     @IBOutlet fileprivate weak var trackImage: UIImageView!
 
-    fileprivate var animator = UIViewPropertyAnimator()
     //animation property
+    fileprivate var animator = UIViewPropertyAnimator()
     fileprivate var shouldBeViewHeight: CGFloat!
     fileprivate var notVisiblePartOfView: CGFloat!
     fileprivate let animationDuration: TimeInterval = 1
@@ -65,8 +65,9 @@ class PlayerView: UIView {
         self.notVisiblePartOfView = notVizibleHeight
     }
 
-    func updateLabelWithText(_ text: String) {
+    func updateViewWith(text: String, image: UIImage) {
         playerLabel.text = text
+        trackImage.image = image
     }
 
     func changePlayButtonIcon(playNow: Bool) {
@@ -146,7 +147,7 @@ class PlayerView: UIView {
         }
     }
 
-    fileprivate func redrawMyView() {
+    fileprivate func redrawMyView() {//greates kostul but work
         let text = playerLabel.text!
         playerLabel.text = playerLabel.text! + " "
         playerLabel.text = text

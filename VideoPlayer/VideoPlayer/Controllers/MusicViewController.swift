@@ -138,6 +138,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
     //MARK: setup information about track on lock screen and in menu
     fileprivate func displayMusicInfo(fileUrl: URL) {
+        var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
         var nowPlayingInfo = [String: Any]()
         let asset = AVAsset(url: fileUrl) as AVAsset
 
@@ -153,9 +154,9 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
                 guard let album = metaDataItems.value as? String else {break}
                 nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
             case "artwork":
-                guard let imageData = metaDataItems.value as? Data else {break}
-                let image = UIImage(data: imageData)!
-                nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(image: image)
+                guard   let imageData = metaDataItems.value as? Data,
+                        let image = UIImage(data: imageData) else {break}
+                imageForPlayerView = image
             default:
                 continue
             }
@@ -165,13 +166,14 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
             nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
         }
 
-        if nowPlayingInfo[MPMediaItemPropertyArtwork] == nil {
-            //nowPlayingInfo[MPMediaItemPropertyArtwork] = //TODO: add defaulte image
-        }
+        let artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
+                return imageForPlayerView
+        })
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
 
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.duration
 
-        playerView.updateLabelWithText(nowPlayingInfo[MPMediaItemPropertyTitle] as! String)
+        playerView.updateViewWith(text: nowPlayingInfo[MPMediaItemPropertyTitle] as! String, image: imageForPlayerView)
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }

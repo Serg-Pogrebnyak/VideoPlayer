@@ -65,9 +65,9 @@
                         <constraint firstAttribute="height" constant="25" id="SAU-ar-KZd"/>
                     </constraints>
                 </stackView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gta-ob-exR">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mp3" translatesAutoresizingMaskIntoConstraints="NO" id="gta-ob-exR">
                     <rect key="frame" x="116.5" y="80" width="160" height="160"/>
-                    <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="gta-ob-exR" secondAttribute="height" multiplier="1:1" id="ktT-Zo-tvr"/>
                     </constraints>
@@ -109,6 +109,7 @@
     </objects>
     <resources>
         <image name="fast-forward" width="18.5" height="18.5"/>
+        <image name="mp3" width="75" height="75"/>
         <image name="next" width="18.5" height="18.5"/>
         <image name="pause" width="18.5" height="18.5"/>
         <image name="play" width="18.5" height="18.5"/>
