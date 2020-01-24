@@ -50,6 +50,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
         indexOfCurrentItem = index
+        unNewTrackAtIndex(index)
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
         do {
 
@@ -71,6 +72,13 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     //MARK: - Fileprivate func
     fileprivate func saveChanges() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(itemsArray), forKey: musicUserDefaultsKey)
+    }
+
+    fileprivate func unNewTrackAtIndex(_ index: Int) {
+        guard itemsArray[index].isNew else {return}
+        itemsArray[index].isNew = false
+        saveChanges()
+        tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
     }
 
     fileprivate func fetchAllTracksAndUpdateLibrary() {
@@ -198,7 +206,7 @@ extension MusicViewController: AVAudioPlayerDelegate {
 extension MusicViewController: PlayerViewDelegate {
     func previousTrackDidTap(sender: PlayerView) {
         if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
-            self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: false)
+            self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: true)
         }
     }
 
@@ -226,7 +234,7 @@ extension MusicViewController: PlayerViewDelegate {
 
     func nextTrackDidTap(sender: PlayerView) {
         if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
-            self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: false)
+            self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: true)
         }
     }
 }
