@@ -166,9 +166,15 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
             nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
         }
 
-        let artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
+        let artwork: MPMediaItemArtwork!
+        if #available(iOS 10.0, *) {
+            artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
                 return imageForPlayerView
-        })
+            })
+        } else {
+            artwork = MPMediaItemArtwork.init(image: imageForPlayerView)
+        }
+
         nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
 
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.duration

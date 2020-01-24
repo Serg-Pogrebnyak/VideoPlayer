@@ -31,7 +31,8 @@ class PlayerView: UIView {
     @IBOutlet fileprivate weak var trackImage: UIImageView!
 
     //animation property
-    fileprivate var animator = UIViewPropertyAnimator()
+    @available(iOS 10.0, *)
+    lazy fileprivate var animator = UIViewPropertyAnimator()
     fileprivate var shouldBeViewHeight: CGFloat!
     fileprivate var notVisiblePartOfView: CGFloat!
     fileprivate let animationDuration: TimeInterval = 1
@@ -105,6 +106,7 @@ class PlayerView: UIView {
     }
 
     //MARK: - animation
+    @available(iOS 10.0, *)
     @IBAction fileprivate func panGestureRecognizerAction(_ sender: UIPanGestureRecognizer) {
         guard shouldBeViewHeight != nil && notVisiblePartOfView != nil else {return}
         switch sender.state {
@@ -126,6 +128,7 @@ class PlayerView: UIView {
         }
     }
 
+    @available(iOS 10.0, *)
     fileprivate func createAnimation() -> UIViewPropertyAnimator {
         if currentVisibleHeight == nil {
             currentVisibleHeight = trackImage.frame.height
