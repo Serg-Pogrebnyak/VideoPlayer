@@ -40,6 +40,12 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         fetchAllTracksAndUpdateLibrary()
         setupRemoteCommandCenter()
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        playerView.setGradientBackground()
+    }
+
     
     @IBAction func didTapEditButton(_ sender: Any) {
         if tableView.isEditing {

@@ -24,6 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Audio session failed")
         }
 
+        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+            _ = OverlayView(frame: CGRect(x: 0, y: 0, width: self.window!.frame.width, height: self.window!.frame.height), image: UIImage(named: "snowflake")!, showAlways: true)
+        }
+
         return true
     }
 

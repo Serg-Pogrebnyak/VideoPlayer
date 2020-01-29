@@ -16,6 +16,8 @@
 		0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408623C72E5E001BBBA4 /* TabBarController.swift */; };
 		0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */; };
 		9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */; };
+		DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE629BEC23E1D49B005B87A0 /* OverlayView.swift */; };
+		DE629BEF23E1D4C3005B87A0 /* ExtensionCALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */; };
 		DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FE223CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift */; };
 		DE6C7FE523CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE6C7FE323CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib */; };
 		DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FE623CE0BF300D2F77C /* CustomTableViewDelegate.swift */; };
@@ -42,6 +44,8 @@
 		2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.release.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
+		DE629BEC23E1D49B005B87A0 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCALayer.swift; sourceTree = "<group>"; };
 		DE6C7FE223CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAndMusicTableViewCell.swift; sourceTree = "<group>"; };
 		DE6C7FE323CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoAndMusicTableViewCell.xib; sourceTree = "<group>"; };
 		DE6C7FE623CE0BF300D2F77C /* CustomTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewDelegate.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 			children = (
 				0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */,
 				DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */,
+				DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -202,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				DE6C7FEC23CE30C200D2F77C /* MusicOrVideoItem.swift */,
+				DE629BEC23E1D49B005B87A0 /* OverlayView.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -360,6 +366,8 @@
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
 				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
+				DE629BEF23E1D4C3005B87A0 /* ExtensionCALayer.swift in Sources */,
+				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
 				DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,
 				0BA7408523C72C05001BBBA4 /* MusicViewController.swift in Sources */,
@@ -507,6 +515,7 @@
 			baseConfigurationReference = BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
