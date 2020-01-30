@@ -12,11 +12,17 @@ import AVFoundation
 import MediaPlayer
 
 class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
+
+    enum NavigationBarButtonStateEnum: String {
+        case edit = "Edit"
+        case cancel = "Cancel"
+    }
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var playerView: PlayerView!
     @IBOutlet fileprivate weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var playerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet fileprivate weak var editAndCancelBarButtonItem: UIBarButtonItem!
 
     internal var itemsArray = [MusicOrVideoItem]()
     fileprivate var player: AVAudioPlayer?
@@ -25,9 +31,14 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     fileprivate let musicExtension = ".mp3"
     fileprivate var customTableViewDelegate: CustomTableViewDelegate!
     fileprivate var customTableViewDataSource: CustomTableViewDataSource!
+    fileprivate var navigationBarState = NavigationBarButtonStateEnum.edit
+    lazy fileprivate var searchBar = UISearchBar(frame: CGRect.zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //add tap recognizer for search bar
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
+        self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
@@ -47,11 +58,28 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
     }
 
     
-    @IBAction func didTapEditButton(_ sender: Any) {
-        if tableView.isEditing {
-             saveChanges()
-         }
-        tableView.isEditing = !tableView.isEditing
+    @IBAction func didTapEditAndCancelButton(_ sender: Any) {
+        switch navigationBarState {
+        case .cancel:
+            self.view.endEditing(true)
+            editAndCancelBarButtonItem.title = NavigationBarButtonStateEnum.edit.rawValue
+            navigationItem.titleView = nil
+            navigationBarState = .edit
+        case .edit:
+            if tableView.isEditing {
+                 saveChanges()
+             }
+            tableView.isEditing = !tableView.isEditing
+        }
+    }
+
+    @objc fileprivate func titleWasTapped() {
+        if navigationItem.titleView == nil {
+            navigationItem.titleView = searchBar
+            searchBar.becomeFirstResponder()
+            editAndCancelBarButtonItem.title = NavigationBarButtonStateEnum.cancel.rawValue
+            navigationBarState = .cancel
+        }
     }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
