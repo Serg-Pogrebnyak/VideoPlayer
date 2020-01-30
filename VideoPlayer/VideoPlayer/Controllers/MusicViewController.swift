@@ -36,7 +36,7 @@ class MusicViewController: AbstractMusicVideoViewController {
         playerView.setGradientBackground()
     }
 
-    override func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
+    override func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
         indexOfCurrentItem = index
         unNewTrackAtIndex(index)
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
@@ -75,7 +75,7 @@ class MusicViewController: AbstractMusicVideoViewController {
         commandCenter.nextTrackCommand.isEnabled = true
         commandCenter.nextTrackCommand.addTarget {event in
             if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
-                self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: false)
+                self.startPlay(atIndex: self.indexOfCurrentItem!+1)
                 return .success
             } else {
                 return .noSuchContent
@@ -84,7 +84,7 @@ class MusicViewController: AbstractMusicVideoViewController {
         commandCenter.previousTrackCommand.isEnabled = true
         commandCenter.previousTrackCommand.addTarget {event in
             if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
-                self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: false)
+                self.startPlay(atIndex: self.indexOfCurrentItem!-1)
                 return .success
             } else {
                 return .noSuchContent
@@ -145,7 +145,7 @@ extension MusicViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         guard let index = indexOfCurrentItem else {return}
         if index + 1 <= itemsArray.count - 1 {
-            startPlay(atIndex: indexOfCurrentItem!+1, autoPlay: true)
+            startPlay(atIndex: indexOfCurrentItem!+1)
         } else {
             player.stop()
         }
@@ -155,10 +155,10 @@ extension MusicViewController: AVAudioPlayerDelegate {
 extension MusicViewController: PlayerViewDelegate {
     func previousTrackDidTap(sender: PlayerView) {
         guard let index = indexOfCurrentItem, index-1 <= self.itemsArray.count - 1 else {
-            self.startPlay(atIndex: 0, autoPlay: true)
+            self.startPlay(atIndex: 0)
             return
         }
-        self.startPlay(atIndex: index-1, autoPlay: true)
+        self.startPlay(atIndex: index-1)
     }
 
     func forwardRewindDidTap(sender: PlayerView) {
@@ -168,7 +168,7 @@ extension MusicViewController: PlayerViewDelegate {
 
     func playAndPauseDidTap(sender: PlayerView) {
         guard let player = player else {
-            startPlay(atIndex: 0, autoPlay: true)
+            startPlay(atIndex: 0)
             return
         }
         if player.isPlaying {
@@ -185,9 +185,9 @@ extension MusicViewController: PlayerViewDelegate {
 
     func nextTrackDidTap(sender: PlayerView) {
         guard let index = indexOfCurrentItem, index+1 <= self.itemsArray.count - 1 else {
-            self.startPlay(atIndex: 0, autoPlay: true)
+            self.startPlay(atIndex: 0)
             return
         }
-        self.startPlay(atIndex: index+1, autoPlay: true)
+        self.startPlay(atIndex: index+1)
     }
 }

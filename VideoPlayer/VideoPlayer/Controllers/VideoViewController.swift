@@ -9,42 +9,25 @@
 import UIKit
 import AVKit
 
-class VideoViewController: UIViewController, MusicOrVideoArrayProtocol {
+class VideoViewController: AbstractMusicVideoViewController {
 
     @IBOutlet fileprivate weak var tableView: UITableView!
     
     fileprivate var playerController : AVPlayerViewController!
-    internal var itemsArray = [MusicOrVideoItem]()
-    fileprivate let videoUserDefaultsKey = "VideoList"
-    fileprivate let videoExtension = ".mp4"
-    fileprivate var customTableViewDelegate: CustomTableViewDelegate!
-    fileprivate var customTableViewDataSource: CustomTableViewDataSource!
 
     override func viewDidLoad() {
+        setSomeParameter(tableView: tableView, userDefaultsKey: "VideoList", itemExtension: ".mp4")
         super.viewDidLoad()
-
-        //configure table view
-        setupTableViewDelegateAndDataSource()
-        let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "MusicCell")
         //UserDefaults.standard.removeObject(forKey: videoUserDefaultsKey)
-        fetchAllTracksAndUpdateLibrary()
-    }
-
-    @IBAction func didTapEditButton(_ sender: Any) {
-        if tableView.isEditing {
-            saveChanges()
-        }
-        tableView.isEditing = !tableView.isEditing
     }
     
     @objc func didfinishPlaying(_ notification: NSNotification)  {
-        let currentObject = notification.object as! AVPlayerItem
-        let currentFileName = ((currentObject.asset) as? AVURLAsset)?.url.lastPathComponent
-        let indexVideo = itemsArray.firstIndex {$0.fileName == currentFileName}!
-        itemsArray[indexVideo].stoppedTime = nil
-        if indexVideo+1 <= itemsArray.count {
-            let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[indexVideo+1].fileName, isDirectory: false)
+        guard let index = indexOfCurrentItem else {return}
+        itemsArray[index].stoppedTime = nil
+        if index+1 <= itemsArray.count-1 {
+            indexOfCurrentItem = index+1
+            unNewTrackAtIndex(index+1)
+            let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index+1].fileName, isDirectory: false)
             let player = AVPlayer(url: url)
             playerController.player = player
             player.play()
@@ -64,7 +47,9 @@ class VideoViewController: UIViewController, MusicOrVideoArrayProtocol {
         saveChanges()
     }
 
-    func startPlay(atIndex index: Int, autoPlay: Bool = true) {
+    override func startPlay(atIndex index: Int, autoPlay: Bool = true) {
+        indexOfCurrentItem = index
+        unNewTrackAtIndex(index)
         let selectedVideo = itemsArray[index]
         var autoPlayMutuable = autoPlay
 
@@ -89,39 +74,6 @@ class VideoViewController: UIViewController, MusicOrVideoArrayProtocol {
                 player.play()
             }
         }
-    }
-    
-    //MARK: - Fileprivate func
-    fileprivate func saveChanges() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(itemsArray), forKey: videoUserDefaultsKey)
-    }
-
-    fileprivate func fetchAllTracksAndUpdateLibrary() {
-        var currentLibrary = [MusicOrVideoItem]()
-        if let data = UserDefaults.standard.value(forKey:  videoUserDefaultsKey) as? Data {
-            currentLibrary = try! PropertyListDecoder().decode(Array<MusicOrVideoItem>.self, from: data)
-        }
-
-        let musicURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
-                                                                         fileExtension: videoExtension) ?? [URL]()
-
-        for URLofMusic in musicURLArray {
-            var musicItem = MusicOrVideoItem.init(fileName: URLofMusic.lastPathComponent)
-            if !currentLibrary.contains(musicItem) {
-                musicItem.isNew = true
-                itemsArray.append(musicItem)
-            }
-        }
-        itemsArray = itemsArray + currentLibrary
-        saveChanges()
-        tableView.reloadData()
-    }
-
-    fileprivate func setupTableViewDelegateAndDataSource() {
-        customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
-        customTableViewDataSource = CustomTableViewDataSource(protocolObject: self)
-        tableView.delegate = customTableViewDelegate
-        tableView.dataSource = customTableViewDataSource
     }
 }
 
