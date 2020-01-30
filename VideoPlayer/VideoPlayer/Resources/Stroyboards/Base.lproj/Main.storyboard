@@ -70,16 +70,9 @@
                         <viewLayoutGuide key="safeArea" id="io6-pR-6mA"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Music" id="RLS-8Y-1QB">
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="0EE-Q2-G5Z">
-                            <connections>
-                                <action selector="didTapEditAndCancelButton:" destination="VLc-sN-I3M" id="9oA-Pa-IPL"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Music" id="RLS-8Y-1QB"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="editAndCancelBarButtonItem" destination="0EE-Q2-G5Z" id="c1l-ru-JY9"/>
                         <outlet property="fromBottomToTopPlayerViewConstraint" destination="V6J-Kq-FQW" id="jbU-4x-w6W"/>
                         <outlet property="playerView" destination="AXb-D7-nxD" id="z0Y-4f-Xrs"/>
                         <outlet property="playerViewHeightConstraint" destination="Np1-RR-mtS" id="RnQ-jH-TQU"/>

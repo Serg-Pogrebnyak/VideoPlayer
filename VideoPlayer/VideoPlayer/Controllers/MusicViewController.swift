@@ -11,44 +11,23 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
-class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
-
-    enum NavigationBarButtonStateEnum: String {
-        case edit = "Edit"
-        case cancel = "Cancel"
-    }
+class MusicViewController: AbstractMusicVideoViewController {
     
     @IBOutlet fileprivate weak var tableView: UITableView!
     @IBOutlet fileprivate weak var playerView: PlayerView!
     @IBOutlet fileprivate weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var playerViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet fileprivate weak var editAndCancelBarButtonItem: UIBarButtonItem!
 
-    internal var itemsArray = [MusicOrVideoItem]()
     fileprivate var player: AVAudioPlayer?
-    fileprivate var indexOfCurrentItem: Int?
-    fileprivate let musicUserDefaultsKey = "MusicList"
-    fileprivate let musicExtension = ".mp3"
-    fileprivate var customTableViewDelegate: CustomTableViewDelegate!
-    fileprivate var customTableViewDataSource: CustomTableViewDataSource!
-    fileprivate var navigationBarState = NavigationBarButtonStateEnum.edit
-    lazy fileprivate var searchBar = UISearchBar(frame: CGRect.zero)
 
     override func viewDidLoad() {
+        setSomeParameter(tableView: tableView, userDefaultsKey: "MusicList", itemExtension: ".mp3")
         super.viewDidLoad()
-        //add tap recognizer for search bar
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
-        self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
         playerView.delegat = self
-        //configure table view
-        setupTableViewDelegateAndDataSource()
-        let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "MusicCell")
         //UserDefaults.standard.removeObject(forKey: musicUserDefaultsKey)
-        fetchAllTracksAndUpdateLibrary()
         setupRemoteCommandCenter()
     }
 
@@ -57,32 +36,7 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         playerView.setGradientBackground()
     }
 
-    
-    @IBAction func didTapEditAndCancelButton(_ sender: Any) {
-        switch navigationBarState {
-        case .cancel:
-            self.view.endEditing(true)
-            editAndCancelBarButtonItem.title = NavigationBarButtonStateEnum.edit.rawValue
-            navigationItem.titleView = nil
-            navigationBarState = .edit
-        case .edit:
-            if tableView.isEditing {
-                 saveChanges()
-             }
-            tableView.isEditing = !tableView.isEditing
-        }
-    }
-
-    @objc fileprivate func titleWasTapped() {
-        if navigationItem.titleView == nil {
-            navigationItem.titleView = searchBar
-            searchBar.becomeFirstResponder()
-            editAndCancelBarButtonItem.title = NavigationBarButtonStateEnum.cancel.rawValue
-            navigationBarState = .cancel
-        }
-    }
-
-    func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
+    override func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
         indexOfCurrentItem = index
         unNewTrackAtIndex(index)
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
@@ -101,46 +55,6 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
         } catch let error {
             showErrorAlertWithMessage(error.localizedDescription)
         }
-    }
-    
-    //MARK: - Fileprivate func
-    fileprivate func saveChanges() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(itemsArray), forKey: musicUserDefaultsKey)
-    }
-
-    fileprivate func unNewTrackAtIndex(_ index: Int) {
-        guard itemsArray[index].isNew else {return}
-        itemsArray[index].isNew = false
-        saveChanges()
-        tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
-    }
-
-    fileprivate func fetchAllTracksAndUpdateLibrary() {
-        var currentLibrary = [MusicOrVideoItem]()
-        if let data = UserDefaults.standard.value(forKey: musicUserDefaultsKey) as? Data {
-            currentLibrary = try! PropertyListDecoder().decode(Array<MusicOrVideoItem>.self, from: data)
-        }
-
-        let musicURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
-                                                                         fileExtension: musicExtension) ?? [URL]()
-
-        for URLofMusic in musicURLArray {
-            var musicItem = MusicOrVideoItem.init(fileName: URLofMusic.lastPathComponent)
-            if !currentLibrary.contains(musicItem) {
-                musicItem.isNew = true
-                itemsArray.append(musicItem)
-            }
-        }
-        itemsArray = itemsArray + currentLibrary
-        saveChanges()
-        tableView.reloadData()
-    }
-
-    fileprivate func setupTableViewDelegateAndDataSource() {
-        customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
-        customTableViewDataSource = CustomTableViewDataSource(protocolObject: self)
-        tableView.delegate = customTableViewDelegate
-        tableView.dataSource = customTableViewDataSource
     }
 
     //MARK: setup remote command for display buttons on lock screen and in menu
@@ -229,7 +143,8 @@ class MusicViewController: UIViewController, MusicOrVideoArrayProtocol {
 
 extension MusicViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if indexOfCurrentItem! + 1 <= itemsArray.count - 1 {
+        guard let index = indexOfCurrentItem else {return}
+        if index + 1 <= itemsArray.count - 1 {
             startPlay(atIndex: indexOfCurrentItem!+1, autoPlay: true)
         } else {
             player.stop()
@@ -239,36 +154,40 @@ extension MusicViewController: AVAudioPlayerDelegate {
 
 extension MusicViewController: PlayerViewDelegate {
     func previousTrackDidTap(sender: PlayerView) {
-        if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
-            self.startPlay(atIndex: self.indexOfCurrentItem!-1, autoPlay: true)
+        guard let index = indexOfCurrentItem, index-1 <= self.itemsArray.count - 1 else {
+            self.startPlay(atIndex: 0, autoPlay: true)
+            return
         }
+        self.startPlay(atIndex: index-1, autoPlay: true)
     }
 
     func forwardRewindDidTap(sender: PlayerView) {
-        guard player != nil else {return}
-        player!.currentTime = player!.currentTime + TimeInterval.init(15)
+        guard let player = player else {return}
+        player.currentTime = player.currentTime + TimeInterval.init(15)
     }
 
     func playAndPauseDidTap(sender: PlayerView) {
-        guard player != nil else {
+        guard let player = player else {
             startPlay(atIndex: 0, autoPlay: true)
             return
         }
-        if player!.isPlaying {
-            player!.pause()
+        if player.isPlaying {
+            player.pause()
         } else {
-            player!.play()
+            player.play()
         }
     }
 
     func backRewindDidTap(sender: PlayerView) {
-        guard player != nil else {return}
-        player!.currentTime = player!.currentTime - TimeInterval.init(15)
+        guard let player = player else {return}
+        player.currentTime = player.currentTime - TimeInterval.init(15)
     }
 
     func nextTrackDidTap(sender: PlayerView) {
-        if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
-            self.startPlay(atIndex: self.indexOfCurrentItem!+1, autoPlay: true)
+        guard let index = indexOfCurrentItem, index+1 <= self.itemsArray.count - 1 else {
+            self.startPlay(atIndex: 0, autoPlay: true)
+            return
         }
+        self.startPlay(atIndex: index+1, autoPlay: true)
     }
 }
