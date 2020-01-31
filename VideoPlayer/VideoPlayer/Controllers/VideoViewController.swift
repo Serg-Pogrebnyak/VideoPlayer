@@ -20,6 +20,15 @@ class VideoViewController: AbstractMusicVideoViewController {
         super.viewDidLoad()
         //UserDefaults.standard.removeObject(forKey: videoUserDefaultsKey)
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if itemsArray.isEmpty {
+            tableView.backgroundView = EmptyVideoListView.loadFromNib()
+        } else {
+            tableView.backgroundView = nil
+        }
+    }
     
     @objc func didfinishPlaying(_ notification: NSNotification)  {
         guard let index = indexOfCurrentItem else {return}

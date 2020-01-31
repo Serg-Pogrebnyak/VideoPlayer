@@ -6,5 +6,6 @@ target 'VideoPlayer' do
   use_frameworks!
 
   pod 'MarqueeLabel'
+  pod 'lottie-ios'
 
 end
