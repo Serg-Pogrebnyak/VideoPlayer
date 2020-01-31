@@ -23,8 +23,8 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "") { (action, indexPath) in
-            print("work method for ios 9")
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "") { [weak self] (action, indexPath) in
+            self?.musicOrVideoArrayProtocol.removeItem(atIndex: indexPath.row)
         }
         deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "trash")!)
 

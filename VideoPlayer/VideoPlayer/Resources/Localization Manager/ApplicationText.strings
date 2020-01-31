@@ -9,3 +9,4 @@
 "Alert.Error.Title" = "Error";
 "Alert.Button.OK" = "OK";
 "Alert.Message.FileNotFound" = "File not found";
+"Alert.Message.Can'tRemove" = "Sorry! Application can't remove this item, you can connect your device to PC and remove it via iTunes.";

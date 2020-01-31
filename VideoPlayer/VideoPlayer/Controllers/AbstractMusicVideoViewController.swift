@@ -94,6 +94,19 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     }
 
+    func removeItem(atIndex index: Int) {
+        do {
+            let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+            try FileManager.default.removeItem(at: url)
+            itemsArray.remove(at: index)
+            filterItemsArray.remove(at: index)
+            childTableView.reloadData()
+            saveChanges()
+        } catch {
+            showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
+        }
+    }
+
     internal func saveChanges() {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(itemsArray), forKey: itemUserDefaultsKey)
     }
