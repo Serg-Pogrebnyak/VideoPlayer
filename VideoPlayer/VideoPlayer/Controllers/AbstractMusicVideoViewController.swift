@@ -43,10 +43,12 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
         self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
         //create navigation bar button
-        editAndCancelBarButtonItem = UIBarButtonItem(title: NavigationBarButtonStateEnum.edit.rawValue ,
+        editAndCancelBarButtonItem = UIBarButtonItem(title: navigationBarState.rawValue,
                                                      style: .done,
                                                      target: self,
                                                      action: #selector(didTapEditAndCancelButton))
+        editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+        editAndCancelBarButtonItem.tintColor = .black
         self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
         fetchAllItemsAndUpdateLibrary()
     }
@@ -101,13 +103,14 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         switch navigationBarState {
         case .cancel:
             self.view.endEditing(true)
-            editAndCancelBarButtonItem.title = NavigationBarButtonStateEnum.edit.rawValue
-            navigationItem.titleView = nil
             navigationBarState = .edit
+            editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+            editAndCancelBarButtonItem.title = navigationBarState.rawValue
+            navigationItem.titleView = nil
         case .edit:
             if childTableView.isEditing {
                  saveChanges()
-             }
+            }
             childTableView.isEditing = !childTableView.isEditing
         }
     }
@@ -116,8 +119,9 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         if navigationItem.titleView == nil {
             navigationItem.titleView = searchBar
             searchBar.becomeFirstResponder()
-            editAndCancelBarButtonItem.title = NavigationBarButtonStateEnum.cancel.rawValue
             navigationBarState = .cancel
+            editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+            editAndCancelBarButtonItem.title = navigationBarState.rawValue
         }
     }
 
