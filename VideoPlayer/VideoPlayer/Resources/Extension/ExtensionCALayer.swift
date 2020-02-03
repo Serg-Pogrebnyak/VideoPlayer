@@ -24,7 +24,7 @@ extension CALayer {
     func addSnowEffectLayer(image: UIImage, shoudRotate: Bool = false, rRange: Float = 0.0, gRange: Float = 0.0, bRange: Float = 0.0) {
         let emitterLayer = CAEmitterLayer()
 
-        emitterLayer.emitterPosition = CGPoint(x: self.frame.width/2, y: -100)
+        emitterLayer.emitterPosition = CGPoint(x: self.frame.width/2, y: -500)
         emitterLayer.beginTime = CACurrentMediaTime()
         let cell = CAEmitterCell()
 

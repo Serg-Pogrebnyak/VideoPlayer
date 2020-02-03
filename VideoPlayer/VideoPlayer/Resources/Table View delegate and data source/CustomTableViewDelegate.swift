@@ -30,4 +30,8 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
 
         return [deleteAction]
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 1.0
+    }
 }
