@@ -16,6 +16,7 @@
 		0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408623C72E5E001BBBA4 /* TabBarController.swift */; };
 		0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */; };
 		9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */; };
+		DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81A723E87FCD00468334 /* UIColorExtension.swift */; };
 		DE470F0D23E3058100269440 /* AbstractMusicVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */; };
 		DE470F1023E46E5900269440 /* emtyPopcornBox.json in Resources */ = {isa = PBXBuildFile; fileRef = DE470F0F23E46E5900269440 /* emtyPopcornBox.json */; };
 		DE470F1223E46FE300269440 /* EmptyVideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F1123E46FE300269440 /* EmptyVideoListView.swift */; };
@@ -49,6 +50,7 @@
 		2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.release.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
+		DE3A81A723E87FCD00468334 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMusicVideoViewController.swift; sourceTree = "<group>"; };
 		DE470F0F23E46E5900269440 /* emtyPopcornBox.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emtyPopcornBox.json; sourceTree = "<group>"; };
 		DE470F1123E46FE300269440 /* EmptyVideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVideoListView.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */,
 				DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */,
 				DE470F1523E48E3500269440 /* LoadElementsFromNib.swift */,
+				DE3A81A723E87FCD00468334 /* UIColorExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */,
 				DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
+				DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */,
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
 				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
