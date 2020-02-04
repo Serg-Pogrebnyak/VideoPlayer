@@ -11,12 +11,20 @@ import UIKit
 class CustomTableViewDataSource: NSObject, UITableViewDataSource {
 
     fileprivate weak var musicOrVideoArrayProtocol: MusicOrVideoArrayProtocol!
+    fileprivate let emptyView: EmptyAnimatedViewProtocol!
 
-    init (protocolObject: MusicOrVideoArrayProtocol) {
+    init (protocolObject: MusicOrVideoArrayProtocol, emptyView: EmptyAnimatedViewProtocol) {
         self.musicOrVideoArrayProtocol = protocolObject
+        self.emptyView = emptyView
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if musicOrVideoArrayProtocol.itemsArray.isEmpty {
+            tableView.backgroundView = emptyView as? UIView
+            emptyView.startAnimation()
+        } else {
+            tableView.backgroundView = nil
+        }
         return musicOrVideoArrayProtocol.itemsArray.count
     }
 

@@ -14,8 +14,19 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="388"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jcG-DF-g64" customClass="AnimationView" customModule="Lottie">
+                    <rect key="frame" x="135" y="146" width="144" height="96"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="144" id="lae-lr-aTM"/>
+                        <constraint firstAttribute="height" constant="96" id="yil-yT-WDC"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="emtyPopcornBox"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No video content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jat-vB-IkZ">
-                    <rect key="frame" x="141.5" y="30" width="131" height="21"/>
+                    <rect key="frame" x="141.5" y="242" width="131" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.65098039215686276" green="0.65098039215686276" blue="0.65098039215686276" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -23,13 +34,18 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="jat-vB-IkZ" firstAttribute="top" secondItem="e3a-Mf-E12" secondAttribute="top" constant="30" id="D9u-gE-bbw"/>
+                <constraint firstItem="jcG-DF-g64" firstAttribute="centerX" secondItem="e3a-Mf-E12" secondAttribute="centerX" id="D1F-Ov-EwZ"/>
+                <constraint firstItem="jat-vB-IkZ" firstAttribute="top" secondItem="jcG-DF-g64" secondAttribute="bottom" id="D9u-gE-bbw"/>
                 <constraint firstItem="jat-vB-IkZ" firstAttribute="centerX" secondItem="e3a-Mf-E12" secondAttribute="centerX" id="Qb9-JN-eVc"/>
+                <constraint firstItem="jcG-DF-g64" firstAttribute="centerY" secondItem="e3a-Mf-E12" secondAttribute="centerY" id="Zie-ph-vdJ"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="Fzd-pg-OZl"/>
+            <connections>
+                <outlet property="animationView" destination="jcG-DF-g64" id="yu8-qD-PgF"/>
+            </connections>
             <point key="canvasLocation" x="-207" y="250"/>
         </view>
     </objects>

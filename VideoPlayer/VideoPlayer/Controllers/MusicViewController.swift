@@ -21,7 +21,7 @@ class MusicViewController: AbstractMusicVideoViewController {
     fileprivate var player: AVAudioPlayer?
 
     override func viewDidLoad() {
-        setSomeParameter(tableView: tableView, userDefaultsKey: "MusicList", itemExtension: ".mp3")
+        setSomeParameter(tableView: tableView, userDefaultsKey: "MusicList", itemExtension: ".mp3", view: EmptyMusicListView.loadFromNib())
         super.viewDidLoad()
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,

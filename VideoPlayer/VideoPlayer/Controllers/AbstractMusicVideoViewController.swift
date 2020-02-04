@@ -27,6 +27,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     fileprivate var customTableViewDataSource: CustomTableViewDataSource!
 
     //shouldbe same unique for music or video VC
+    internal var emptyView: EmptyAnimatedViewProtocol!
     internal var itemUserDefaultsKey: String!
     internal var itemExtension: String!
     fileprivate var childTableView: UITableView! {
@@ -84,7 +85,8 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         childTableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
     }
 
-    func setSomeParameter(tableView table: UITableView, userDefaultsKey: String, itemExtension: String) {
+    func setSomeParameter(tableView table: UITableView, userDefaultsKey: String, itemExtension: String, view: EmptyAnimatedViewProtocol) {
+        emptyView = view
         childTableView = table
         itemUserDefaultsKey = userDefaultsKey
         self.itemExtension = itemExtension
@@ -140,7 +142,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     fileprivate func setupTableViewDelegateAndDataSource() {
         customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
-        customTableViewDataSource = CustomTableViewDataSource(protocolObject: self)
+        customTableViewDataSource = CustomTableViewDataSource(protocolObject: self, emptyView: emptyView)
         childTableView.delegate = customTableViewDelegate
         childTableView.dataSource = customTableViewDataSource
         let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)

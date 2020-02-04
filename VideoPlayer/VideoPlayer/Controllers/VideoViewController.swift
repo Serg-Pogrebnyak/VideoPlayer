@@ -16,18 +16,9 @@ class VideoViewController: AbstractMusicVideoViewController {
     fileprivate var playerController : AVPlayerViewController!
 
     override func viewDidLoad() {
-        setSomeParameter(tableView: tableView, userDefaultsKey: "VideoList", itemExtension: ".mp4")
+        setSomeParameter(tableView: tableView, userDefaultsKey: "VideoList", itemExtension: ".mp4", view: EmptyVideoListView.loadFromNib())
         super.viewDidLoad()
         //UserDefaults.standard.removeObject(forKey: videoUserDefaultsKey)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if itemsArray.isEmpty {
-            tableView.backgroundView = EmptyVideoListView.loadFromNib()
-        } else {
-            tableView.backgroundView = nil
-        }
     }
     
     @objc func didfinishPlaying(_ notification: NSNotification)  {
