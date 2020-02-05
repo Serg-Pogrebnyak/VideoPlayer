@@ -23,13 +23,13 @@ class MusicViewController: AbstractMusicVideoViewController {
     fileprivate var nowPlayingInfo = [String: Any]()
 
     override func viewDidLoad() {
+//        UserDefaults.standard.removeObject(forKey: "MusicList")
         setSomeParameter(tableView: tableView, userDefaultsKey: "MusicList", itemExtension: ".mp3", view: EmptyMusicListView.loadFromNib())
         super.viewDidLoad()
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
         playerView.delegat = self
-        //UserDefaults.standard.removeObject(forKey: musicUserDefaultsKey)
         setupRemoteCommandCenter()
     }
 

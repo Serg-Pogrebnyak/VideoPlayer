@@ -44,6 +44,14 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
         self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
         //create navigation bar button
+        let syncButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(didTapSyncButton))
+        syncButtonItem.image = UIImage.init(named: "sync")
+        syncButtonItem.tintColor = UIColor.barColor
+        self.navigationItem.leftBarButtonItem = syncButtonItem
+
         editAndCancelBarButtonItem = UIBarButtonItem(title: navigationBarState.rawValue,
                                                      style: .done,
                                                      target: self,
@@ -51,10 +59,12 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
         editAndCancelBarButtonItem.tintColor = UIColor.barColor
         self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
+        
         fetchAllItemsAndUpdateLibrary()
     }
 
     fileprivate func fetchAllItemsAndUpdateLibrary() {
+        itemsArray.removeAll()
         var currentLibrary = [MusicOrVideoItem]()
         if let data = UserDefaults.standard.value(forKey: itemUserDefaultsKey) as? Data {
             if let items = try? PropertyListDecoder().decode(Array<MusicOrVideoItem>.self, from: data) {
@@ -100,7 +110,6 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
-
     }
 
     func removeItem(atIndex index: Int) {
@@ -121,6 +130,10 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     }
 
     //MARK: - fileprivate functions
+    //bar batton actions------------------------------------------------------------------------------------------------------------------------------------
+    @objc fileprivate func didTapSyncButton(_ sender: Any) {
+        fetchAllItemsAndUpdateLibrary()
+    }
     @objc fileprivate func didTapEditAndCancelButton(_ sender: Any) {
         switch navigationBarState {
         case .cancel:
@@ -136,7 +149,6 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             childTableView.isEditing = !childTableView.isEditing
         }
     }
-
     @objc fileprivate func titleWasTapped() {
         if navigationItem.titleView == nil {
             navigationItem.titleView = searchBar
@@ -146,6 +158,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             editAndCancelBarButtonItem.title = navigationBarState.rawValue
         }
     }
+    //finished bar batton actions---------------------------------------------------------------------------------------------------------------------------
 
     fileprivate func setupTableViewDelegateAndDataSource() {
         customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
