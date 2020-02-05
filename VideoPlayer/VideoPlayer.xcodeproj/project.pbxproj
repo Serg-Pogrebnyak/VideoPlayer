@@ -572,7 +572,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
 				INFOPLIST_FILE = "$(SRCROOT)/VideoPlayer/Resources/Plists/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -594,7 +594,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
 				INFOPLIST_FILE = "$(SRCROOT)/VideoPlayer/Resources/Plists/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

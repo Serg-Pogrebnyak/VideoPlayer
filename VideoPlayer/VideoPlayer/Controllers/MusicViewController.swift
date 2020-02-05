@@ -71,7 +71,13 @@ class MusicViewController: AbstractMusicVideoViewController {
 
     //MARK: setup remote command for display buttons on lock screen and in menu
     fileprivate func setupRemoteCommandCenter() {
-        let commandCenter = MPRemoteCommandCenter.shared();
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.addTarget { (object) -> MPRemoteCommandHandlerStatus in
+            let event = object as! MPChangePlaybackPositionCommandEvent
+            self.rewindPlayerItemTo(CMTime.init(seconds: event.positionTime, preferredTimescale: 1))
+            return .success
+        }
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget {event in
             self.player.play()
@@ -162,6 +168,14 @@ class MusicViewController: AbstractMusicVideoViewController {
 
         startPlay(atIndex: index+1)
     }
+
+    fileprivate func rewindPlayerItemTo(_ rewindTo: CMTime) {
+        guard player.currentItem != nil else {return}
+        player.seek(to: rewindTo) { [weak self] (flag) in
+            guard let self = self, flag else {return}
+            self.updateInformationOnLockScreen()
+        }
+    }
 }
 
 extension MusicViewController: PlayerViewDelegate {
@@ -174,12 +188,8 @@ extension MusicViewController: PlayerViewDelegate {
     }
 
     func forwardRewindDidTap(sender: PlayerView) {
-        guard player.currentItem != nil else {return}
         let rewindTo = player.currentTime() + rewind
-        player.seek(to: rewindTo) { [weak self] (flag) in
-            guard let self = self, flag else {return}
-            self.updateInformationOnLockScreen()
-        }
+        rewindPlayerItemTo(rewindTo)
     }
 
     func playAndPauseDidTap(sender: PlayerView) {
@@ -195,12 +205,8 @@ extension MusicViewController: PlayerViewDelegate {
     }
 
     func backRewindDidTap(sender: PlayerView) {
-        guard player.currentItem != nil else {return}
         let rewindTo = player.currentTime() - rewind
-        player.seek(to: rewindTo) { [weak self] (flag) in
-            guard let self = self, flag else {return}
-            self.updateInformationOnLockScreen()
-        }
+        rewindPlayerItemTo(rewindTo)
     }
 
     func nextTrackDidTap(sender: PlayerView) {
