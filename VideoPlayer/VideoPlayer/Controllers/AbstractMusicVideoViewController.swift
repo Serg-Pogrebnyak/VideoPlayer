@@ -73,6 +73,13 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             }
         }
         itemsArray = itemsArray + currentLibrary
+        if itemsArray.count != musicURLArray.count {
+            for item in itemsArray {
+                guard !musicURLArray.contains(where: {$0.lastPathComponent == item.fileName}) else {continue}
+                let index = itemsArray.firstIndex(of: item)
+                itemsArray.remove(at: index!)
+            }
+        }
         filterItemsArray = itemsArray
         saveChanges()
         childTableView.reloadData()
