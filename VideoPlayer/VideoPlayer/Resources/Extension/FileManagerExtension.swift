@@ -1,5 +1,5 @@
 //
-//  ExtensionFileManager.swift
+//  FileManagerExtension.swift
 //  VideoPlayer
 //
 //  Created by Sergey Pohrebnuak on 09.01.2020.

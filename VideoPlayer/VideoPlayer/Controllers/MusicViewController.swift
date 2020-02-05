@@ -18,7 +18,9 @@ class MusicViewController: AbstractMusicVideoViewController {
     @IBOutlet fileprivate weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var playerViewHeightConstraint: NSLayoutConstraint!
 
-    fileprivate var player: AVAudioPlayer?
+    fileprivate let rewind = CMTime(seconds: 15, preferredTimescale: 1)
+    fileprivate var player = AVPlayer()
+    fileprivate var nowPlayingInfo = [String: Any]()
 
     override func viewDidLoad() {
         setSomeParameter(tableView: tableView, userDefaultsKey: "MusicList", itemExtension: ".mp3", view: EmptyMusicListView.loadFromNib())
@@ -36,26 +38,35 @@ class MusicViewController: AbstractMusicVideoViewController {
         playerView.setGradientBackground()
     }
 
+    //MARK: - overrided functions
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        let currentItem = object as! AVPlayer
+        print(currentItem.rate)
+        if currentItem.rate > 0.0 {
+            playerView.changePlayButtonIcon(playNow: true)
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
+        } else {
+            playerView.changePlayButtonIcon(playNow: false)
+            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 0
+        }
+        updateInformationOnLockScreen()
+    }
+
     override func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
         guard !itemsArray.isEmpty else {return}
         indexOfCurrentItem = index
         unNewTrackAtIndex(index)
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
-        do {
 
-            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+        let playerItem = AVPlayerItem(url: url)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlay), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+        player = AVPlayer.init(playerItem: playerItem)
+        player.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
 
-            guard let player = player else { return }
-
-            if autoplay {
-                player.play()
-            }
-            player.delegate = self
-            playerView.changePlayButtonIcon(playNow: player.isPlaying)
-            displayMusicInfo(fileUrl: url)
-        } catch let error {
-            showErrorAlertWithMessage(error.localizedDescription)
+        if autoplay {
+            player.play()
         }
+        displayMusicInfo(fileUrl: url)
     }
 
     //MARK: setup remote command for display buttons on lock screen and in menu
@@ -63,14 +74,12 @@ class MusicViewController: AbstractMusicVideoViewController {
         let commandCenter = MPRemoteCommandCenter.shared();
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget {event in
-            self.playerView.changePlayButtonIcon(playNow: true)
-            self.player?.play()
+            self.player.play()
             return .success
         }
         commandCenter.pauseCommand.isEnabled = true
         commandCenter.pauseCommand.addTarget {event in
-            self.playerView.changePlayButtonIcon(playNow: false)
-            self.player?.pause()
+            self.player.pause()
             return .success
         }
         commandCenter.nextTrackCommand.isEnabled = true
@@ -96,7 +105,6 @@ class MusicViewController: AbstractMusicVideoViewController {
     //MARK: setup information about track on lock screen and in menu
     fileprivate func displayMusicInfo(fileUrl: URL) {
         var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
-        var nowPlayingInfo = [String: Any]()
         let asset = AVAsset(url: fileUrl) as AVAsset
 
         for metaDataItems in asset.commonMetadata {
@@ -134,22 +142,25 @@ class MusicViewController: AbstractMusicVideoViewController {
 
         nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
 
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.duration
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player.currentItem!.asset.duration.seconds
 
         playerView.updateViewWith(text: nowPlayingInfo[MPMediaItemPropertyTitle] as! String, image: imageForPlayerView)
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
-}
 
-extension MusicViewController: AVAudioPlayerDelegate {
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        guard let index = indexOfCurrentItem else {return}
-        if index + 1 <= itemsArray.count - 1 {
-            startPlay(atIndex: indexOfCurrentItem!+1)
-        } else {
-            player.stop()
-        }
+    fileprivate func updateInformationOnLockScreen() {
+        print(player.currentTime().stringSeconds)
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().stringSeconds
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+
+    @objc fileprivate func playerDidFinishPlay() {
+        guard   let index = indexOfCurrentItem,
+                index + 1 <= itemsArray.count - 1
+        else {return}
+
+        startPlay(atIndex: index+1)
     }
 }
 
@@ -163,16 +174,20 @@ extension MusicViewController: PlayerViewDelegate {
     }
 
     func forwardRewindDidTap(sender: PlayerView) {
-        guard let player = player else {return}
-        player.currentTime = player.currentTime + TimeInterval.init(15)
+        guard player.currentItem != nil else {return}
+        let rewindTo = player.currentTime() + rewind
+        player.seek(to: rewindTo) { [weak self] (flag) in
+            guard let self = self, flag else {return}
+            self.updateInformationOnLockScreen()
+        }
     }
 
     func playAndPauseDidTap(sender: PlayerView) {
-        guard let player = player else {
+        guard player.currentItem != nil else {
             startPlay(atIndex: 0)
             return
         }
-        if player.isPlaying {
+        if player.rate > 0.0 {
             player.pause()
         } else {
             player.play()
@@ -180,8 +195,12 @@ extension MusicViewController: PlayerViewDelegate {
     }
 
     func backRewindDidTap(sender: PlayerView) {
-        guard let player = player else {return}
-        player.currentTime = player.currentTime - TimeInterval.init(15)
+        guard player.currentItem != nil else {return}
+        let rewindTo = player.currentTime() - rewind
+        player.seek(to: rewindTo) { [weak self] (flag) in
+            guard let self = self, flag else {return}
+            self.updateInformationOnLockScreen()
+        }
     }
 
     func nextTrackDidTap(sender: PlayerView) {

@@ -14,20 +14,21 @@
 		0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */; };
 		0BA7408523C72C05001BBBA4 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408423C72C05001BBBA4 /* MusicViewController.swift */; };
 		0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408623C72E5E001BBBA4 /* TabBarController.swift */; };
-		0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */; };
+		0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* FileManagerExtension.swift */; };
 		9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */; };
 		DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81A723E87FCD00468334 /* UIColorExtension.swift */; };
 		DE3A81AE23E95F6400468334 /* noData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE3A81AD23E95F6400468334 /* noData.json */; };
 		DE3A81B023E965C600468334 /* EmptyMusicListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */; };
 		DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81B123E965D800468334 /* EmptyMusicListView.swift */; };
 		DE3A81B423E9884000468334 /* AnimatedViewProtocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81B323E9884000468334 /* AnimatedViewProtocl.swift */; };
+		DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81B523EADB4700468334 /* CMTimeExtension.swift */; };
 		DE470F0D23E3058100269440 /* AbstractMusicVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */; };
 		DE470F1023E46E5900269440 /* emtyPopcornBox.json in Resources */ = {isa = PBXBuildFile; fileRef = DE470F0F23E46E5900269440 /* emtyPopcornBox.json */; };
 		DE470F1223E46FE300269440 /* EmptyVideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F1123E46FE300269440 /* EmptyVideoListView.swift */; };
 		DE470F1423E46FF700269440 /* EmptyVideoListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE470F1323E46FF700269440 /* EmptyVideoListView.xib */; };
 		DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F1523E48E3500269440 /* LoadElementsFromNib.swift */; };
 		DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE629BEC23E1D49B005B87A0 /* OverlayView.swift */; };
-		DE629BEF23E1D4C3005B87A0 /* ExtensionCALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */; };
+		DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE629BEE23E1D4C3005B87A0 /* CALayerExtension.swift */; };
 		DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FE223CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift */; };
 		DE6C7FE523CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE6C7FE323CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib */; };
 		DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6C7FE623CE0BF300D2F77C /* CustomTableViewDelegate.swift */; };
@@ -50,7 +51,7 @@
 		0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		0BA7408423C72C05001BBBA4 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		0BA7408623C72E5E001BBBA4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionFileManager.swift; sourceTree = "<group>"; };
+		0BDEA8D523C750B7003261BB /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.release.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -59,13 +60,14 @@
 		DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMusicListView.xib; sourceTree = "<group>"; };
 		DE3A81B123E965D800468334 /* EmptyMusicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMusicListView.swift; sourceTree = "<group>"; };
 		DE3A81B323E9884000468334 /* AnimatedViewProtocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedViewProtocl.swift; sourceTree = "<group>"; };
+		DE3A81B523EADB4700468334 /* CMTimeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTimeExtension.swift; sourceTree = "<group>"; };
 		DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMusicVideoViewController.swift; sourceTree = "<group>"; };
 		DE470F0F23E46E5900269440 /* emtyPopcornBox.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emtyPopcornBox.json; sourceTree = "<group>"; };
 		DE470F1123E46FE300269440 /* EmptyVideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVideoListView.swift; sourceTree = "<group>"; };
 		DE470F1323E46FF700269440 /* EmptyVideoListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyVideoListView.xib; sourceTree = "<group>"; };
 		DE470F1523E48E3500269440 /* LoadElementsFromNib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadElementsFromNib.swift; sourceTree = "<group>"; };
 		DE629BEC23E1D49B005B87A0 /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
-		DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCALayer.swift; sourceTree = "<group>"; };
+		DE629BEE23E1D4C3005B87A0 /* CALayerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayerExtension.swift; sourceTree = "<group>"; };
 		DE6C7FE223CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAndMusicTableViewCell.swift; sourceTree = "<group>"; };
 		DE6C7FE323CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoAndMusicTableViewCell.xib; sourceTree = "<group>"; };
 		DE6C7FE623CE0BF300D2F77C /* CustomTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewDelegate.swift; sourceTree = "<group>"; };
@@ -181,11 +183,12 @@
 		0BDEA8D423C750A5003261BB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				0BDEA8D523C750B7003261BB /* ExtensionFileManager.swift */,
+				0BDEA8D523C750B7003261BB /* FileManagerExtension.swift */,
 				DE6C7FEE23CF097500D2F77C /* UIViewControllerExtension.swift */,
-				DE629BEE23E1D4C3005B87A0 /* ExtensionCALayer.swift */,
+				DE629BEE23E1D4C3005B87A0 /* CALayerExtension.swift */,
 				DE470F1523E48E3500269440 /* LoadElementsFromNib.swift */,
 				DE3A81A723E87FCD00468334 /* UIColorExtension.swift */,
+				DE3A81B523EADB4700468334 /* CMTimeExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -408,13 +411,14 @@
 				DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */,
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
+				DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */,
 				DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */,
 				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
-				0BDEA8D623C750B7003261BB /* ExtensionFileManager.swift in Sources */,
+				0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */,
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
 				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
-				DE629BEF23E1D4C3005B87A0 /* ExtensionCALayer.swift in Sources */,
+				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
 				DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,
