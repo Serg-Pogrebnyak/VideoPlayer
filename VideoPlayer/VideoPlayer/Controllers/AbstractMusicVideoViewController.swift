@@ -62,20 +62,20 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             }
         }
 
-        let musicURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
+        let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
                                                                          fileExtension: itemExtension) ?? [URL]()
 
-        for URLofMusic in musicURLArray {
-            var musicItem = MusicOrVideoItem.init(fileName: URLofMusic.lastPathComponent)
+        for URLofItem in musicOrVideoURLArray {
+            var musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent)
             if !currentLibrary.contains(musicItem) {
                 musicItem.isNew = true
                 itemsArray.append(musicItem)
             }
         }
         itemsArray = itemsArray + currentLibrary
-        if itemsArray.count != musicURLArray.count {
+        if itemsArray.count != musicOrVideoURLArray.count {
             for item in itemsArray {
-                guard !musicURLArray.contains(where: {$0.lastPathComponent == item.fileName}) else {continue}
+                guard !musicOrVideoURLArray.contains(where: {$0.lastPathComponent == item.fileName}) else {continue}
                 let index = itemsArray.firstIndex(of: item)
                 itemsArray.remove(at: index!)
             }
