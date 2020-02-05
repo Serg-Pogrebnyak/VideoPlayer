@@ -59,7 +59,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
         editAndCancelBarButtonItem.tintColor = UIColor.barColor
         self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
-        
+
         fetchAllItemsAndUpdateLibrary()
     }
 
