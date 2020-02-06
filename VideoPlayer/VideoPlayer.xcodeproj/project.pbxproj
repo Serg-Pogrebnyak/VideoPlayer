@@ -39,6 +39,8 @@
 		DEC23BA623CF112E007E74FD /* ApplicationText.strings in Resources */ = {isa = PBXBuildFile; fileRef = DEC23BA523CF112E007E74FD /* ApplicationText.strings */; };
 		DEC23BA923D5C6C8007E74FD /* PlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEC23BA823D5C6C8007E74FD /* PlayerView.xib */; };
 		DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC23BAA23D5C6E1007E74FD /* PlayerView.swift */; };
+		DECD06D423EC2B3400FFED0A /* UISliderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECD06D323EC2B3400FFED0A /* UISliderExtension.swift */; };
+		DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECD06D523EC3B2D00FFED0A /* TimeIntervalExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,8 @@
 		DEC23BA523CF112E007E74FD /* ApplicationText.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = ApplicationText.strings; sourceTree = "<group>"; };
 		DEC23BA823D5C6C8007E74FD /* PlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerView.xib; sourceTree = "<group>"; };
 		DEC23BAA23D5C6E1007E74FD /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		DECD06D323EC2B3400FFED0A /* UISliderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISliderExtension.swift; sourceTree = "<group>"; };
+		DECD06D523EC3B2D00FFED0A /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +193,8 @@
 				DE470F1523E48E3500269440 /* LoadElementsFromNib.swift */,
 				DE3A81A723E87FCD00468334 /* UIColorExtension.swift */,
 				DE3A81B523EADB4700468334 /* CMTimeExtension.swift */,
+				DECD06D323EC2B3400FFED0A /* UISliderExtension.swift */,
+				DECD06D523EC3B2D00FFED0A /* TimeIntervalExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -412,6 +418,8 @@
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
 				DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */,
+				DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */,
+				DECD06D423EC2B3400FFED0A /* UISliderExtension.swift in Sources */,
 				DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */,
 				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
 				0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */,

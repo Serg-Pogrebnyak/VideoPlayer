@@ -16,4 +16,20 @@ extension UIColor {
             return .black
         }
     }
+
+    static var thumbBorderColor: UIColor {
+        if #available(iOS 11.0, *) {
+            return UIColor.init(named: "thumbBorderColor")!
+        } else {
+            return .black
+        }
+    }
+
+    static var thumbBackgroundColor: UIColor {
+        if #available(iOS 11.0, *) {
+            return UIColor.init(named: "thumbBackgroundColor")!
+        } else {
+            return .white
+        }
+    }
 }

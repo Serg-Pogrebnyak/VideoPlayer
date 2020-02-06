@@ -9,8 +9,8 @@
 import MediaPlayer
 
 extension CMTime {
-    var seconds: Float64 {
-        return CMTimeGetSeconds(self)
+    var seconds: Double {
+        return Double(CMTimeGetSeconds(self))
     }
 
     var stringSeconds: String {

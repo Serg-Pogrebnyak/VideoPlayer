@@ -11,8 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerView" customModule="NIXPlayer" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="Cpk-6I-3Yn"/>
+                <outlet property="currentTimeLabel" destination="V7M-dE-Vx7" id="sgF-oV-Ql1"/>
                 <outlet property="playAndPauseButton" destination="fjF-yH-qGO" id="4tl-7P-fBs"/>
                 <outlet property="playerLabel" destination="2fN-cY-Vbh" id="XmJ-dm-Rkq"/>
+                <outlet property="progressSlider" destination="3NZ-5S-WIi" id="RKt-3G-fIJ"/>
+                <outlet property="remainingTimeLabel" destination="vix-I8-Tr3" id="dKR-4b-ksW"/>
                 <outlet property="trackImage" destination="gta-ob-exR" id="mjX-gN-cnG"/>
             </connections>
         </placeholder>
@@ -22,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hEt-nt-b4M">
-                    <rect key="frame" x="10" y="45" width="373" height="25"/>
+                    <rect key="frame" x="10" y="65" width="373" height="25"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3u-Xz-dez">
                             <rect key="frame" x="0.0" y="0.0" width="62.5" height="25"/>
@@ -66,13 +69,13 @@
                     </constraints>
                 </stackView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mp3" translatesAutoresizingMaskIntoConstraints="NO" id="gta-ob-exR">
-                    <rect key="frame" x="116.5" y="80" width="160" height="160"/>
+                    <rect key="frame" x="126.5" y="100" width="140" height="140"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="gta-ob-exR" secondAttribute="height" multiplier="1:1" id="ktT-Zo-tvr"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-cY-Vbh">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="- - -" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-cY-Vbh">
                     <rect key="frame" x="0.0" y="10" width="393" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="TIi-FU-2Tv"/>
@@ -81,17 +84,64 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EMt-NI-sR4">
+                    <rect key="frame" x="10" y="40" width="373" height="15"/>
+                    <subviews>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="3NZ-5S-WIi">
+                            <rect key="frame" x="38" y="0.0" width="297" height="16"/>
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="Unl-vc-wcJ"/>
+                            </constraints>
+                        </slider>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-:-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vix-I8-Tr3">
+                            <rect key="frame" x="333" y="0.0" width="40" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="NQu-ar-mLG"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-:-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="V7M-dE-Vx7">
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="Bt3-Vf-2uH"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="3NZ-5S-WIi" firstAttribute="leading" secondItem="EMt-NI-sR4" secondAttribute="leading" constant="40" id="CM8-C2-dws"/>
+                        <constraint firstItem="3NZ-5S-WIi" firstAttribute="leading" secondItem="V7M-dE-Vx7" secondAttribute="trailing" id="Ffw-LB-6H4"/>
+                        <constraint firstAttribute="bottom" secondItem="vix-I8-Tr3" secondAttribute="bottom" id="YMW-Of-6yG"/>
+                        <constraint firstItem="V7M-dE-Vx7" firstAttribute="leading" secondItem="EMt-NI-sR4" secondAttribute="leading" id="bs4-M7-u0X"/>
+                        <constraint firstAttribute="trailing" secondItem="vix-I8-Tr3" secondAttribute="trailing" id="cg1-xI-fV0"/>
+                        <constraint firstAttribute="bottom" secondItem="V7M-dE-Vx7" secondAttribute="bottom" id="h0t-0o-TSV"/>
+                        <constraint firstItem="vix-I8-Tr3" firstAttribute="leading" secondItem="3NZ-5S-WIi" secondAttribute="trailing" id="itR-TT-eSK"/>
+                        <constraint firstItem="vix-I8-Tr3" firstAttribute="top" secondItem="EMt-NI-sR4" secondAttribute="top" id="n8W-Fi-sX7"/>
+                        <constraint firstItem="V7M-dE-Vx7" firstAttribute="top" secondItem="EMt-NI-sR4" secondAttribute="top" id="s25-uf-Ogz"/>
+                        <constraint firstAttribute="bottom" secondItem="3NZ-5S-WIi" secondAttribute="bottom" id="uks-ge-ddG"/>
+                        <constraint firstAttribute="height" constant="15" id="zjv-TP-x9O"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="hEt-nt-b4M" firstAttribute="top" secondItem="2fN-cY-Vbh" secondAttribute="bottom" constant="15" id="0ML-55-QuZ"/>
                 <constraint firstItem="gta-ob-exR" firstAttribute="top" secondItem="hEt-nt-b4M" secondAttribute="bottom" constant="10" id="Chg-Db-SdT"/>
                 <constraint firstItem="2fN-cY-Vbh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="Cq9-iS-Ql1"/>
                 <constraint firstItem="hEt-nt-b4M" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="DjD-Ta-CdM"/>
                 <constraint firstAttribute="trailing" secondItem="2fN-cY-Vbh" secondAttribute="trailing" id="JHs-Hr-Ue2"/>
                 <constraint firstItem="gta-ob-exR" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="SCc-Tn-jdk"/>
+                <constraint firstItem="hEt-nt-b4M" firstAttribute="top" secondItem="EMt-NI-sR4" secondAttribute="bottom" constant="10" id="Y9U-Cr-uUp"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hEt-nt-b4M" secondAttribute="trailing" constant="10" id="bLe-iE-tDv"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gta-ob-exR" secondAttribute="bottom" constant="10" id="eMr-xh-DAZ"/>
+                <constraint firstItem="EMt-NI-sR4" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="fDQ-xH-Laj"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="EMt-NI-sR4" secondAttribute="trailing" constant="10" id="i2o-qY-A1O"/>
+                <constraint firstItem="EMt-NI-sR4" firstAttribute="top" secondItem="2fN-cY-Vbh" secondAttribute="bottom" constant="10" id="tnq-Ff-41s"/>
                 <constraint firstItem="2fN-cY-Vbh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="xl0-AT-Ll4"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

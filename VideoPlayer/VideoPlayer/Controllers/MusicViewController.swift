@@ -179,6 +179,14 @@ class MusicViewController: AbstractMusicVideoViewController {
 }
 
 extension MusicViewController: PlayerViewDelegate {
+    func updateTimeLabel() -> (Double, Double)? {
+        if player.currentItem != nil {
+            return (player.currentTime().seconds, player.currentItem!.asset.duration.seconds)
+        } else {
+            return nil
+        }
+    }
+
     func previousTrackDidTap(sender: PlayerView) {
         guard let index = indexOfCurrentItem, index-1 <= self.itemsArray.count - 1 else {
             self.startPlay(atIndex: 0)

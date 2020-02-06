@@ -14,6 +14,7 @@ protocol PlayerViewDelegate {
     func playAndPauseDidTap(sender: PlayerView)
     func forwardRewindDidTap(sender: PlayerView)
     func nextTrackDidTap(sender: PlayerView)
+    func updateTimeLabel() -> (Double, Double)?
 }
 
 extension PlayerViewDelegate {
@@ -29,8 +30,12 @@ class PlayerView: UIView {
     @IBOutlet fileprivate weak var playerLabel: UILabel!
     @IBOutlet fileprivate weak var playAndPauseButton: UIButton!
     @IBOutlet fileprivate weak var trackImage: UIImageView!
+    @IBOutlet fileprivate weak var currentTimeLabel: UILabel!
+    @IBOutlet fileprivate weak var remainingTimeLabel: UILabel!
+    @IBOutlet fileprivate weak var progressSlider: UISlider!
 
     fileprivate var gradientLayer: CAGradientLayer!
+    fileprivate var timerForUpdateTiemLabel: Timer?
     //animation property
     @available(iOS 10.0, *)
     lazy fileprivate var animator = UIViewPropertyAnimator()
@@ -40,7 +45,7 @@ class PlayerView: UIView {
     fileprivate let constraintAfterTrackView: CGFloat = 10
     fileprivate var currentVisibleHeight: CGFloat!
     fileprivate var shouldBeTrackImageHeight: CGFloat {
-        return shouldBeViewHeight - 80 //80 because all constraint and element height before trackimageview in total
+        return shouldBeViewHeight - 100 //100 because all constraint and element height before trackimageview in total
     }
     fileprivate var multiplier: CGFloat {
         return (shouldBeTrackImageHeight - constraintAfterTrackView) / currentVisibleHeight
@@ -66,6 +71,7 @@ class PlayerView: UIView {
         self.shouldBeViewHeight = allHeight
         self.notVisiblePartOfView = notVizibleHeight
     }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         gradientLayer?.frame = self.bounds
@@ -101,6 +107,8 @@ class PlayerView: UIView {
         backgroundView.frame = self.bounds
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         trackImage.alpha = 0.0
+        progressSlider.setCustomThumb()
+        timerForUpdateTiemLabel = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(getNewTimeFromDelegate), userInfo: nil, repeats: true)
     }
 
     @IBAction fileprivate func previousTrackButton(_ sender: Any) {
@@ -173,5 +181,13 @@ class PlayerView: UIView {
         let text = playerLabel.text!
         playerLabel.text = playerLabel.text! + " "
         playerLabel.text = text
+    }
+
+    @objc fileprivate func getNewTimeFromDelegate() {
+        guard let object = delegat?.updateTimeLabel() else {return}
+        currentTimeLabel.text = object.0.stringFromTimeInterval()
+        remainingTimeLabel.text = (object.1-object.0).stringFromTimeInterval()
+        progressSlider.maximumValue = Float(object.1)
+        progressSlider.value = Float(object.0)
     }
 }
