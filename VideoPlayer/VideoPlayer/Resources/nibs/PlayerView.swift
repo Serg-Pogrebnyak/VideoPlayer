@@ -12,6 +12,7 @@ protocol PlayerViewDelegate {
     func previousTrackDidTap(sender: PlayerView)
     func backRewindDidTap(sender: PlayerView)
     func playAndPauseDidTap(sender: PlayerView)
+    func forcePlayOrPause(sender: PlayerView, shoudPlay: Bool, seekTo: Float?)
     func forwardRewindDidTap(sender: PlayerView)
     func nextTrackDidTap(sender: PlayerView)
     func updateTimeLabel() -> (Double, Double)?
@@ -36,6 +37,7 @@ class PlayerView: UIView {
 
     fileprivate var gradientLayer: CAGradientLayer!
     fileprivate var timerForUpdateTiemLabel: Timer?
+    fileprivate var pausedTimer = false
     //animation property
     @available(iOS 10.0, *)
     lazy fileprivate var animator = UIViewPropertyAnimator()
@@ -109,6 +111,7 @@ class PlayerView: UIView {
         trackImage.alpha = 0.0
         progressSlider.setCustomThumb()
         timerForUpdateTiemLabel = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(getNewTimeFromDelegate), userInfo: nil, repeats: true)
+        self.progressSlider.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: UIControl.Event.valueChanged)
     }
 
     @IBAction fileprivate func previousTrackButton(_ sender: Any) {
@@ -184,10 +187,28 @@ class PlayerView: UIView {
     }
 
     @objc fileprivate func getNewTimeFromDelegate() {
-        guard let object = delegat?.updateTimeLabel() else {return}
+        guard let object = delegat?.updateTimeLabel(), !pausedTimer else {return}
         currentTimeLabel.text = object.0.stringFromTimeInterval()
         remainingTimeLabel.text = (object.1-object.0).stringFromTimeInterval()
         progressSlider.maximumValue = Float(object.1)
         progressSlider.value = Float(object.0)
+    }
+
+    @objc fileprivate func onSliderValChanged(slider: UISlider, event: UIEvent) {
+        if let touchEvent = event.allTouches?.first {
+            switch touchEvent.phase {
+            case .began:
+                self.delegat?.forcePlayOrPause(sender: self, shoudPlay: false, seekTo: nil)
+                pausedTimer = true
+            case .moved:
+                currentTimeLabel.text = Double(progressSlider.value).stringFromTimeInterval()
+                remainingTimeLabel.text = Double(progressSlider.maximumValue - progressSlider.value).stringFromTimeInterval()
+            case .ended:
+                self.delegat?.forcePlayOrPause(sender: self, shoudPlay: true, seekTo: slider.value)
+                pausedTimer = false
+            default:
+                break
+            }
+        }
     }
 }

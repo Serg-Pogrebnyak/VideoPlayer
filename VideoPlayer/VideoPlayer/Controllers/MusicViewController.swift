@@ -157,7 +157,7 @@ class MusicViewController: AbstractMusicVideoViewController {
 
     fileprivate func updateInformationOnLockScreen() {
         print(player.currentTime().stringSeconds)
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().stringSeconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds as CFNumber
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 
@@ -209,6 +209,17 @@ extension MusicViewController: PlayerViewDelegate {
             player.pause()
         } else {
             player.play()
+        }
+    }
+
+    func forcePlayOrPause(sender: PlayerView, shoudPlay: Bool, seekTo: Float?) {
+        guard player.currentItem != nil else {return}
+
+        if shoudPlay {
+            rewindPlayerItemTo(CMTime.init(seconds: Double(seekTo!), preferredTimescale: 1))
+            player.play()
+        } else {
+            player.pause()
         }
     }
 
