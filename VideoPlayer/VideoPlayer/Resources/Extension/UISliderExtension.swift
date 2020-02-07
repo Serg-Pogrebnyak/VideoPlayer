@@ -34,10 +34,5 @@ extension UISlider {
         }
 
         self.setThumbImage(image, for: .normal)
-        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-    }
-
-    @objc fileprivate func willEnterForeground() {
-        setCustomThumb()
     }
 }

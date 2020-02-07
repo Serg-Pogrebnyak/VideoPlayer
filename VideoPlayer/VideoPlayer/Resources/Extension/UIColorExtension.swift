@@ -32,4 +32,20 @@ extension UIColor {
             return .white
         }
     }
+
+    static var topGradientColor : UIColor {
+        if #available(iOS 11.0, *) {
+            return UIColor.init(named: "topGradient")!
+        } else {
+            return UIColor(red: 255.0/255.0, green: 149.0/255.0, blue: 0.0/255.0, alpha: 1.0)
+        }
+    }
+
+    static var bottomGradientColor : UIColor {
+        if #available(iOS 11.0, *) {
+            return UIColor.init(named: "bottomGradient")!
+        } else {
+            return UIColor(red: 255.0/255.0, green: 94.0/255.0, blue: 58.0/255.0, alpha: 1.0)
+        }
+    }
 }

@@ -88,10 +88,9 @@ class PlayerView: UIView {
 
     func setGradientBackground() {
         guard gradientLayer == nil else {return}
-        let colorTop =  UIColor(red: 255.0/255.0, green: 149.0/255.0, blue: 0.0/255.0, alpha: 1.0).cgColor
-        let colorBottom = UIColor(red: 255.0/255.0, green: 94.0/255.0, blue: 58.0/255.0, alpha: 1.0).cgColor
         gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [colorTop, colorBottom]
+        gradientLayer.colors = [UIColor.topGradientColor.cgColor,
+                                UIColor.bottomGradientColor.cgColor]
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.frame = self.backgroundView.frame
         gradientLayer.roundCorners(corners: [.topLeft, .topRight], radius: 20)
@@ -108,6 +107,10 @@ class PlayerView: UIView {
         playAndPauseButton.isSelected = playNow
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     //MARK: - fileprivate actions and functions
     fileprivate func commonInit(){
         Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)
@@ -118,6 +121,7 @@ class PlayerView: UIView {
         progressSlider.setCustomThumb()
         timerForUpdateTiemLabel = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(getNewTimeFromDelegate), userInfo: nil, repeats: true)
         self.progressSlider.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: UIControl.Event.valueChanged)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
     @IBAction fileprivate func previousTrackButton(_ sender: Any) {
@@ -239,6 +243,14 @@ class PlayerView: UIView {
             default:
                 break
             }
+        }
+    }
+
+    @objc fileprivate func willEnterForeground() {
+        DispatchQueue.main.async() {
+            self.progressSlider.setCustomThumb()
+            self.gradientLayer.colors = [UIColor.topGradientColor.cgColor,
+                                         UIColor.bottomGradientColor.cgColor]
         }
     }
 }
