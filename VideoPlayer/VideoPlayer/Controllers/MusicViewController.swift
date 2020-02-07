@@ -38,6 +38,11 @@ class MusicViewController: AbstractMusicVideoViewController {
         playerView.setGradientBackground()
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        playerView.finishedAnimation()
+    }
+
     //MARK: - overrided functions
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         let currentItem = object as! AVPlayer

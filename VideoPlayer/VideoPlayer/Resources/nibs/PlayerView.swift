@@ -80,6 +80,12 @@ class PlayerView: UIView {
         gradientLayer?.roundCorners(corners: [.topLeft, .topRight], radius: 20)
     }
 
+    func finishedAnimation() {
+        if #available(iOS 10.0, *) {
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
+    }
+
     func setGradientBackground() {
         guard gradientLayer == nil else {return}
         let colorTop =  UIColor(red: 255.0/255.0, green: 149.0/255.0, blue: 0.0/255.0, alpha: 1.0).cgColor
