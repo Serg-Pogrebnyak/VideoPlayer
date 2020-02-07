@@ -10,6 +10,7 @@ import UIKit
 
 extension UISlider {
     func setCustomThumb(radius: CGFloat = 15.0) {
+        self.tintColor = .thumbBackgroundColor
         let thumb = UIView()
         thumb.backgroundColor = .thumbBackgroundColor
         thumb.frame = CGRect(x: 0, y: radius / 2, width: radius, height: radius)
@@ -33,5 +34,10 @@ extension UISlider {
         }
 
         self.setThumbImage(image, for: .normal)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+
+    @objc fileprivate func willEnterForeground() {
+        setCustomThumb()
     }
 }
