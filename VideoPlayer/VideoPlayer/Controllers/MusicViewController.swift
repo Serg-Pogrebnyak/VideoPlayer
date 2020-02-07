@@ -58,7 +58,11 @@ class MusicViewController: AbstractMusicVideoViewController {
     }
 
     override func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
-        guard !itemsArray.isEmpty else {return}
+        guard   !itemsArray.isEmpty,
+                index >= 0,
+                index < itemsArray.count
+        else {return}
+
         indexOfCurrentItem = index
         unNewTrackAtIndex(index)
         let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
