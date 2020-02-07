@@ -53,21 +53,7 @@ open class OverlayView: UIView, CAAnimationDelegate {
         currentWindow?.addSubview(self)
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         //add accelerometer - snow will always fall down
-        if motion.isAccelerometerAvailable {
-            self.motion.accelerometerUpdateInterval = 1.0/60.0
-            self.motion.startAccelerometerUpdates(to: OperationQueue.main) { [weak self] (accelerometerData, error) in
-                guard   let self = self,
-                        let x = accelerometerData?.acceleration.x,
-                        let y = accelerometerData?.acceleration.y,
-                        error == nil else {return}
-                let rotationAngle = self.getY ? y : x
-                UIView.animate(withDuration: 0.7) {   [weak self] in
-                    guard let self = self else {return}
-                    //-1 - because should rotate in the opposite side; pi/2 = 90 degrees - because iOS calculate from 0 to 1 and its equal 90 degrees
-                    self.transform = CGAffineTransform.init(rotationAngle: self.rotationMultiplier*CGFloat(rotationAngle)*(CGFloat.pi/2.0))
-                }
-            }
-        }
+        didChangePowerMode()
         handleDeviceOrientation(UIDevice.current)
         //detect change UIOrientation
         UIDevice.current.beginGeneratingDeviceOrientationNotifications()
@@ -75,6 +61,12 @@ open class OverlayView: UIView, CAAnimationDelegate {
                                                selector: #selector(orientationChanged(note:)),
                                                name: UIDevice.orientationDidChangeNotification,
                                                object: UIDevice.current)
+
+        //detect low energy mode
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didChangePowerMode),
+                                               name: .NSProcessInfoPowerStateDidChange,
+                                               object: nil)
     }
 
     required public init?(coder: NSCoder) {
@@ -154,4 +146,31 @@ open class OverlayView: UIView, CAAnimationDelegate {
                 break
         }
     }
+
+    fileprivate func startMotionDetect() {
+        if motion.isAccelerometerAvailable {
+            self.motion.accelerometerUpdateInterval = 1.0/60.0
+            self.motion.startAccelerometerUpdates(to: OperationQueue.main) { [weak self] (accelerometerData, error) in
+                guard   let self = self,
+                        let x = accelerometerData?.acceleration.x,
+                        let y = accelerometerData?.acceleration.y,
+                        error == nil else {return}
+                let rotationAngle = self.getY ? y : x
+                UIView.animate(withDuration: 0.7) {   [weak self] in
+                    guard let self = self else {return}
+                    //-1 - because should rotate in the opposite side; pi/2 = 90 degrees - because iOS calculate from 0 to 1 and its equal 90 degrees
+                    self.transform = CGAffineTransform.init(rotationAngle: self.rotationMultiplier*CGFloat(rotationAngle)*(CGFloat.pi/2.0))
+                }
+            }
+        }
+    }
+
+    @objc fileprivate func didChangePowerMode() {
+        if ProcessInfo.processInfo.isLowPowerModeEnabled {
+            motion.stopAccelerometerUpdates()
+        } else {
+            startMotionDetect()
+        }
+    }
+
 }
