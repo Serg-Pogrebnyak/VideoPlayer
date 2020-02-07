@@ -156,9 +156,33 @@ class PlayerView: UIView {
             animator.startAnimation()
             animator.pauseAnimation()
         case .changed:
-            animator.fractionComplete = abs(sender.translation(in: self).y / notVisiblePartOfView)
+            if self.transform == CGAffineTransform(translationX: 0, y: -notVisiblePartOfView) {
+                guard sender.translation(in: self).y < 0 else {return}
+                animator.fractionComplete = abs(sender.translation(in: self).y / notVisiblePartOfView)
+            } else {
+                guard sender.translation(in: self).y > 0 else {return}
+                animator.fractionComplete = sender.translation(in: self).y / notVisiblePartOfView
+            }
         case .ended:
-            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            if self.transform == CGAffineTransform(translationX: 0, y: -notVisiblePartOfView) {
+                guard sender.translation(in: self).y < 0 else {
+                    animator.fractionComplete = 0.0
+                    animator.stopAnimation(true)
+                    animator.finishAnimation(at: .current)
+                    self.transform = CGAffineTransform(translationX: 0, y: 0)
+                    return
+                }
+                animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            } else {
+                guard sender.translation(in: self).y > 0 else {
+                    animator.fractionComplete = 0.0
+                    animator.stopAnimation(true)
+                    animator.finishAnimation(at: .current)
+                    self.transform = CGAffineTransform(translationX: 0, y: -self.notVisiblePartOfView)
+                    return
+                }
+                animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+            }
         default:
             break
         }
