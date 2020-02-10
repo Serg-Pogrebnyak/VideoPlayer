@@ -119,7 +119,7 @@ class PlayerView: UIView {
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         trackImage.alpha = 0.0
         progressSlider.setCustomThumb()
-        timerForUpdateTiemLabel = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(getNewTimeFromDelegate), userInfo: nil, repeats: true)
+        timerForUpdateTiemLabel = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(getNewTimeFromDelegate), userInfo: nil, repeats: true)
         self.progressSlider.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: UIControl.Event.valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -222,9 +222,10 @@ class PlayerView: UIView {
 
     @objc fileprivate func getNewTimeFromDelegate() {
         guard let object = delegat?.updateTimeLabel(), !pausedTimer else {return}
+        let duration = roundl(object.1)
         currentTimeLabel.text = object.0.stringFromTimeInterval()
-        remainingTimeLabel.text = (object.1-object.0).stringFromTimeInterval()
-        progressSlider.maximumValue = Float(object.1)
+        remainingTimeLabel.text = (duration-object.0).stringFromTimeInterval()
+        progressSlider.maximumValue = Float(duration)
         progressSlider.value = Float(object.0)
     }
 
