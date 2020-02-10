@@ -119,14 +119,12 @@ class MusicViewController: AbstractMusicVideoViewController {
 
     //MARK: setup information about track on lock screen and in menu
     fileprivate func displayMusicInfo(fileUrl: URL) {
+        nowPlayingInfo = [String: Any]()
         var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
         let asset = AVAsset(url: fileUrl) as AVAsset
 
         for metaDataItems in asset.commonMetadata {
             switch metaDataItems.commonKey!.rawValue {
-            case "title":
-                guard let title = metaDataItems.value as? String else {break}
-                nowPlayingInfo[MPMediaItemPropertyTitle] = title
             case "artist":
                 guard let artist = metaDataItems.value as? String else {break}
                 nowPlayingInfo[MPMediaItemPropertyArtist] = artist
@@ -142,9 +140,7 @@ class MusicViewController: AbstractMusicVideoViewController {
             }
         }
 
-        if nowPlayingInfo[MPMediaItemPropertyTitle] == nil {
-            nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
-        }
+        nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
 
         let artwork: MPMediaItemArtwork!
         if #available(iOS 10.0, *) {
