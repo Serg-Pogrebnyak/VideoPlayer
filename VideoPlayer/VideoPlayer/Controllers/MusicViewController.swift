@@ -82,23 +82,27 @@ class MusicViewController: AbstractMusicVideoViewController {
     fileprivate func setupRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.changePlaybackPositionCommand.isEnabled = true
-        commandCenter.changePlaybackPositionCommand.addTarget { (object) -> MPRemoteCommandHandlerStatus in
+        commandCenter.changePlaybackPositionCommand.addTarget { [weak self] (object) -> MPRemoteCommandHandlerStatus in
+            guard let self = self else {return .commandFailed}
             let event = object as! MPChangePlaybackPositionCommandEvent
             self.rewindPlayerItemTo(CMTime.init(seconds: event.positionTime, preferredTimescale: 1))
             return .success
         }
         commandCenter.playCommand.isEnabled = true
-        commandCenter.playCommand.addTarget {event in
+        commandCenter.playCommand.addTarget { [weak self] event in
+            guard let self = self else {return .commandFailed}
             self.player.play()
             return .success
         }
         commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget {event in
+        commandCenter.pauseCommand.addTarget { [weak self] event in
+            guard let self = self else {return .commandFailed}
             self.player.pause()
             return .success
         }
         commandCenter.nextTrackCommand.isEnabled = true
-        commandCenter.nextTrackCommand.addTarget {event in
+        commandCenter.nextTrackCommand.addTarget { [weak self] event in
+            guard let self = self else {return .commandFailed}
             if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
                 self.startPlay(atIndex: self.indexOfCurrentItem!+1)
                 return .success
@@ -107,7 +111,8 @@ class MusicViewController: AbstractMusicVideoViewController {
             }
         }
         commandCenter.previousTrackCommand.isEnabled = true
-        commandCenter.previousTrackCommand.addTarget {event in
+        commandCenter.previousTrackCommand.addTarget { [weak self] event in
+            guard let self = self else {return .commandFailed}
             if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
                 self.startPlay(atIndex: self.indexOfCurrentItem!-1)
                 return .success

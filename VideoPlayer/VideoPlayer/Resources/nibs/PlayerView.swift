@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PlayerViewDelegate {
+protocol PlayerViewDelegate: class {
     func previousTrackDidTap(sender: PlayerView)
     func backRewindDidTap(sender: PlayerView)
     func playAndPauseDidTap(sender: PlayerView)
@@ -25,7 +25,7 @@ extension PlayerViewDelegate {
 
 class PlayerView: UIView {
 
-    var delegat: PlayerViewDelegate?
+    weak var delegat: PlayerViewDelegate?
 
     @IBOutlet fileprivate var backgroundView: UIView!
     @IBOutlet fileprivate weak var playerLabel: UILabel!
