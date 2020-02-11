@@ -104,6 +104,7 @@ class PlayerView: UIView {
     func updateViewWith(text: String, image: UIImage) {
         playerLabel.text = text
         trackImage.image = image
+        progressSlider.isEnabled = true
     }
 
     func changePlayButtonIcon(playNow: Bool) {
