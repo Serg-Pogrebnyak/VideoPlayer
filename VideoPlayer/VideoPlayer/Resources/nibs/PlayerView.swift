@@ -78,6 +78,9 @@ class PlayerView: UIView {
         super.layoutSubviews()
         gradientLayer?.frame = self.bounds
         gradientLayer?.roundCorners(corners: [.topLeft, .topRight], radius: 20)
+        if #available(iOS 10.0, *) {
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        }
     }
 
     func finishedAnimation() {
