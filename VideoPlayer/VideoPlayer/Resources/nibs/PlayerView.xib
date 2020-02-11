@@ -25,24 +25,24 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hEt-nt-b4M">
-                    <rect key="frame" x="10" y="65" width="373" height="25"/>
+                    <rect key="frame" x="10" y="65" width="373" height="40"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3u-Xz-dez">
-                            <rect key="frame" x="0.0" y="0.0" width="62.5" height="25"/>
+                            <rect key="frame" x="0.0" y="0.0" width="62.5" height="40"/>
                             <state key="normal" image="previous"/>
                             <connections>
                                 <action selector="previousTrackButton:" destination="-1" eventType="touchUpInside" id="nhv-Yg-pqm"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfg-kF-Wip">
-                            <rect key="frame" x="77.5" y="0.0" width="62.5" height="25"/>
+                            <rect key="frame" x="77.5" y="0.0" width="62.5" height="40"/>
                             <state key="normal" image="rewind"/>
                             <connections>
                                 <action selector="backRewind:" destination="-1" eventType="touchUpInside" id="zno-S9-ksR"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjF-yH-qGO">
-                            <rect key="frame" x="155" y="0.0" width="63" height="25"/>
+                            <rect key="frame" x="155" y="0.0" width="63" height="40"/>
                             <state key="normal" image="play"/>
                             <state key="selected" image="pause"/>
                             <connections>
@@ -50,14 +50,14 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-Yo-ujn">
-                            <rect key="frame" x="233" y="0.0" width="62.5" height="25"/>
+                            <rect key="frame" x="233" y="0.0" width="62.5" height="40"/>
                             <state key="normal" image="fast-forward"/>
                             <connections>
                                 <action selector="forwardRewind:" destination="-1" eventType="touchUpInside" id="oOY-Mm-Zvb"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pk2-UE-sB6">
-                            <rect key="frame" x="310.5" y="0.0" width="62.5" height="25"/>
+                            <rect key="frame" x="310.5" y="0.0" width="62.5" height="40"/>
                             <state key="normal" image="next"/>
                             <connections>
                                 <action selector="nextTrack:" destination="-1" eventType="touchUpInside" id="Euc-EO-yNB"/>
@@ -65,11 +65,11 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="25" id="SAU-ar-KZd"/>
+                        <constraint firstAttribute="height" constant="40" id="SAU-ar-KZd"/>
                     </constraints>
                 </stackView>
                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mp3" translatesAutoresizingMaskIntoConstraints="NO" id="gta-ob-exR">
-                    <rect key="frame" x="126.5" y="100" width="140" height="140"/>
+                    <rect key="frame" x="134" y="115" width="125" height="125"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="gta-ob-exR" secondAttribute="height" multiplier="1:1" id="ktT-Zo-tvr"/>

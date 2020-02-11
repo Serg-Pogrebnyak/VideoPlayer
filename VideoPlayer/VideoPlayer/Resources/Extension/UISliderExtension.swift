@@ -9,7 +9,7 @@
 import UIKit
 
 extension UISlider {
-    func setCustomThumb(radius: CGFloat = 15.0) {
+    func setCustomThumb(radius: CGFloat = 20.0) {
         self.tintColor = .thumbBackgroundColor
         let thumb = UIView()
         thumb.backgroundColor = .thumbBackgroundColor

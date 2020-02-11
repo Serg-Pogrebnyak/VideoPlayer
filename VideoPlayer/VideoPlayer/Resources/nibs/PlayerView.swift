@@ -47,7 +47,7 @@ class PlayerView: UIView {
     fileprivate let constraintAfterTrackView: CGFloat = 10
     fileprivate var currentVisibleHeight: CGFloat!
     fileprivate var shouldBeTrackImageHeight: CGFloat {
-        return shouldBeViewHeight - 100 //100 because all constraint and element height before trackimageview in total
+        return shouldBeViewHeight - 115 //115 because all constraint and element height before trackimageview in total
     }
     fileprivate var multiplier: CGFloat {
         return (shouldBeTrackImageHeight - constraintAfterTrackView) / currentVisibleHeight
