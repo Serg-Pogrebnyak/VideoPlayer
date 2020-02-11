@@ -18,6 +18,8 @@ import CoreMotion
 
 open class OverlayView: UIView, CAAnimationDelegate {
 
+    static weak var shared: OverlayView?
+
     //MARK:- private property
     private var timer: Timer!
     private var timerSecond = -1
@@ -67,6 +69,7 @@ open class OverlayView: UIView, CAAnimationDelegate {
                                                selector: #selector(didChangePowerMode),
                                                name: .NSProcessInfoPowerStateDidChange,
                                                object: nil)
+        OverlayView.shared = self
     }
 
     required public init?(coder: NSCoder) {
