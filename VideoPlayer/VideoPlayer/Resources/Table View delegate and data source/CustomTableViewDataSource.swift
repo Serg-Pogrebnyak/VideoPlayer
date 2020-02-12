@@ -48,7 +48,6 @@ class CustomTableViewDataSource: NSObject, UITableViewDataSource {
         musicOrVideoArrayProtocol.itemsArray.remove(at: sourceIndexPath.row)
         movedMusicItem.isNew = false
         musicOrVideoArrayProtocol.itemsArray.insert(movedMusicItem, at: destinationIndexPath.row)
-        tableView.reloadData()
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

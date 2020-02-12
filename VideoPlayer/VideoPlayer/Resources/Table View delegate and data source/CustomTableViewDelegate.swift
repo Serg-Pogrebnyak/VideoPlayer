@@ -17,8 +17,20 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
+        if tableView.isEditing {
+            let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
+            musicOrVideoArrayProtocol.selectedItems(count: countOfSelected)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
+            musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
+            musicOrVideoArrayProtocol.selectedItems(count: countOfSelected)
+        }
     }
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

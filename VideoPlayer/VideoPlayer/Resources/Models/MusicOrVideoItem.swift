@@ -12,6 +12,7 @@ protocol MusicOrVideoArrayProtocol: class {
     var itemsArray: [MusicOrVideoItem] {get set}
     func startPlay(atIndex index: Int, autoPlay: Bool)
     func removeItem(atIndex index: Int)
+    func selectedItems(count: Int)
 }
 
 struct MusicOrVideoItem: Codable, Equatable {

@@ -22,6 +22,8 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     internal var navigationBarState = NavigationBarButtonStateEnum.edit
     internal var indexOfCurrentItem: Int?
 
+    fileprivate var syncBarButtonItem: UIBarButtonItem!
+    fileprivate var deleteBarButtonItem: UIBarButtonItem!
     fileprivate var editAndCancelBarButtonItem: UIBarButtonItem!
     fileprivate var customTableViewDelegate: CustomTableViewDelegate!
     fileprivate var customTableViewDataSource: CustomTableViewDataSource!
@@ -39,18 +41,25 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     override func viewDidLoad() {
         super.viewDidLoad()
         checkAllWasSet()
+        childTableView.allowsMultipleSelectionDuringEditing = true
         searchBar.delegate = self
         //add tap recognizer for search bar
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
         self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
         //create navigation bar button
-        let syncButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
+        syncBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
                                              style: .done,
                                              target: self,
                                              action: #selector(didTapSyncButton))
-        syncButtonItem.image = UIImage.init(named: "sync")
-        syncButtonItem.tintColor = UIColor.barColor
-        self.navigationItem.leftBarButtonItem = syncButtonItem
+        syncBarButtonItem.image = UIImage.init(named: "sync")
+        syncBarButtonItem.tintColor = UIColor.barColor
+        self.navigationItem.leftBarButtonItem = syncBarButtonItem
+
+        deleteBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.deleteButton.title"),
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(didTapDeleteButton))
+        deleteBarButtonItem.tintColor = UIColor.red
 
         editAndCancelBarButtonItem = UIBarButtonItem(title: navigationBarState.rawValue,
                                                      style: .done,
@@ -112,6 +121,16 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool) {
     }
 
+    func selectedItems(count: Int) {
+        if count > 0 {
+            let buttonTitle = LocalizationManager.shared.getText("NavigationBar.deleteButton.title")
+            deleteBarButtonItem.title = buttonTitle + "(\(count))"
+            self.navigationItem.leftBarButtonItem = deleteBarButtonItem
+        } else {
+            self.navigationItem.leftBarButtonItem = syncBarButtonItem
+        }
+    }
+
     func removeItem(atIndex index: Int) {
         do {
             let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
@@ -131,6 +150,14 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     //MARK: - fileprivate functions
     //bar batton actions------------------------------------------------------------------------------------------------------------------------------------
+    @objc fileprivate func didTapDeleteButton(_ sender: Any) {
+        guard let array = childTableView.indexPathsForSelectedRows else {return}
+        let reversedArray = array.reversed()
+        for indexPath in reversedArray {
+            removeItem(atIndex: indexPath.row)
+        }
+        self.navigationItem.leftBarButtonItem = syncBarButtonItem
+    }
     @objc fileprivate func didTapSyncButton(_ sender: Any) {
         fetchAllItemsAndUpdateLibrary()
     }
@@ -143,6 +170,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             editAndCancelBarButtonItem.title = navigationBarState.rawValue
             navigationItem.titleView = nil
         case .edit:
+            self.navigationItem.leftBarButtonItem = syncBarButtonItem
             if childTableView.isEditing {
                  saveChanges()
             }
