@@ -44,7 +44,7 @@ class CustomTableViewDataSource: NSObject, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        var movedMusicItem = musicOrVideoArrayProtocol.itemsArray[sourceIndexPath.row]
+        let movedMusicItem = musicOrVideoArrayProtocol.itemsArray[sourceIndexPath.row]
         musicOrVideoArrayProtocol.itemsArray.remove(at: sourceIndexPath.row)
         movedMusicItem.isNew = false
         musicOrVideoArrayProtocol.itemsArray.insert(movedMusicItem, at: destinationIndexPath.row)

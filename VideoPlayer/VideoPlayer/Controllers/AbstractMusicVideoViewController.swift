@@ -74,19 +74,21 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     fileprivate func fetchAllItemsAndUpdateLibrary() {
         itemsArray.removeAll()
-        var currentLibrary = [MusicOrVideoItem]()
-        if let data = UserDefaults.standard.value(forKey: itemUserDefaultsKey) as? Data {
-            if let items = try? PropertyListDecoder().decode(Array<MusicOrVideoItem>.self, from: data) {
-                currentLibrary = items
-            }
-        }
+        let currentLibrary: [MusicOrVideoItem] = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
 
         let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
-                                                                         fileExtension: itemExtension) ?? [URL]()
+                                                                                fileExtension: itemExtension) ?? [URL]()
 
-        for URLofItem in musicOrVideoURLArray {
-            var musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent)
-            if !currentLibrary.contains(musicItem) {
+        for URLofItem in musicOrVideoURLArray {//TODO: fix this
+            var flag = true
+            for item in currentLibrary {
+                if item.fileName == URLofItem.lastPathComponent {
+                    flag = false
+                    break
+                }
+            }
+            if flag {
+                let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent)
                 musicItem.isNew = true
                 itemsArray.append(musicItem)
             }
@@ -145,7 +147,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     }
 
     internal func saveChanges() {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(itemsArray), forKey: itemUserDefaultsKey)
+        CoreManager.shared.saveContext()
     }
 
     //MARK: - fileprivate functions

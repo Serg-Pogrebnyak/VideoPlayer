@@ -43,7 +43,7 @@ class VideoViewController: AbstractMusicVideoViewController {
         let timeInSecond = Double(time.value)/Double(time.timescale)
         let currentFileName = ((currentObject.asset) as? AVURLAsset)?.url.lastPathComponent
         let indexVideo = itemsArray.firstIndex {$0.fileName == currentFileName}!
-        itemsArray[indexVideo].stoppedTime = timeInSecond
+        itemsArray[indexVideo].stoppedTime = timeInSecond as NSNumber
         saveChanges()
     }
 
@@ -57,7 +57,7 @@ class VideoViewController: AbstractMusicVideoViewController {
         let player = AVPlayer(url: url)
         if let stoppedTime = selectedVideo.stoppedTime {
             let playerTimescale = player.currentItem?.asset.duration.timescale ?? 1
-            let time =  CMTime(seconds: stoppedTime, preferredTimescale: playerTimescale)
+            let time =  CMTime(seconds: stoppedTime as! Double, preferredTimescale: playerTimescale)
             player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
             autoPlayMutuable = false
         }

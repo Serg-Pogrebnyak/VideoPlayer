@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="MusicOrVideoItem" representedClassName=".MusicOrVideoItem" syncable="YES">
+        <attribute name="fileName" attributeType="String"/>
+        <attribute name="isNew" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="stoppedTime" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="MusicOrVideoItem" positionX="-63" positionY="-18" width="128" height="88"/>
+    </elements>
+</model>

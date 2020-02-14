@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 protocol MusicOrVideoArrayProtocol: class {
     var itemsArray: [MusicOrVideoItem] {get set}
@@ -15,18 +16,28 @@ protocol MusicOrVideoArrayProtocol: class {
     func selectedItems(count: Int)
 }
 
-struct MusicOrVideoItem: Codable, Equatable {
-    let fileName: String
-    var isNew: Bool
-    var stoppedTime: Double?
+class MusicOrVideoItem: NSManagedObject {
+    @NSManaged public var fileName: String
+    @NSManaged public var isNew: Bool
+    @NSManaged public var stoppedTime: NSNumber?
 
-    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil) {
-        self.fileName = fileName
-        self.isNew = isNew
-        self.stoppedTime = stoppedTime
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
     }
 
-    static func == (lfs:MusicOrVideoItem, rfs:MusicOrVideoItem) -> Bool {
-        return lfs.fileName == rfs.fileName
+    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil) {
+        let entity = NSEntityDescription.entity(forEntityName: "MusicOrVideoItem", in: CoreManager.shared.coreManagerContext)!
+        super.init(entity: entity, insertInto: CoreManager.shared.coreManagerContext)
+        self.fileName = fileName
+        self.isNew = isNew
+        if let time = stoppedTime {
+            self.stoppedTime = time as NSNumber
+        } else {
+            self.stoppedTime = nil
+        }
+    }
+
+    @nonobjc public func fetchRequest() -> NSFetchRequest<MusicOrVideoItem> {
+        return NSFetchRequest<MusicOrVideoItem>(entityName: "MusicOrVideoItem")
     }
 }

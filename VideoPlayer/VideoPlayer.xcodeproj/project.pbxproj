@@ -22,6 +22,8 @@
 		DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81B123E965D800468334 /* EmptyMusicListView.swift */; };
 		DE3A81B423E9884000468334 /* AnimatedViewProtocl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81B323E9884000468334 /* AnimatedViewProtocl.swift */; };
 		DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81B523EADB4700468334 /* CMTimeExtension.swift */; };
+		DE3AE3B923F440360017A329 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DE3AE3B723F440360017A329 /* CoreDataModel.xcdatamodeld */; };
+		DE3AE40A23F459E80017A329 /* CoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3AE40923F459E80017A329 /* CoreManager.swift */; };
 		DE470F0D23E3058100269440 /* AbstractMusicVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */; };
 		DE470F1023E46E5900269440 /* emtyPopcornBox.json in Resources */ = {isa = PBXBuildFile; fileRef = DE470F0F23E46E5900269440 /* emtyPopcornBox.json */; };
 		DE470F1223E46FE300269440 /* EmptyVideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE470F1123E46FE300269440 /* EmptyVideoListView.swift */; };
@@ -63,6 +65,8 @@
 		DE3A81B123E965D800468334 /* EmptyMusicListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMusicListView.swift; sourceTree = "<group>"; };
 		DE3A81B323E9884000468334 /* AnimatedViewProtocl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedViewProtocl.swift; sourceTree = "<group>"; };
 		DE3A81B523EADB4700468334 /* CMTimeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTimeExtension.swift; sourceTree = "<group>"; };
+		DE3AE3B823F440360017A329 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		DE3AE40923F459E80017A329 /* CoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreManager.swift; sourceTree = "<group>"; };
 		DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractMusicVideoViewController.swift; sourceTree = "<group>"; };
 		DE470F0F23E46E5900269440 /* emtyPopcornBox.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emtyPopcornBox.json; sourceTree = "<group>"; };
 		DE470F1123E46FE300269440 /* EmptyVideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyVideoListView.swift; sourceTree = "<group>"; };
@@ -118,6 +122,7 @@
 		0B8BCB3C23C7465800EDA27F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DE3AE3BA23F440480017A329 /* CoreData */,
 				DE470F0E23E46E4900269440 /* Animations */,
 				DEC23BA223CF0FF4007E74FD /* Localization Manager */,
 				DE6C7FEB23CE30AF00D2F77C /* Models */,
@@ -214,6 +219,15 @@
 				7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE3AE3BA23F440480017A329 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				DE3AE3B723F440360017A329 /* CoreDataModel.xcdatamodeld */,
+				DE3AE40923F459E80017A329 /* CoreManager.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 		DE470F0E23E46E4900269440 /* Animations */ = {
@@ -412,8 +426,10 @@
 				DE470F0D23E3058100269440 /* AbstractMusicVideoViewController.swift in Sources */,
 				DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */,
 				DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */,
+				DE3AE40A23F459E80017A329 /* CoreManager.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
 				DE3A81B423E9884000468334 /* AnimatedViewProtocl.swift in Sources */,
+				DE3AE3B923F440360017A329 /* CoreDataModel.xcdatamodeld in Sources */,
 				DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */,
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
@@ -580,7 +596,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
 				INFOPLIST_FILE = "$(SRCROOT)/VideoPlayer/Resources/Plists/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -602,7 +618,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
 				INFOPLIST_FILE = "$(SRCROOT)/VideoPlayer/Resources/Plists/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -637,6 +653,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DE3AE3B723F440360017A329 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DE3AE3B823F440360017A329 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = DE3AE3B823F440360017A329 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0BA7406323C71B1F001BBBA4 /* Project object */;
 }

@@ -218,6 +218,7 @@ class PlayerView: UIView {
         }
     }
 
+    //TODO: fix this
     fileprivate func redrawMyView() {//greates kostul but work
         let text = playerLabel.text!
         playerLabel.text = playerLabel.text! + " "
