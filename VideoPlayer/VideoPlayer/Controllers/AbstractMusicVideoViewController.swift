@@ -79,7 +79,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
                                                                                 fileExtension: itemExtension) ?? [URL]()
 
-        for URLofItem in musicOrVideoURLArray {//TODO: fix this
+        for URLofItem in musicOrVideoURLArray {
             var flag = true
             for item in currentLibrary {
                 if item.fileName == URLofItem.lastPathComponent {
@@ -98,7 +98,8 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             for item in itemsArray {
                 guard !musicOrVideoURLArray.contains(where: {$0.lastPathComponent == item.fileName}) else {continue}
                 let index = itemsArray.firstIndex(of: item)
-                itemsArray.remove(at: index!)
+                let removedObject = itemsArray.remove(at: index!)
+                CoreManager.shared.coreManagerContext.delete(removedObject)
             }
         }
         filterItemsArray = itemsArray
@@ -137,9 +138,10 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         do {
             let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
             try FileManager.default.removeItem(at: url)
-            itemsArray.remove(at: index)
+            let removedObject = itemsArray.remove(at: index)
             filterItemsArray.remove(at: index)
             childTableView.reloadData()
+            CoreManager.shared.coreManagerContext.delete(removedObject)
             saveChanges()
         } catch {
             showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
@@ -151,7 +153,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     }
 
     //MARK: - fileprivate functions
-    //bar batton actions------------------------------------------------------------------------------------------------------------------------------------
+    //bar batton actions--------------------------------------------------------------------------------------------------
     @objc fileprivate func didTapDeleteButton(_ sender: Any) {
         guard let array = childTableView.indexPathsForSelectedRows else {return}
         let reversedArray = array.reversed()
@@ -188,7 +190,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             editAndCancelBarButtonItem.title = navigationBarState.rawValue
         }
     }
-    //finished bar batton actions---------------------------------------------------------------------------------------------------------------------------
+    //finished bar batton actions------------------------------------------------------------------------------------------
 
     fileprivate func setupTableViewDelegateAndDataSource() {
         customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
