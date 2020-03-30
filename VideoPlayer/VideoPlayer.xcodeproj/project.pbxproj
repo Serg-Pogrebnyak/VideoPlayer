@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B4D3A852431D5D000FDCD41 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B4D3A842431D5D000FDCD41 /* CloudKit.framework */; };
+		0B4D3A8724320D9400FDCD41 /* CloudCoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4D3A8624320D9400FDCD41 /* CloudCoreData.swift */; };
 		0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */; };
 		0BA7407623C71B1F001BBBA4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407423C71B1F001BBBA4 /* Main.storyboard */; };
 		0BA7407823C71B20001BBBA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407723C71B20001BBBA4 /* Assets.xcassets */; };
@@ -46,6 +48,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B4D3A832431D5C500FDCD41 /* NIXPlayer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NIXPlayer.entitlements; sourceTree = "<group>"; };
+		0B4D3A842431D5D000FDCD41 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		0B4D3A8624320D9400FDCD41 /* CloudCoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudCoreData.swift; sourceTree = "<group>"; };
 		0BA7406B23C71B1F001BBBA4 /* NIXPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NIXPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BA7406E23C71B1F001BBBA4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0BA7407523C71B1F001BBBA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -94,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */,
+				0B4D3A852431D5D000FDCD41 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +188,7 @@
 		0BA7406D23C71B1F001BBBA4 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				0B4D3A832431D5C500FDCD41 /* NIXPlayer.entitlements */,
 				0B8BCB3A23C7463600EDA27F /* Application */,
 				0B8BCB3B23C7464200EDA27F /* Controllers */,
 				0B8BCB3C23C7465800EDA27F /* Resources */,
@@ -216,6 +223,7 @@
 		7FD3CC5C570E3811A92A1F00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0B4D3A842431D5D000FDCD41 /* CloudKit.framework */,
 				7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */,
 			);
 			name = Frameworks;
@@ -226,6 +234,7 @@
 			children = (
 				DE3AE3B723F440360017A329 /* CoreDataModel.xcdatamodeld */,
 				DE3AE40923F459E80017A329 /* CoreManager.swift */,
+				0B4D3A8624320D9400FDCD41 /* CloudCoreData.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -440,6 +449,7 @@
 				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
 				0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */,
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
+				0B4D3A8724320D9400FDCD41 /* CloudCoreData.swift in Sources */,
 				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
 				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
@@ -591,7 +601,7 @@
 			baseConfigurationReference = BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_ENTITLEMENTS = VideoPlayer/NIXPlayer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
@@ -614,6 +624,7 @@
 			baseConfigurationReference = 2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = VideoPlayer/NIXPlayer.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = YQ63ZZYZV7;
