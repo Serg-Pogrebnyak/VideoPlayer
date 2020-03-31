@@ -69,7 +69,12 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         editAndCancelBarButtonItem.tintColor = UIColor.barColor
         self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
 
+//        CloudCoreData.fetchAllRecords(myLocalRecords: CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()){
+//            print(CoreManager.shared.getElementsArray()?.count)
+//        }
+        
         fetchAllItemsAndUpdateLibrary()
+//        CloudCoreData.pushAllDataBaseToCloud()
     }
 
     fileprivate func fetchAllItemsAndUpdateLibrary() {

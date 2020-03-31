@@ -38,9 +38,11 @@ class CoreManager {
 
     // MARK: - Core Data Saving support
     func saveContext () {
-        if coreManagerContext.hasChanges {
+        guard coreManagerContext.hasChanges else {return}
+        coreManagerContext.perform {
             do {
-                try coreManagerContext.save()
+                try self.coreManagerContext.save()
+                print("✅saved")
             } catch {
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
