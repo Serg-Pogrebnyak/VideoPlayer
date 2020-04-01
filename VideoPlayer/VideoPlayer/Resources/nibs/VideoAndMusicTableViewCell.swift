@@ -11,21 +11,40 @@ import UIKit
 class VideoAndMusicTableViewCell: UITableViewCell {
 
 
+    @IBOutlet fileprivate weak var downloadImage: UIImageView!
     @IBOutlet fileprivate weak var fileNameLabel: UILabel!
     @IBOutlet fileprivate weak var newImage: UIImageView!
-    @IBOutlet fileprivate var fromLabelToSuperView: NSLayoutConstraint!
-    @IBOutlet fileprivate var fromLabelToImage: NSLayoutConstraint!
-
+    @IBOutlet fileprivate var fromLabelToSuperViewTraling: NSLayoutConstraint!
+    @IBOutlet fileprivate var fromLabelToImageTraling: NSLayoutConstraint!
+    @IBOutlet fileprivate var fromLabelToSuperViewLeading: NSLayoutConstraint!
+    @IBOutlet fileprivate var fromLabelToImageLeading: NSLayoutConstraint!
+    
     func setDataInCell(item: MusicOrVideoItem) {
         fileNameLabel.text = item.fileName
         newImage.isHidden = !item.isNew
         if item.isNew {
-            fromLabelToSuperView.isActive = false
-            fromLabelToImage.isActive = true
+            fromLabelToSuperViewTraling.isActive = false
+            fromLabelToImageTraling.isActive = true
         } else {
-            fromLabelToSuperView.isActive = true
-            fromLabelToImage.isActive = false
+            fromLabelToSuperViewTraling.isActive = true
+            fromLabelToImageTraling.isActive = false
         }
+        
+        if checkHasLocalItem(fileName: item.fileName) {
+            downloadImage.isHidden = true
+            fromLabelToSuperViewLeading.isActive = true
+            fromLabelToImageLeading.isActive = false
+        } else {
+            downloadImage.isHidden = false
+            fromLabelToSuperViewLeading.isActive = false
+            fromLabelToImageLeading.isActive = true
+        }
+    }
+    
+    fileprivate func checkHasLocalItem(fileName: String) ->Bool {
+        let fileUrl = FileManager.default.getTempDirectory().appendingPathComponent(fileName).path
+
+        return FileManager.default.fileExists(atPath: fileUrl)
     }
 
 }
