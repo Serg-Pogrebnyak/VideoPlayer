@@ -52,7 +52,7 @@ class CustomTableViewDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let path = FileManager.default.getURLS().appendingPathComponent(musicOrVideoArrayProtocol.itemsArray[indexPath.row].fileName, isDirectory: false)
+            let path = FileManager.default.getTempDirectory().appendingPathComponent(musicOrVideoArrayProtocol.itemsArray[indexPath.row].fileName, isDirectory: false)
             do {
                 try FileManager.default.removeItem(at: path)
                 musicOrVideoArrayProtocol.itemsArray.remove(at: indexPath.row)

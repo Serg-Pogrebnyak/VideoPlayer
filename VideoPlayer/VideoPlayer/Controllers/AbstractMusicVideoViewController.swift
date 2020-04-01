@@ -73,42 +73,26 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 //            print(CoreManager.shared.getElementsArray()?.count)
 //        }
         
-        fetchAllItemsAndUpdateLibrary()
+        checkNewLocaltemsAndUpdateLibrary()
 //        CloudCoreData.pushAllDataBaseToCloud()
     }
 
-    fileprivate func fetchAllItemsAndUpdateLibrary() {
+    fileprivate func checkNewLocaltemsAndUpdateLibrary() {
         itemsArray.removeAll()
-        let currentLibrary: [MusicOrVideoItem] = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
 
         let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
                                                                                 fileExtension: itemExtension) ?? [URL]()
-
+        var newObects = [MusicOrVideoItem]()
+        
         for URLofItem in musicOrVideoURLArray {
-            var flag = true
-            for item in currentLibrary {
-                if item.fileName == URLofItem.lastPathComponent {
-                    flag = false
-                    break
-                }
-            }
-            if flag {
-                let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent)
-                musicItem.isNew = true
-                itemsArray.append(musicItem)
-            }
+            let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent, filePathInDocumentFolder: URLofItem)
+            musicItem.isNew = true
+            newObects.append(musicItem)
         }
-        itemsArray = itemsArray + currentLibrary
-        if itemsArray.count != musicOrVideoURLArray.count {
-            for item in itemsArray {
-                guard !musicOrVideoURLArray.contains(where: {$0.lastPathComponent == item.fileName}) else {continue}
-                let index = itemsArray.firstIndex(of: item)
-                let removedObject = itemsArray.remove(at: index!)
-                CoreManager.shared.coreManagerContext.delete(removedObject)
-            }
-        }
+        CoreManager.shared.saveContext()
+        
+        itemsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
         filterItemsArray = itemsArray
-        saveChanges()
         childTableView.reloadData()
     }
 
@@ -141,7 +125,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     func removeItem(atIndex index: Int) {
         do {
-            let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+            let url = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
             try FileManager.default.removeItem(at: url)
             let removedObject = itemsArray.remove(at: index)
             filterItemsArray.remove(at: index)
@@ -168,7 +152,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         self.navigationItem.leftBarButtonItem = syncBarButtonItem
     }
     @objc fileprivate func didTapSyncButton(_ sender: Any) {
-        fetchAllItemsAndUpdateLibrary()
+        checkNewLocaltemsAndUpdateLibrary()
     }
     @objc fileprivate func didTapEditAndCancelButton(_ sender: Any) {
         switch navigationBarState {

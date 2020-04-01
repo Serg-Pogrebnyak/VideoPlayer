@@ -65,7 +65,7 @@ class MusicViewController: AbstractMusicVideoViewController {
 
         indexOfCurrentItem = index
         unNewTrackAtIndex(index)
-        let url = FileManager.default.getURLS().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+        let url = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
 
         let playerItem = AVPlayerItem(url: url)
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlay), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)

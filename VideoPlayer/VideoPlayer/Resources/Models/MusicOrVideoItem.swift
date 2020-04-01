@@ -27,7 +27,7 @@ class MusicOrVideoItem: NSManagedObject {
         super.init(entity: entity, insertInto: context)
     }
 
-    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil, localIdOptional: String? = nil, uploadedToCloud: Bool = false) {
+    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil, localIdOptional: String? = nil, uploadedToCloud: Bool = false, filePathInDocumentFolder: URL? = nil) {
         let entity = NSEntityDescription.entity(forEntityName: "MusicOrVideoItem", in: CoreManager.shared.coreManagerContext)!
         super.init(entity: entity, insertInto: CoreManager.shared.coreManagerContext)
         self.fileName = fileName
@@ -43,9 +43,46 @@ class MusicOrVideoItem: NSManagedObject {
         } else {
             self.localId = UUID().uuidString
         }
+        
+        if filePathInDocumentFolder != nil {
+            replaceItem(from: filePathInDocumentFolder!)
+        }
     }
 
     @nonobjc public func fetchRequest() -> NSFetchRequest<MusicOrVideoItem> {
         return NSFetchRequest<MusicOrVideoItem>(entityName: "MusicOrVideoItem")
+    }
+    
+    func replaceItem(from srcURL: URL) {
+        do {
+            let fileManager = FileManager.default
+            let dstURL = FileManager.default.getTempDirectory().appendingPathComponent(self.fileName)
+            try fileManager.copyItem(at: srcURL, to: dstURL)
+            try fileManager.removeItem(at: srcURL)
+        } catch let error as NSError {
+            if error.code == NSFileWriteFileExistsError {
+                print("Error replace file. File exists. Trying to replace")
+            }
+        }
+    }
+    
+    fileprivate func convertToData(path: URL) -> Data {
+        do {
+            return try Data.init(contentsOf: path)
+        } catch {
+            fatalError("Can't convert file to data")
+        }
+    }
+    
+    fileprivate func convertToFile(data: Data, filename: String) {
+        do {
+            var filePathAndName = FileManager.default.getTempDirectory().absoluteString
+            filePathAndName.append(contentsOf: filename)
+            //filePathAndName.append(contentsOf: ".mp3")
+            let newUrl = URL(string: filePathAndName)!
+            try data.write(to: newUrl)
+        } catch {
+            fatalError("Can't convert data to file")
+        }
     }
 }
