@@ -66,6 +66,11 @@ class MusicOrVideoItem: NSManagedObject {
         }
     }
     
+    func hasLocalFile() ->Bool {
+        let fileUrl = FileManager.default.getTempDirectory().appendingPathComponent(self.fileName).path
+        return FileManager.default.fileExists(atPath: fileUrl)
+    }
+    
     fileprivate func convertToFile(data: Data, filename: String) {
         do {
             var filePathAndName = FileManager.default.getTempDirectory().absoluteString

@@ -30,7 +30,7 @@ class VideoAndMusicTableViewCell: UITableViewCell {
             fromLabelToImageTraling.isActive = false
         }
         
-        if checkHasLocalItem(fileName: item.fileName) {
+        if item.hasLocalFile() {
             downloadImage.isHidden = true
             fromLabelToSuperViewLeading.isActive = true
             fromLabelToImageLeading.isActive = false
@@ -39,12 +39,6 @@ class VideoAndMusicTableViewCell: UITableViewCell {
             fromLabelToSuperViewLeading.isActive = false
             fromLabelToImageLeading.isActive = true
         }
-    }
-    
-    fileprivate func checkHasLocalItem(fileName: String) ->Bool {
-        let fileUrl = FileManager.default.getTempDirectory().appendingPathComponent(fileName).path
-
-        return FileManager.default.fileExists(atPath: fileUrl)
     }
 
 }
