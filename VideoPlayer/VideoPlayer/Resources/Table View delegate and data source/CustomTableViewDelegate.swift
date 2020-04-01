@@ -21,8 +21,18 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
             let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
             musicOrVideoArrayProtocol.selectedItems(count: countOfSelected)
         } else {
-            tableView.deselectRow(at: indexPath, animated: true)
-            musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
+            let item = musicOrVideoArrayProtocol.itemsArray[indexPath.row]
+            if item.hasLocalFile() {
+                tableView.deselectRow(at: indexPath, animated: true)
+                musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
+            } else {
+                    tableView.deselectRow(at: indexPath, animated: true)
+                    CloudCoreData.loadFile(recordName: item.remoteId!, fileName: item.fileName, completion: {
+                        DispatchQueue.main.async {
+                            tableView.reloadData()
+                        }
+                    })
+            }
         }
     }
 

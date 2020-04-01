@@ -64,7 +64,8 @@ class CloudCoreData {
                                  isNew: isNew,
                                  stoppedTime: record.value(forKey: "stoppedTime") as? Double,
                                  localIdOptional: localId,
-                                 uploadedToCloud: true)
+                                 uploadedToCloud: true,
+                                 remoteId: record.recordID.recordName)
             try! privateQueue.save()
         }
         
@@ -73,6 +74,27 @@ class CloudCoreData {
             compleation?()
         }
         publicCloudDataBase.add(queryOperation)
+    }
+    
+    static func loadFile(recordName: String, fileName: String, completion: @escaping () -> Void) {
+        let fetchOperation = CKFetchRecordsOperation.init(recordIDs: [CKRecord.ID.init(recordName: recordName)])
+        fetchOperation.desiredKeys = ["songURL"]
+        fetchOperation.queuePriority = .normal
+        
+        fetchOperation.perRecordCompletionBlock = { (record, _, error) in
+            guard   error == nil,
+                    let asset = record?.value(forKey: "songURL") as? CKAsset,
+                    let songURL = asset.fileURL,
+                    let songData = try? Data.init(contentsOf: songURL) else {return}
+            MusicOrVideoItem.convertToFile(data: songData, filename: fileName)
+        }
+
+        //fetchOperation.perRecordProgressBlock//TODO: fix this
+        fetchOperation.completionBlock = {
+            completion()
+            print("✅ success loaded data")
+        }
+        publicCloudDataBase.add(fetchOperation)
     }
     
     static private func isThisNewElement(myLocalRecords: [MusicOrVideoItem], id: String) -> Bool {

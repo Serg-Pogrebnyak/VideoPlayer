@@ -22,16 +22,18 @@ class MusicOrVideoItem: NSManagedObject {
     @NSManaged public var uploadedToCloud: Bool
     @NSManaged public var stoppedTime: NSNumber?
     @NSManaged public var localId: String
+    @NSManaged public var remoteId: String?
 
     private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
     }
 
-    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil, localIdOptional: String? = nil, uploadedToCloud: Bool = false, filePathInDocumentFolder: URL? = nil) {
+    init(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil, localIdOptional: String? = nil, uploadedToCloud: Bool = false, filePathInDocumentFolder: URL? = nil, remoteId: String? = nil) {
         let entity = NSEntityDescription.entity(forEntityName: "MusicOrVideoItem", in: CoreManager.shared.coreManagerContext)!
         super.init(entity: entity, insertInto: CoreManager.shared.coreManagerContext)
         self.fileName = fileName
         self.isNew = isNew
+        self.remoteId = remoteId
         if let time = stoppedTime {
             self.stoppedTime = time as NSNumber
         } else {
@@ -71,13 +73,11 @@ class MusicOrVideoItem: NSManagedObject {
         return FileManager.default.fileExists(atPath: fileUrl)
     }
     
-    fileprivate func convertToFile(data: Data, filename: String) {
+    static func convertToFile(data: Data, filename: String) {
         do {
-            var filePathAndName = FileManager.default.getTempDirectory().absoluteString
-            filePathAndName.append(contentsOf: filename)
-            //filePathAndName.append(contentsOf: ".mp3")
-            let newUrl = URL(string: filePathAndName)!
-            try data.write(to: newUrl)
+            let filePathAndName = FileManager.default.getTempDirectory().appendingPathComponent(filename)
+            try data.write(to: filePathAndName)
+            print("✅ success saved to temp dir")
         } catch {
             fatalError("Can't convert data to file")
         }

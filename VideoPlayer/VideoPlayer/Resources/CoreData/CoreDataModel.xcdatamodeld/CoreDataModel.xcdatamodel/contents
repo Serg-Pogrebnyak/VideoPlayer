@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="MusicOrVideoItem" representedClassName=".MusicOrVideoItem" syncable="YES">
-        <attribute name="fileName" attributeType="String" defaultValueString="DefaultFileName"/>
+        <attribute name="fileName" optional="YES" attributeType="String"/>
         <attribute name="isNew" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="localId" attributeType="String" defaultValueString="DefaultLocalId"/>
+        <attribute name="remoteId" optional="YES" attributeType="String"/>
         <attribute name="stoppedTime" optional="YES" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="uploadedToCloud" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="MusicOrVideoItem" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="MusicOrVideoItem" positionX="-63" positionY="-18" width="128" height="133"/>
     </elements>
 </model>
