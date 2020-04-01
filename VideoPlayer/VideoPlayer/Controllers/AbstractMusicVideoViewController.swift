@@ -68,13 +68,12 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
         editAndCancelBarButtonItem.tintColor = UIColor.barColor
         self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
-
-//        CloudCoreData.fetchAllRecords(myLocalRecords: CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()){
-//            print(CoreManager.shared.getElementsArray()?.count)
-//        }
         
         checkNewLocaltemsAndUpdateLibrary()
         CloudCoreData.pushAllDataBaseToCloud()
+        CloudCoreData.fetchAllRecords(myLocalRecords: CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()){
+            self.checkNewLocaltemsAndUpdateLibrary()
+        }
     }
 
     fileprivate func checkNewLocaltemsAndUpdateLibrary() {
@@ -93,7 +92,9 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         
         itemsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
         filterItemsArray = itemsArray
-        childTableView.reloadData()
+        DispatchQueue.main.async {
+            self.childTableView.reloadData()
+        }
     }
 
     func unNewTrackAtIndex(_ index: Int) {

@@ -7,6 +7,7 @@
 //
 
 import CloudKit
+import CoreData
 
 class CloudCoreData {
     
@@ -48,26 +49,30 @@ class CloudCoreData {
     
     static func fetchAllRecords(myLocalRecords records: [MusicOrVideoItem], compleation: (() -> Void)? = nil) {
         let query = CKQuery(recordType: "MusicOrVideoItem", predicate: NSPredicate(value: true))
+        let privateQueue = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        privateQueue.parent = CoreManager.shared.coreManagerContext
+        let queryOperation = CKQueryOperation(query: query)
+        queryOperation.desiredKeys = ["fileName", "isNew", "stoppedTime", "localId"]
+        queryOperation.queuePriority = .veryHigh
+        queryOperation.recordFetchedBlock = { record in
+            let localId = record.value(forKey: "localId") as! String
+            guard isThisNewElement(myLocalRecords: records, id: localId) else {return}
+
+
+            let isNew = (record.value(forKey: "isNew") as! Int) == 1 ? true : false
+            _ = MusicOrVideoItem(fileName: record.value(forKey: "fileName") as! String,
+                                 isNew: isNew,
+                                 stoppedTime: record.value(forKey: "stoppedTime") as? Double,
+                                 localIdOptional: localId,
+                                 uploadedToCloud: true)
+            try! privateQueue.save()
+        }
         
-        publicCloudDataBase.perform(query, inZoneWith: nil) { (optionalRecordsArray, error) in
-            guard let recordsArray = optionalRecordsArray, error == nil else {return}
-            var newRecords = [MusicOrVideoItem]()
-            for item in recordsArray {
-                let localId = item.value(forKey: "localId") as! String
-                guard isThisNewElement(myLocalRecords: records, id: localId) else {continue}
-                
-                
-                let isNew = (item.value(forKey: "isNew") as! Int) == 1 ? true : false
-                let record = MusicOrVideoItem(fileName: item.value(forKey: "fileName") as! String,
-                                              isNew: isNew,
-                                              stoppedTime: item.value(forKey: "stoppedTime") as? Double,
-                                              localIdOptional: localId,
-                                              uploadedToCloud: true)
-                newRecords.append(record)
-            }
+        queryOperation.completionBlock = {
             CoreManager.shared.saveContext()
             compleation?()
         }
+        publicCloudDataBase.add(queryOperation)
     }
     
     static private func isThisNewElement(myLocalRecords: [MusicOrVideoItem], id: String) -> Bool {
