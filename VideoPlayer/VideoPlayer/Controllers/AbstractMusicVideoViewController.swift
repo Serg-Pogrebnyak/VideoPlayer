@@ -74,7 +74,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 //        }
         
         checkNewLocaltemsAndUpdateLibrary()
-//        CloudCoreData.pushAllDataBaseToCloud()
+        CloudCoreData.pushAllDataBaseToCloud()
     }
 
     fileprivate func checkNewLocaltemsAndUpdateLibrary() {

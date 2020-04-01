@@ -66,14 +66,6 @@ class MusicOrVideoItem: NSManagedObject {
         }
     }
     
-    fileprivate func convertToData(path: URL) -> Data {
-        do {
-            return try Data.init(contentsOf: path)
-        } catch {
-            fatalError("Can't convert file to data")
-        }
-    }
-    
     fileprivate func convertToFile(data: Data, filename: String) {
         do {
             var filePathAndName = FileManager.default.getTempDirectory().absoluteString

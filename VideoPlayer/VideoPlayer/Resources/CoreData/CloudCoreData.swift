@@ -14,15 +14,18 @@ class CloudCoreData {
     
     static func pushAllDataBaseToCloud() {
         let localObjectsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
-        
+
         for item in localObjectsArray {
             guard !item.uploadedToCloud else {continue}
+            let fileUrl = FileManager.default.getTempDirectory().appendingPathComponent(item.fileName)
+            let songAsset = CKAsset(fileURL: fileUrl)
             let musicOrVideoRecod = CKRecord(recordType: "MusicOrVideoItem")
             
             musicOrVideoRecod.setValue(item.fileName, forKey: "fileName")
             musicOrVideoRecod.setValue(item.isNew ? 1 : 0, forKey: "isNew")
             musicOrVideoRecod.setValue(item.stoppedTime, forKey: "stoppedTime")
             musicOrVideoRecod.setValue(item.localId, forKey: "localId")
+            musicOrVideoRecod.setValue(songAsset, forKey: "songURL")
 
             publicCloudDataBase.save(musicOrVideoRecod) { (savedItemOptional, error) in
                 guard error == nil, let savedItem = savedItemOptional else {return}
@@ -53,12 +56,13 @@ class CloudCoreData {
                 let localId = item.value(forKey: "localId") as! String
                 guard isThisNewElement(myLocalRecords: records, id: localId) else {continue}
                 
+                
                 let isNew = (item.value(forKey: "isNew") as! Int) == 1 ? true : false
                 let record = MusicOrVideoItem(fileName: item.value(forKey: "fileName") as! String,
-                                 isNew: isNew,
-                                 stoppedTime: item.value(forKey: "stoppedTime") as? Double,
-                                 localIdOptional: localId,
-                                 uploadedToCloud: true)
+                                              isNew: isNew,
+                                              stoppedTime: item.value(forKey: "stoppedTime") as? Double,
+                                              localIdOptional: localId,
+                                              uploadedToCloud: true)
                 newRecords.append(record)
             }
             CoreManager.shared.saveContext()
