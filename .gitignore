@@ -5,7 +5,8 @@
 ## Build generated
 build/
 DerivedData/
-
+*.mp3
+*.mp4
 ## Various settings
 *.pbxuser
 !default.pbxuser
