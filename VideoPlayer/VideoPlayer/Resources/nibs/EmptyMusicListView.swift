@@ -11,7 +11,7 @@ import Lottie
 
 class EmptyMusicListView: UIView, AbstractNibView, EmptyAnimatedViewProtocol {
 
-    @IBOutlet fileprivate weak var animationView: AnimationView!
+    @IBOutlet private weak var animationView: AnimationView!
 
     func startAnimation() {
         animationView.backgroundBehavior = .pauseAndRestore

@@ -11,9 +11,9 @@ import AVKit
 
 class VideoViewController: AbstractMusicVideoViewController {
 
-    @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
-    fileprivate var playerController : AVPlayerViewController!
+    private var playerController : AVPlayerViewController!
 
     override func viewDidLoad() {
         setSomeParameter(tableView: tableView, userDefaultsKey: "VideoList", itemExtension: ".mp4", view: EmptyVideoListView.loadFromNib())

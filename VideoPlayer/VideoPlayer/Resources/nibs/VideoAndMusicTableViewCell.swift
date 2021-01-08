@@ -11,13 +11,13 @@ import UIKit
 class VideoAndMusicTableViewCell: UITableViewCell {
 
 
-    @IBOutlet fileprivate weak var downloadImage: UIImageView!
-    @IBOutlet fileprivate weak var fileNameLabel: UILabel!
-    @IBOutlet fileprivate weak var newImage: UIImageView!
-    @IBOutlet fileprivate var fromLabelToSuperViewTraling: NSLayoutConstraint!
-    @IBOutlet fileprivate var fromLabelToImageTraling: NSLayoutConstraint!
-    @IBOutlet fileprivate var fromLabelToSuperViewLeading: NSLayoutConstraint!
-    @IBOutlet fileprivate var fromLabelToImageLeading: NSLayoutConstraint!
+    @IBOutlet private weak var downloadImage: UIImageView!
+    @IBOutlet private weak var fileNameLabel: UILabel!
+    @IBOutlet private weak var newImage: UIImageView!
+    @IBOutlet private var fromLabelToSuperViewTraling: NSLayoutConstraint!
+    @IBOutlet private var fromLabelToImageTraling: NSLayoutConstraint!
+    @IBOutlet private var fromLabelToSuperViewLeading: NSLayoutConstraint!
+    @IBOutlet private var fromLabelToImageLeading: NSLayoutConstraint!
     
     func setDataInCell(item: MusicOrVideoItem) {
         fileNameLabel.text = item.fileName

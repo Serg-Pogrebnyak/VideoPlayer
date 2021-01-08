@@ -25,28 +25,28 @@ extension PlayerViewDelegate {
 
 class PlayerView: UIView {
 
+    @IBOutlet private var backgroundView: UIView!
+    @IBOutlet private weak var playerLabel: UILabel!
+    @IBOutlet private weak var playAndPauseButton: UIButton!
+    @IBOutlet private weak var trackImage: UIImageView!
+    @IBOutlet private weak var currentTimeLabel: UILabel!
+    @IBOutlet private weak var remainingTimeLabel: UILabel!
+    @IBOutlet private weak var progressSlider: UISlider!
+
     weak var delegat: PlayerViewDelegate?
-
-    @IBOutlet fileprivate var backgroundView: UIView!
-    @IBOutlet fileprivate weak var playerLabel: UILabel!
-    @IBOutlet fileprivate weak var playAndPauseButton: UIButton!
-    @IBOutlet fileprivate weak var trackImage: UIImageView!
-    @IBOutlet fileprivate weak var currentTimeLabel: UILabel!
-    @IBOutlet fileprivate weak var remainingTimeLabel: UILabel!
-    @IBOutlet fileprivate weak var progressSlider: UISlider!
-
-    fileprivate var gradientLayer: CAGradientLayer!
-    fileprivate var timerForUpdateTiemLabel: Timer?
-    fileprivate var pausedTimer = false
+    
+    private var gradientLayer: CAGradientLayer!
+    private var timerForUpdateTiemLabel: Timer?
+    private var pausedTimer = false
     //animation property
     @available(iOS 10.0, *)
-    lazy fileprivate var animator = UIViewPropertyAnimator()
-    fileprivate var shouldBeViewHeight: CGFloat!
-    fileprivate var notVisiblePartOfView: CGFloat!
-    fileprivate let animationDuration: TimeInterval = 1
-    fileprivate let constraintAfterTrackView: CGFloat = 10
-    fileprivate var currentVisibleHeight: CGFloat!
-    fileprivate var shouldBeTrackImageHeight: CGFloat {
+    lazy private var animator = UIViewPropertyAnimator()
+    private var shouldBeViewHeight: CGFloat!
+    private var notVisiblePartOfView: CGFloat!
+    private let animationDuration: TimeInterval = 1
+    private let constraintAfterTrackView: CGFloat = 10
+    private var currentVisibleHeight: CGFloat!
+    private var shouldBeTrackImageHeight: CGFloat {
         return shouldBeViewHeight - 115 //115 because all constraint and element height before trackimageview in total
     }
     fileprivate var multiplier: CGFloat {

@@ -13,14 +13,14 @@ import MediaPlayer
 
 class MusicViewController: AbstractMusicVideoViewController {
     
-    @IBOutlet fileprivate weak var tableView: UITableView!
-    @IBOutlet fileprivate weak var playerView: PlayerView!
-    @IBOutlet fileprivate weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
-    @IBOutlet fileprivate weak var playerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var playerView: PlayerView!
+    @IBOutlet private weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var playerViewHeightConstraint: NSLayoutConstraint!
 
-    fileprivate let rewind = CMTime(seconds: 15, preferredTimescale: 1)
-    fileprivate var player = AVPlayer()
-    fileprivate var nowPlayingInfo = [String: Any]()
+    private let rewind = CMTime(seconds: 15, preferredTimescale: 1)
+    private var player = AVPlayer()
+    private var nowPlayingInfo = [String: Any]()
 
     override func viewDidLoad() {
 //        UserDefaults.standard.removeObject(forKey: "MusicList")

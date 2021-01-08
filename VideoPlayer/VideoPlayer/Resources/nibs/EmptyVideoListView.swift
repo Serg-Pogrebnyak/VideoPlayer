@@ -11,10 +11,9 @@ import Lottie
 
 class EmptyVideoListView: UIView, AbstractNibView, EmptyAnimatedViewProtocol {
 
-    @IBOutlet fileprivate weak var animationView: AnimationView!
+    @IBOutlet private weak var animationView: AnimationView!
 
     func startAnimation() {
-//        animationView.play()
         animationView.backgroundBehavior = .pauseAndRestore
         animationView.play()
     }
