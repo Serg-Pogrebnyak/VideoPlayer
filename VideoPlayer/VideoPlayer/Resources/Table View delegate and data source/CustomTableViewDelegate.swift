@@ -27,11 +27,11 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
                 musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
             } else {
                     tableView.deselectRow(at: indexPath, animated: true)
-                    CloudCoreData.loadFile(recordName: item.remoteId!, fileName: item.fileName, completion: {
-                        DispatchQueue.main.async {
-                            tableView.reloadData()
-                        }
-                    })
+//                    CloudCoreData.loadFile(recordName: item.remoteId!, fileName: item.fileName, completion: {
+//                        DispatchQueue.main.async {
+//                            tableView.reloadData()
+//                        }
+//                    })
             }
         }
     }

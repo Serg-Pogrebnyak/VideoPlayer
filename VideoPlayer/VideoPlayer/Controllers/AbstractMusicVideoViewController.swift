@@ -70,10 +70,10 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
         
         checkNewLocaltemsAndUpdateLibrary()
-        CloudCoreData.pushAllDataBaseToCloud()
-        CloudCoreData.fetchAllRecords(myLocalRecords: CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()){
-            self.checkNewLocaltemsAndUpdateLibrary()
-        }
+//        CloudCoreData.pushAllDataBaseToCloud()
+//        CloudCoreData.fetchAllRecords(myLocalRecords: CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()){
+//            self.checkNewLocaltemsAndUpdateLibrary()
+//        }
     }
 
     fileprivate func checkNewLocaltemsAndUpdateLibrary() {
