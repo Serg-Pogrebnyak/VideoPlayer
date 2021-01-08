@@ -41,39 +41,9 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     override func viewDidLoad() {
         super.viewDidLoad()
         checkAllWasSet()
-        childTableView.allowsMultipleSelectionDuringEditing = true
-        searchBar.delegate = self
-        //add tap recognizer for search bar
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
-        self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
-        //create navigation bar button
-        syncBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
-                                             style: .done,
-                                             target: self,
-                                             action: #selector(didTapSyncButton))
-        syncBarButtonItem.image = UIImage.init(named: "sync")
-        syncBarButtonItem.tintColor = UIColor.barColor
-        self.navigationItem.leftBarButtonItem = syncBarButtonItem
-
-        deleteBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.deleteButton.title"),
-                                              style: .done,
-                                              target: self,
-                                              action: #selector(didTapDeleteButton))
-        deleteBarButtonItem.tintColor = UIColor.red
-
-        editAndCancelBarButtonItem = UIBarButtonItem(title: navigationBarState.rawValue,
-                                                     style: .done,
-                                                     target: self,
-                                                     action: #selector(didTapEditAndCancelButton))
-        editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
-        editAndCancelBarButtonItem.tintColor = UIColor.barColor
-        self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
         
+        setupUI()
         checkNewLocaltemsAndUpdateLibrary()
-//        CloudCoreData.pushAllDataBaseToCloud()
-//        CloudCoreData.fetchAllRecords(myLocalRecords: CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()){
-//            self.checkNewLocaltemsAndUpdateLibrary()
-//        }
     }
 
     fileprivate func checkNewLocaltemsAndUpdateLibrary() {
@@ -142,9 +112,39 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         CoreManager.shared.saveContext()
     }
 
-    //MARK: - fileprivate functions
-    //bar batton actions--------------------------------------------------------------------------------------------------
-    @objc fileprivate func didTapDeleteButton(_ sender: Any) {
+    //MARK: - private functions
+    private func setupUI() {
+        childTableView.allowsMultipleSelectionDuringEditing = true
+        searchBar.delegate = self
+        //add tap recognizer for search bar
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
+        self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
+        //create navigation bar buttons
+        syncBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(didTapSyncButton))
+        syncBarButtonItem.image = UIImage.init(named: "sync")
+        syncBarButtonItem.tintColor = UIColor.barColor
+        self.navigationItem.leftBarButtonItem = syncBarButtonItem
+
+        deleteBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.deleteButton.title"),
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(didTapDeleteButton))
+        deleteBarButtonItem.tintColor = UIColor.red
+
+        editAndCancelBarButtonItem = UIBarButtonItem(title: navigationBarState.rawValue,
+                                                     style: .done,
+                                                     target: self,
+                                                     action: #selector(didTapEditAndCancelButton))
+        editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+        editAndCancelBarButtonItem.tintColor = UIColor.barColor
+        self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
+    }
+    
+    //MARK: bar batton actions
+    @objc private func didTapDeleteButton(_ sender: Any) {
         guard let array = childTableView.indexPathsForSelectedRows else {return}
         let reversedArray = array.reversed()
         for indexPath in reversedArray {
@@ -152,10 +152,12 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         }
         self.navigationItem.leftBarButtonItem = syncBarButtonItem
     }
-    @objc fileprivate func didTapSyncButton(_ sender: Any) {
+    
+    @objc private func didTapSyncButton(_ sender: Any) {
         checkNewLocaltemsAndUpdateLibrary()
     }
-    @objc fileprivate func didTapEditAndCancelButton(_ sender: Any) {
+    
+    @objc private func didTapEditAndCancelButton(_ sender: Any) {
         switch navigationBarState {
         case .cancel:
             self.view.endEditing(true)
@@ -171,7 +173,8 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             childTableView.isEditing = !childTableView.isEditing
         }
     }
-    @objc fileprivate func titleWasTapped() {
+    
+    @objc private func titleWasTapped() {
         if navigationItem.titleView == nil {
             navigationItem.titleView = searchBar
             searchBar.becomeFirstResponder()
@@ -180,9 +183,9 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
             editAndCancelBarButtonItem.title = navigationBarState.rawValue
         }
     }
-    //finished bar batton actions------------------------------------------------------------------------------------------
-
-    fileprivate func setupTableViewDelegateAndDataSource() {
+    
+    //MARK: Other private functions
+    private func setupTableViewDelegateAndDataSource() {
         customTableViewDelegate = CustomTableViewDelegate(protocolObject: self)
         customTableViewDataSource = CustomTableViewDataSource(protocolObject: self, emptyView: emptyView)
         childTableView.delegate = customTableViewDelegate
@@ -191,13 +194,14 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         childTableView.register(nib, forCellReuseIdentifier: "MusicCell")
     }
 
-    fileprivate func checkAllWasSet() {
+    private func checkAllWasSet() {
         assert(childTableView != nil)
         assert(itemUserDefaultsKey != nil)
         assert(itemExtension != nil)
     }
 }
 
+//MARK: - UISearchBarDelegate
 extension AbstractMusicVideoViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         childTableView.reloadData()
