@@ -599,7 +599,7 @@
 			baseConfigurationReference = BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = VideoPlayer/NIXPlayer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9B6M85MQ7J;
@@ -622,7 +622,7 @@
 			baseConfigurationReference = 2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = VideoPlayer/NIXPlayer.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9B6M85MQ7J;
