@@ -16,7 +16,7 @@ class VideoViewController: AbstractMusicVideoViewController {
     private var playerController : AVPlayerViewController!
 
     override func viewDidLoad() {
-        setSomeParameter(tableView: tableView, userDefaultsKey: "VideoList", itemExtension: ".mp4", view: EmptyVideoListView.loadFromNib())
+        setSomeParameter(tableView: tableView, itemExtension: ".mp4", view: EmptyVideoListView.loadFromNib())
         super.viewDidLoad()
         //UserDefaults.standard.removeObject(forKey: videoUserDefaultsKey)
     }

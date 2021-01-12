@@ -11,26 +11,40 @@ import Foundation
 import AVFoundation
 import MediaPlayer
 
-class MusicViewController: AbstractMusicVideoViewController {
+class MusicViewController: UIViewController {
+    
+    private enum NavigationBarButtonStateEnum: String {
+        case edit = "Edit"
+        case cancel = "Cancel"
+    }
     
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var playerView: PlayerView!
     @IBOutlet private weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
     @IBOutlet private weak var playerViewHeightConstraint: NSLayoutConstraint!
-
+    
+    private var syncBarButtonItem: UIBarButtonItem!
+    private var deleteBarButtonItem: UIBarButtonItem!
+    private var editAndCancelBarButtonItem: UIBarButtonItem!
+    lazy private var searchBar = UISearchBar(frame: CGRect.zero)
+    
+    private var navigationBarState = NavigationBarButtonStateEnum.edit
+    private var itemsArray = [MusicOrVideoItem]()
+    private var filterItemsArray = [MusicOrVideoItem]()
     private let rewind = CMTime(seconds: 15, preferredTimescale: 1)
     private var player = AVPlayer()
     private var nowPlayingInfo = [String: Any]()
+    private var indexOfCurrentItem: Int?
 
     override func viewDidLoad() {
-//        UserDefaults.standard.removeObject(forKey: "MusicList")
-        setSomeParameter(tableView: tableView, userDefaultsKey: "MusicList", itemExtension: ".mp3", view: EmptyMusicListView.loadFromNib())
         super.viewDidLoad()
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
         playerView.delegat = self
         setupRemoteCommandCenter()
+        checkNewLocaltemsAndUpdateLibrary()
+        setupUI()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -41,6 +55,79 @@ class MusicViewController: AbstractMusicVideoViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         playerView.finishedAnimation()
+    }
+    
+    private func setupUI() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.allowsMultipleSelectionDuringEditing = true
+        searchBar.delegate = self
+        //add tap recognizer for search bar
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(titleWasTapped))
+        self.navigationController?.navigationBar.addGestureRecognizer(recognizer)
+        //create navigation bar buttons
+        syncBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(didTapSyncButton))
+        syncBarButtonItem.image = UIImage.init(named: "sync")
+        syncBarButtonItem.tintColor = UIColor.barColor
+        self.navigationItem.leftBarButtonItem = syncBarButtonItem
+
+        deleteBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.deleteButton.title"),
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(didTapDeleteButton))
+        deleteBarButtonItem.tintColor = UIColor.red
+
+        editAndCancelBarButtonItem = UIBarButtonItem(title: navigationBarState.rawValue,
+                                                     style: .done,
+                                                     target: self,
+                                                     action: #selector(didTapEditAndCancelButton))
+        editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+        editAndCancelBarButtonItem.tintColor = UIColor.barColor
+        self.navigationItem.rightBarButtonItem = editAndCancelBarButtonItem
+    }
+    
+    //MARK: bar batton actions
+    @objc private func didTapDeleteButton(_ sender: Any) {
+        guard let array = tableView.indexPathsForSelectedRows else {return}
+        let reversedArray = array.reversed()
+        for indexPath in reversedArray {
+            removeItem(atIndex: indexPath.row)
+        }
+        self.navigationItem.leftBarButtonItem = syncBarButtonItem
+    }
+    
+    @objc private func didTapSyncButton(_ sender: Any) {
+        checkNewLocaltemsAndUpdateLibrary()
+    }
+    
+    @objc private func didTapEditAndCancelButton(_ sender: Any) {
+        switch navigationBarState {
+        case .cancel:
+            self.view.endEditing(true)
+            navigationBarState = .edit
+            editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+            editAndCancelBarButtonItem.title = navigationBarState.rawValue
+            navigationItem.titleView = nil
+        case .edit:
+            self.navigationItem.leftBarButtonItem = syncBarButtonItem
+            if tableView.isEditing {
+                 saveChanges()
+            }
+            tableView.isEditing = !tableView.isEditing
+        }
+    }
+    
+    @objc private func titleWasTapped() {
+        if navigationItem.titleView == nil {
+            navigationItem.titleView = searchBar
+            searchBar.becomeFirstResponder()
+            navigationBarState = .cancel
+            editAndCancelBarButtonItem.image = UIImage.init(named: navigationBarState.rawValue)
+            editAndCancelBarButtonItem.title = navigationBarState.rawValue
+        }
     }
 
     //MARK: - overrided functions
@@ -57,7 +144,7 @@ class MusicViewController: AbstractMusicVideoViewController {
         updateInformationOnLockScreen()
     }
 
-    override func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
+    func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
         guard   !itemsArray.isEmpty,
                 index >= 0,
                 index < itemsArray.count
@@ -79,7 +166,7 @@ class MusicViewController: AbstractMusicVideoViewController {
     }
 
     //MARK: setup remote command for display buttons on lock screen and in menu
-    fileprivate func setupRemoteCommandCenter() {
+    private func setupRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.changePlaybackPositionCommand.isEnabled = true
         commandCenter.changePlaybackPositionCommand.addTarget { [weak self] (object) -> MPRemoteCommandHandlerStatus in
@@ -121,9 +208,30 @@ class MusicViewController: AbstractMusicVideoViewController {
             }
         }
     }
+    
+    private func checkNewLocaltemsAndUpdateLibrary() {
+        itemsArray.removeAll()
+
+        let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
+                                                                                fileExtension: ".mp3") ?? [URL]()
+        var newObects = [MusicOrVideoItem]()
+        
+        for URLofItem in musicOrVideoURLArray {
+            let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent, filePathInDocumentFolder: URLofItem)
+            musicItem.isNew = true
+            newObects.append(musicItem)
+        }
+        CoreManager.shared.saveContext()
+        
+        itemsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
+        filterItemsArray = itemsArray
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 
     //MARK: setup information about track on lock screen and in menu
-    fileprivate func displayMusicInfo(fileUrl: URL) {
+    private func displayMusicInfo(fileUrl: URL) {
         nowPlayingInfo = [String: Any]()
         var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
         let asset = AVAsset(url: fileUrl) as AVAsset
@@ -160,13 +268,13 @@ class MusicViewController: AbstractMusicVideoViewController {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 
-    fileprivate func updateInformationOnLockScreen() {
+    private func updateInformationOnLockScreen() {
         print(player.currentTime().stringSeconds)
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds as CFNumber
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 
-    @objc fileprivate func playerDidFinishPlay() {
+    @objc private func playerDidFinishPlay() {
         guard   let index = indexOfCurrentItem,
                 index + 1 <= itemsArray.count - 1
         else {return}
@@ -174,11 +282,46 @@ class MusicViewController: AbstractMusicVideoViewController {
         startPlay(atIndex: index+1)
     }
 
-    fileprivate func rewindPlayerItemTo(_ rewindTo: CMTime) {
+    private func rewindPlayerItemTo(_ rewindTo: CMTime) {
         guard player.currentItem != nil else {return}
         player.seek(to: rewindTo) { [weak self] (flag) in
             guard let self = self, flag else {return}
             self.updateInformationOnLockScreen()
+        }
+    }
+    
+    private func unNewTrackAtIndex(_ index: Int) {
+        guard itemsArray[index].isNew else {return}
+        itemsArray[index].isNew = false
+        saveChanges()
+        tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
+    }
+    
+    private func selectedItems(count: Int) {
+        if count > 0 {
+            let buttonTitle = LocalizationManager.shared.getText("NavigationBar.deleteButton.title")
+            deleteBarButtonItem.title = buttonTitle + "(\(count))"
+            self.navigationItem.leftBarButtonItem = deleteBarButtonItem
+        } else {
+            self.navigationItem.leftBarButtonItem = syncBarButtonItem
+        }
+    }
+    
+    private func saveChanges() {
+        CoreManager.shared.saveContext()
+    }
+    
+    private func removeItem(atIndex index: Int) {
+        do {
+            let url = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+            try FileManager.default.removeItem(at: url)
+            let removedObject = itemsArray.remove(at: index)
+            filterItemsArray.remove(at: index)
+            tableView.reloadData()
+            CoreManager.shared.coreManagerContext.delete(removedObject)
+            saveChanges()
+        } catch {
+            showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
         }
     }
 }
@@ -239,5 +382,123 @@ extension MusicViewController: PlayerViewDelegate {
             return
         }
         self.startPlay(atIndex: index+1)
+    }
+}
+
+//MARK: - UISearchBarDelegate
+extension MusicViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        tableView.reloadData()
+    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let trimmedString = searchText
+        self.itemsArray.removeAll()
+
+        if trimmedString.isEmpty {
+            self.itemsArray = self.filterItemsArray
+        }else{
+            self.itemsArray = self.filterItemsArray.filter({ (musicItem) -> Bool in
+                return musicItem.fileName.contains(trimmedString)
+            })
+        }
+        tableView.reloadData()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchBar.resignFirstResponder()
+        tableView.reloadData()
+    }
+}
+
+extension MusicViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
+            selectedItems(count: countOfSelected)
+        } else {
+            let item = itemsArray[indexPath.row]
+            if item.hasLocalFile() {
+                tableView.deselectRow(at: indexPath, animated: true)
+                startPlay(atIndex: indexPath.row, autoPlay: true)
+            } else {
+                    tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
+            selectedItems(count: countOfSelected)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "") { [weak self] (action, indexPath) in
+            self?.removeItem(atIndex: indexPath.row)
+        }
+        deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "trash")!)
+
+        return [deleteAction]
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0
+    }
+}
+
+extension MusicViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if itemsArray.isEmpty {
+            let emptyView = EmptyMusicListView.loadFromNib()
+            tableView.backgroundView = emptyView
+            emptyView.startAnimation()
+        } else {
+            tableView.backgroundView = nil
+        }
+        return itemsArray.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath) as! VideoAndMusicTableViewCell
+        cell.setDataInCell(item: itemsArray[indexPath.row])
+        return cell
+    }
+
+    // MARK: - Table view cell moving
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let movedMusicItem = itemsArray[sourceIndexPath.row]
+        itemsArray.remove(at: sourceIndexPath.row)
+        movedMusicItem.isNew = false
+        itemsArray.insert(movedMusicItem, at: destinationIndexPath.row)
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let path = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[indexPath.row].fileName, isDirectory: false)
+            do {
+                try FileManager.default.removeItem(at: path)
+                itemsArray.remove(at: indexPath.row)
+                tableView.reloadData()
+            } catch {
+                showErrorAlertWithMessageByKey("Alert.Message.FileNotFound")
+            }
+        }
     }
 }

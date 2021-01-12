@@ -30,7 +30,6 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     //shouldbe same unique for music or video VC
     internal var emptyView: EmptyAnimatedViewProtocol!
-    internal var itemUserDefaultsKey: String!
     internal var itemExtension: String!
     private var childTableView: UITableView! {
         didSet {
@@ -74,10 +73,9 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         childTableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
     }
 
-    func setSomeParameter(tableView table: UITableView, userDefaultsKey: String, itemExtension: String, view: EmptyAnimatedViewProtocol) {
+    func setSomeParameter(tableView table: UITableView, itemExtension: String, view: EmptyAnimatedViewProtocol) {
         emptyView = view
         childTableView = table
-        itemUserDefaultsKey = userDefaultsKey
         self.itemExtension = itemExtension
     }
 
@@ -196,7 +194,6 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     private func checkAllWasSet() {
         assert(childTableView != nil)
-        assert(itemUserDefaultsKey != nil)
         assert(itemExtension != nil)
     }
 }
