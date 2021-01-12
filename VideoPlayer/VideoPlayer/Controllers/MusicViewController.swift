@@ -210,21 +210,18 @@ class MusicViewController: UIViewController {
     }
     
     private func checkNewLocaltemsAndUpdateLibrary() {
-        itemsArray.removeAll()
-
         let musicURLS = FileManager.default.getFilesFromDocumentDirectory(withFileExtension: ".mp3")
 
         var newObects = [MusicOrVideoItem]()
         
         for itemURL in musicURLS {
-            guard let musicItem = MusicOrVideoItem.init(fileName: itemURL.lastPathComponent,
-                                                  filePathInDocumentFolder: itemURL)
-            else {
+            let itemName = itemURL.lastPathComponent
+            guard FileManager.default.replaceItemInTempFolder(from: itemURL, fileName: itemName) else {
                 //TODO: show user error
                 continue
             }
             
-            musicItem.isNew = true
+            let musicItem = MusicOrVideoItem.init(fileName: itemName)
             newObects.append(musicItem)
         }
         CoreManager.shared.saveContext()

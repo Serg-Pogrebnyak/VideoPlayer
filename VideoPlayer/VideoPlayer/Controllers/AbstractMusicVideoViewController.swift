@@ -53,14 +53,14 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         var newObects = [MusicOrVideoItem]()
         
         for URLofItem in musicOrVideoURLArray {
-            guard let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent,
-                                                        filePathInDocumentFolder: URLofItem)
-            else {
-                //TODO: show user error
-                continue
-            }
-            musicItem.isNew = true
-            newObects.append(musicItem)
+//            guard let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent,
+//                                                        filePathInDocumentFolder: URLofItem)
+//            else {
+//                //TODO: show user error
+//                continue
+//            }
+//            musicItem.isNew = true
+//            newObects.append(musicItem)
         }
         CoreManager.shared.saveContext()
         

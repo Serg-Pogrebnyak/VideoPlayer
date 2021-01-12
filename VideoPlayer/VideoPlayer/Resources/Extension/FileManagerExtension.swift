@@ -28,7 +28,7 @@ extension FileManager {
         return fileURLs.filter{$0.lastPathComponent.contains(fileExtension)}
     }
     
-    func replaceItem(from srcURL: URL, fileName: String) -> Bool {
+    func replaceItemInTempFolder(from srcURL: URL, fileName: String) -> Bool {
         do {
             let dstURL = tempDirectory.appendingPathComponent(fileName)
             try copyItem(at: srcURL, to: dstURL)

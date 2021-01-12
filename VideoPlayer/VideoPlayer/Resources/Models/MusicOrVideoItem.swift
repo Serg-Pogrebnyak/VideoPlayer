@@ -28,30 +28,15 @@ final class MusicOrVideoItem: NSManagedObject {
     private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
     }
-
-    init?(fileName: String, isNew: Bool = false, stoppedTime: Double? = nil, localIdOptional: String? = nil, uploadedToCloud: Bool = false, filePathInDocumentFolder: URL? = nil, remoteId: String? = nil) {
+    
+    init(fileName: String) {
         let entity = NSEntityDescription.entity(forEntityName: "MusicOrVideoItem", in: CoreManager.shared.coreManagerContext)!
         super.init(entity: entity, insertInto: CoreManager.shared.coreManagerContext)
         self.fileName = fileName
-        self.isNew = isNew
-        self.remoteId = remoteId
-        if let time = stoppedTime {
-            self.stoppedTime = time as NSNumber
-        } else {
-            self.stoppedTime = nil
-        }
-        
-        if let localId = localIdOptional {
-            self.localId = localId
-        } else {
-            self.localId = UUID().uuidString
-        }
-        
-        guard let filePath = filePathInDocumentFolder else { return }
-        
-        if !FileManager.default.replaceItem(from: filePath, fileName: fileName) {
-            return nil
-        }
+        self.isNew = true
+        self.remoteId = nil
+        self.stoppedTime = nil
+        self.localId = UUID().uuidString
     }
 
     @nonobjc public func fetchRequest() -> NSFetchRequest<MusicOrVideoItem> {
