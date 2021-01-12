@@ -48,12 +48,17 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     fileprivate func checkNewLocaltemsAndUpdateLibrary() {
         itemsArray.removeAll()
 
-        let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
-                                                                                fileExtension: itemExtension) ?? [URL]()
+        let musicOrVideoURLArray = FileManager.default.getFilesFromDocumentDirectory(withFileExtension: itemExtension)
+        
         var newObects = [MusicOrVideoItem]()
         
         for URLofItem in musicOrVideoURLArray {
-            let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent, filePathInDocumentFolder: URLofItem)
+            guard let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent,
+                                                        filePathInDocumentFolder: URLofItem)
+            else {
+                //TODO: show user error
+                continue
+            }
             musicItem.isNew = true
             newObects.append(musicItem)
         }
@@ -94,7 +99,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     func removeItem(atIndex index: Int) {
         do {
-            let url = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+            let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
             try FileManager.default.removeItem(at: url)
             let removedObject = itemsArray.remove(at: index)
             filterItemsArray.remove(at: index)

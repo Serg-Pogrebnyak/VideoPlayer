@@ -152,7 +152,7 @@ class MusicViewController: UIViewController {
 
         indexOfCurrentItem = index
         unNewTrackAtIndex(index)
-        let url = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+        let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
 
         let playerItem = AVPlayerItem(url: url)
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlay), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
@@ -212,12 +212,18 @@ class MusicViewController: UIViewController {
     private func checkNewLocaltemsAndUpdateLibrary() {
         itemsArray.removeAll()
 
-        let musicOrVideoURLArray = FileManager.default.getAllFilesWithExtension(directory: .documentDirectory,
-                                                                                fileExtension: ".mp3") ?? [URL]()
+        let musicURLS = FileManager.default.getFilesFromDocumentDirectory(withFileExtension: ".mp3")
+
         var newObects = [MusicOrVideoItem]()
         
-        for URLofItem in musicOrVideoURLArray {
-            let musicItem = MusicOrVideoItem.init(fileName: URLofItem.lastPathComponent, filePathInDocumentFolder: URLofItem)
+        for itemURL in musicURLS {
+            guard let musicItem = MusicOrVideoItem.init(fileName: itemURL.lastPathComponent,
+                                                  filePathInDocumentFolder: itemURL)
+            else {
+                //TODO: show user error
+                continue
+            }
+            
             musicItem.isNew = true
             newObects.append(musicItem)
         }
@@ -313,7 +319,7 @@ class MusicViewController: UIViewController {
     
     private func removeItem(atIndex index: Int) {
         do {
-            let url = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+            let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
             try FileManager.default.removeItem(at: url)
             let removedObject = itemsArray.remove(at: index)
             filterItemsArray.remove(at: index)
@@ -423,7 +429,7 @@ extension MusicViewController: UITableViewDelegate {
             selectedItems(count: countOfSelected)
         } else {
             let item = itemsArray[indexPath.row]
-            if item.hasLocalFile() {
+            if FileManager.default.hasLocalFile(fileName: item.fileName) {
                 tableView.deselectRow(at: indexPath, animated: true)
                 startPlay(atIndex: indexPath.row, autoPlay: true)
             } else {
@@ -491,7 +497,8 @@ extension MusicViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let path = FileManager.default.getTempDirectory().appendingPathComponent(itemsArray[indexPath.row].fileName, isDirectory: false)
+            let path = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[indexPath.row].fileName,
+                                                                        isDirectory: false)
             do {
                 try FileManager.default.removeItem(at: path)
                 itemsArray.remove(at: indexPath.row)

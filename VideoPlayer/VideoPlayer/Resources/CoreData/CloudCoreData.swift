@@ -18,7 +18,7 @@ class CloudCoreData {
 
         for item in localObjectsArray {
             guard !item.uploadedToCloud else {continue}
-            let fileUrl = FileManager.default.getTempDirectory().appendingPathComponent(item.fileName)
+            let fileUrl = FileManager.default.tempDirectory.appendingPathComponent(item.fileName)
             let songAsset = CKAsset(fileURL: fileUrl)
             let musicOrVideoRecod = CKRecord(recordType: "MusicOrVideoItem")
             
@@ -86,7 +86,7 @@ class CloudCoreData {
                     let asset = record?.value(forKey: "songURL") as? CKAsset,
                     let songURL = asset.fileURL,
                     let songData = try? Data.init(contentsOf: songURL) else {return}
-            MusicOrVideoItem.convertToFile(data: songData, filename: fileName)
+            FileManager.default.convertToFile(data: songData, filename: fileName)
         }
 
         //fetchOperation.perRecordProgressBlock//TODO: fix this

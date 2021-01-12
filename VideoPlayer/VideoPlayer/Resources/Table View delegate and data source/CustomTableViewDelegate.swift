@@ -22,7 +22,7 @@ class CustomTableViewDelegate: NSObject, UITableViewDelegate {
             musicOrVideoArrayProtocol.selectedItems(count: countOfSelected)
         } else {
             let item = musicOrVideoArrayProtocol.itemsArray[indexPath.row]
-            if item.hasLocalFile() {
+            if FileManager.default.hasLocalFile(fileName: item.fileName) {
                 tableView.deselectRow(at: indexPath, animated: true)
                 musicOrVideoArrayProtocol.startPlay(atIndex: indexPath.row, autoPlay: true)
             } else {

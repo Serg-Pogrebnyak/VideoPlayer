@@ -30,7 +30,7 @@ class VideoAndMusicTableViewCell: UITableViewCell {
             fromLabelToImageTraling.isActive = false
         }
         
-        if item.hasLocalFile() {
+        if FileManager.default.hasLocalFile(fileName: item.fileName) {
             downloadImage.isHidden = true
             fromLabelToSuperViewLeading.isActive = true
             fromLabelToImageLeading.isActive = false

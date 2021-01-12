@@ -8,19 +8,57 @@
 
 import Foundation
 
-extension FileManager {    
-    func getAllFilesWithExtension(directory: FileManager.SearchPathDirectory, skipsHiddenFiles: Bool = true, fileExtension: String) -> [URL]? {
-        let documentsURL = urls(for: directory, in: .userDomainMask)[0]
-        let fileURLs = try? contentsOfDirectory(at: documentsURL,
-                                                includingPropertiesForKeys: nil,
-                                                options: skipsHiddenFiles ? .skipsHiddenFiles : [] )
-        let filteredFiles = fileURLs?.filter{$0.lastPathComponent.contains(fileExtension)}
+extension FileManager {
+    func getFilesFromDocumentDirectory(withFileExtension fileExtension: String) -> [URL] {
+        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
         
-        return filteredFiles
+        guard let documentsURL = urls(for: documentDirectory, in: .userDomainMask).first else {
+            //TODO: write error
+            return [URL]()
+        }
+        
+        guard let fileURLs = try? contentsOfDirectory(at: documentsURL,
+                                                      includingPropertiesForKeys: nil,
+                                                      options: .skipsHiddenFiles)
+        else {
+            //TODO: write error
+            return [URL]()
+        }
+        
+        return fileURLs.filter{$0.lastPathComponent.contains(fileExtension)}
     }
     
-    func getTempDirectory() -> URL {
-        return FileManager.default.temporaryDirectory
+    func replaceItem(from srcURL: URL, fileName: String) -> Bool {
+        do {
+            let dstURL = tempDirectory.appendingPathComponent(fileName)
+            try copyItem(at: srcURL, to: dstURL)
+            try removeItem(at: srcURL)
+            return true
+        } catch let error as NSError {
+            if error.code == NSFileWriteFileExistsError {
+                //TODO: write error
+            }
+            return false
+        }
+    }
+    
+    func hasLocalFile(fileName: String) -> Bool {
+        let fileUrl = tempDirectory.appendingPathComponent(fileName).path
+        return FileManager.default.fileExists(atPath: fileUrl)
+    }
+    
+    func convertToFile(data: Data, filename: String) {
+        do {
+            let filePathAndName = FileManager.default.tempDirectory.appendingPathComponent(filename)
+            try data.write(to: filePathAndName)
+        } catch {
+            fatalError("Can't convert data to file")
+        }
+        //TODO: return result of converting
+    }
+    
+    var tempDirectory: URL {
+        FileManager.default.temporaryDirectory
     }
     
 }
