@@ -10,42 +10,22 @@ import UIKit
 
 extension UIColor {
     static var barColor: UIColor {
-        if #available(iOS 11.0, *) {
-            return UIColor.init(named: "barColor")!
-        } else {
-            return .black
-        }
+        return UIColor.init(named: "barColor")!
     }
 
     static var thumbBorderColor: UIColor {
-        if #available(iOS 11.0, *) {
-            return UIColor.init(named: "thumbBorderColor")!
-        } else {
-            return .black
-        }
+        return UIColor.init(named: "thumbBorderColor")!
     }
 
     static var thumbBackgroundColor: UIColor {
-        if #available(iOS 11.0, *) {
-            return UIColor.init(named: "thumbBackgroundColor")!
-        } else {
-            return .white
-        }
+        return UIColor.init(named: "thumbBackgroundColor")!
     }
 
     static var topGradientColor : UIColor {
-        if #available(iOS 11.0, *) {
-            return UIColor.init(named: "topGradient")!
-        } else {
-            return UIColor(red: 255.0/255.0, green: 149.0/255.0, blue: 0.0/255.0, alpha: 1.0)
-        }
+        return UIColor.init(named: "topGradient")!
     }
 
     static var bottomGradientColor : UIColor {
-        if #available(iOS 11.0, *) {
-            return UIColor.init(named: "bottomGradient")!
-        } else {
-            return UIColor(red: 255.0/255.0, green: 94.0/255.0, blue: 58.0/255.0, alpha: 1.0)
-        }
+        return UIColor.init(named: "bottomGradient")!
     }
 }

@@ -146,15 +146,10 @@ class MusicViewController: AbstractMusicVideoViewController {
         }
 
         nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
-
-        let artwork: MPMediaItemArtwork!
-        if #available(iOS 10.0, *) {
-            artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
-                return imageForPlayerView
-            })
-        } else {
-            artwork = MPMediaItemArtwork.init(image: imageForPlayerView)
-        }
+        
+        let artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
+            return imageForPlayerView
+        })
 
         nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
 

@@ -39,7 +39,6 @@ class PlayerView: UIView {
     private var timerForUpdateTiemLabel: Timer?
     private var pausedTimer = false
     //animation property
-    @available(iOS 10.0, *)
     lazy private var animator = UIViewPropertyAnimator()
     private var shouldBeViewHeight: CGFloat!
     private var notVisiblePartOfView: CGFloat!
@@ -78,15 +77,11 @@ class PlayerView: UIView {
         super.layoutSubviews()
         gradientLayer?.frame = self.bounds
         gradientLayer?.roundCorners(corners: [.topLeft, .topRight], radius: 20)
-        if #available(iOS 10.0, *) {
-            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
-        }
+        animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
     }
 
     func finishedAnimation() {
-        if #available(iOS 10.0, *) {
-            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
-        }
+        animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
     }
 
     func setGradientBackground() {
@@ -150,7 +145,6 @@ class PlayerView: UIView {
     }
 
     //MARK: - animation
-    @available(iOS 10.0, *)
     @IBAction fileprivate func panGestureRecognizerAction(_ sender: UIPanGestureRecognizer) {
         guard shouldBeViewHeight != nil && notVisiblePartOfView != nil else {return}
         switch sender.state {
@@ -196,7 +190,6 @@ class PlayerView: UIView {
         }
     }
 
-    @available(iOS 10.0, *)
     fileprivate func createAnimation() -> UIViewPropertyAnimator {
         if currentVisibleHeight == nil {
             currentVisibleHeight = trackImage.frame.height
@@ -227,7 +220,7 @@ class PlayerView: UIView {
 
     @objc fileprivate func getNewTimeFromDelegate() {
         guard let object = delegat?.updateTimeLabel(), !pausedTimer else {return}
-        let duration = roundl(object.1)
+        let duration = round(object.1)
         currentTimeLabel.text = object.0.stringFromTimeInterval()
         remainingTimeLabel.text = (duration-object.0).stringFromTimeInterval()
         progressSlider.maximumValue = Float(duration)

@@ -17,20 +17,11 @@ extension UISlider {
         thumb.layer.cornerRadius = radius / 2
 
         let image: UIImage!
-        if #available(iOS 10.0, *) {
-            thumb.layer.borderWidth = 0.4
-            thumb.layer.borderColor = UIColor.thumbBorderColor.cgColor
-            let renderer = UIGraphicsImageRenderer(bounds: thumb.bounds)
-            image = renderer.image { rendererContext in
-                thumb.layer.render(in: rendererContext.cgContext)
-            }
-        } else {
-            var layer: CALayer = CALayer()
-            layer = thumb.layer
-            UIGraphicsBeginImageContext(thumb.bounds.size)
-            layer.render(in: UIGraphicsGetCurrentContext()!)
-            image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+        thumb.layer.borderWidth = 0.4
+        thumb.layer.borderColor = UIColor.thumbBorderColor.cgColor
+        let renderer = UIGraphicsImageRenderer(bounds: thumb.bounds)
+        image = renderer.image { rendererContext in
+            thumb.layer.render(in: rendererContext.cgContext)
         }
 
         self.setThumbImage(image, for: .normal)
