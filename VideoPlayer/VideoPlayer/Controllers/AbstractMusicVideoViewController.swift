@@ -22,17 +22,17 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
     internal var navigationBarState = NavigationBarButtonStateEnum.edit
     internal var indexOfCurrentItem: Int?
 
-    fileprivate var syncBarButtonItem: UIBarButtonItem!
-    fileprivate var deleteBarButtonItem: UIBarButtonItem!
-    fileprivate var editAndCancelBarButtonItem: UIBarButtonItem!
-    fileprivate var customTableViewDelegate: CustomTableViewDelegate!
-    fileprivate var customTableViewDataSource: CustomTableViewDataSource!
+    private var syncBarButtonItem: UIBarButtonItem!
+    private var deleteBarButtonItem: UIBarButtonItem!
+    private var editAndCancelBarButtonItem: UIBarButtonItem!
+    private var customTableViewDelegate: CustomTableViewDelegate!
+    private var customTableViewDataSource: CustomTableViewDataSource!
 
     //shouldbe same unique for music or video VC
     internal var emptyView: EmptyAnimatedViewProtocol!
     internal var itemUserDefaultsKey: String!
     internal var itemExtension: String!
-    fileprivate var childTableView: UITableView! {
+    private var childTableView: UITableView! {
         didSet {
             setupTableViewDelegateAndDataSource()
         }
