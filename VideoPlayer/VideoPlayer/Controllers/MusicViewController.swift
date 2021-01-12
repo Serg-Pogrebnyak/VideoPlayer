@@ -30,7 +30,7 @@ class MusicViewController: UIViewController {
     
     private var navigationBarState = NavigationBarButtonStateEnum.edit
     private var itemsArray = [MusicOrVideoItem]()
-    private var filterItemsArray = [MusicOrVideoItem]()
+    private var itemsSet = Set<MusicOrVideoItem>()
     private let rewind = CMTime(seconds: 15, preferredTimescale: 1)
     private var player = AVPlayer()
     private var nowPlayingInfo = [String: Any]()
@@ -94,7 +94,7 @@ class MusicViewController: UIViewController {
         guard let array = tableView.indexPathsForSelectedRows else {return}
         let reversedArray = array.reversed()
         for indexPath in reversedArray {
-            removeItem(atIndex: indexPath.row)
+            removeMediaItem(atIndex: indexPath.row)
         }
         self.navigationItem.leftBarButtonItem = syncBarButtonItem
     }
@@ -229,8 +229,8 @@ class MusicViewController: UIViewController {
         }
         CoreManager.shared.saveContext()
         
-        itemsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
-        filterItemsArray = itemsArray
+        itemsSet = CoreManager.shared.getMediaItems()
+        itemsArray = Array(itemsSet)
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -317,16 +317,14 @@ class MusicViewController: UIViewController {
         CoreManager.shared.saveContext()
     }
     
-    private func removeItem(atIndex index: Int) {
-        do {
-            let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
-            try FileManager.default.removeItem(at: url)
-            let removedObject = itemsArray.remove(at: index)
-            filterItemsArray.remove(at: index)
-            tableView.reloadData()
-            CoreManager.shared.coreManagerContext.delete(removedObject)
-            saveChanges()
-        } catch {
+    private func removeMediaItem(atIndex index: Int) {
+        let removedObject = itemsArray.remove(at: index)
+        itemsSet.remove(removedObject)
+        tableView.reloadData()
+        CoreManager.shared.coreManagerContext.delete(removedObject)
+        saveChanges()
+        
+        if !FileManager.default.removeFileFromTemp(withName: removedObject.fileName) {
             showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
         }
     }
@@ -402,9 +400,9 @@ extension MusicViewController: UISearchBarDelegate {
         self.itemsArray.removeAll()
 
         if trimmedString.isEmpty {
-            self.itemsArray = self.filterItemsArray
+            self.itemsArray = Array(itemsSet)
         }else{
-            self.itemsArray = self.filterItemsArray.filter({ (musicItem) -> Bool in
+            self.itemsArray = self.itemsSet.filter({ (musicItem) -> Bool in
                 return musicItem.fileName.contains(trimmedString)
             })
         }
@@ -448,7 +446,7 @@ extension MusicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
         let deleteAction = UITableViewRowAction(style: .destructive, title: "") { [weak self] (action, indexPath) in
-            self?.removeItem(atIndex: indexPath.row)
+            self?.removeMediaItem(atIndex: indexPath.row)
         }
         deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "trash")!)
 
@@ -497,15 +495,7 @@ extension MusicViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let path = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[indexPath.row].fileName,
-                                                                        isDirectory: false)
-            do {
-                try FileManager.default.removeItem(at: path)
-                itemsArray.remove(at: indexPath.row)
-                tableView.reloadData()
-            } catch {
-                showErrorAlertWithMessageByKey("Alert.Message.FileNotFound")
-            }
+            removeMediaItem(atIndex: indexPath.row)
         }
     }
 }

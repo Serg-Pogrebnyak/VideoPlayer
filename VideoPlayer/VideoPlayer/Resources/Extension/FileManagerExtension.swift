@@ -42,6 +42,17 @@ extension FileManager {
         }
     }
     
+    func removeFileFromTemp(withName name: String) -> Bool {
+        do {
+            let url = FileManager.default.tempDirectory.appendingPathComponent(name, isDirectory: false)
+            try FileManager.default.removeItem(at: url)
+            return true
+        } catch let error as NSError {
+            //TODO: write error
+            return false
+        }
+    }
+    
     func hasLocalFile(fileName: String) -> Bool {
         let fileUrl = tempDirectory.appendingPathComponent(fileName).path
         return FileManager.default.fileExists(atPath: fileUrl)
@@ -51,7 +62,8 @@ extension FileManager {
         do {
             let filePathAndName = FileManager.default.tempDirectory.appendingPathComponent(filename)
             try data.write(to: filePathAndName)
-        } catch {
+        } catch let error as NSError {
+            //TODO: write error
             fatalError("Can't convert data to file")
         }
         //TODO: return result of converting

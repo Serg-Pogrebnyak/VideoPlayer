@@ -64,7 +64,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
         }
         CoreManager.shared.saveContext()
         
-        itemsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
+        //itemsArray = CoreManager.shared.getElementsArray() ?? [MusicOrVideoItem]()
         filterItemsArray = itemsArray
         DispatchQueue.main.async {
             self.childTableView.reloadData()

@@ -26,12 +26,19 @@ class CoreManager {
         return persistentContainer.viewContext
     }
 
-    func getElementsArray() -> [MusicOrVideoItem]? {
+    func getMediaItems() -> Set<MusicOrVideoItem> {
         do {
-            return try self.coreManagerContext.fetch(MusicOrVideoItem.fetchRequest()) as? [MusicOrVideoItem]
+            let arrayOfItems = try self.coreManagerContext.fetch(MusicOrVideoItem.fetchRequest())
+            if let arrayOfMediaItems = arrayOfItems as? [MusicOrVideoItem] {
+                return Set(arrayOfMediaItems.map { $0 })
+            } else {
+                //TODO: write cast error
+                return Set<MusicOrVideoItem>()
+            }
         } catch {
+            //TODO: write error
             let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            return Set<MusicOrVideoItem>()
         }
 
     }
