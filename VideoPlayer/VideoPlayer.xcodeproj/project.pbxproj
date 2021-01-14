@@ -14,10 +14,14 @@
 		0BA7407823C71B20001BBBA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407723C71B20001BBBA4 /* Assets.xcassets */; };
 		0BA7407B23C71B20001BBBA4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BA7407923C71B20001BBBA4 /* LaunchScreen.storyboard */; };
 		0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */; };
-		0BA7408523C72C05001BBBA4 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408423C72C05001BBBA4 /* MusicViewController.swift */; };
 		0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408623C72E5E001BBBA4 /* TabBarController.swift */; };
 		0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* FileManagerExtension.swift */; };
 		9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */; };
+		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
+		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
+		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
+		C5FAC02B25AF3FC6006660B2 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02525AF3FC6006660B2 /* MusicViewController.swift */; };
+		C5FAC02C25AF3FC6006660B2 /* MusicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02625AF3FC6006660B2 /* MusicInteractor.swift */; };
 		DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81A723E87FCD00468334 /* UIColorExtension.swift */; };
 		DE3A81AE23E95F6400468334 /* noData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE3A81AD23E95F6400468334 /* noData.json */; };
 		DE3A81B023E965C600468334 /* EmptyMusicListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */; };
@@ -57,12 +61,16 @@
 		0BA7407A23C71B20001BBBA4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0BA7407C23C71B20001BBBA4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
-		0BA7408423C72C05001BBBA4 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		0BA7408623C72E5E001BBBA4 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		0BDEA8D523C750B7003261BB /* FileManagerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtension.swift; sourceTree = "<group>"; };
 		2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.release.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
+		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
+		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
+		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
+		C5FAC02525AF3FC6006660B2 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
+		C5FAC02625AF3FC6006660B2 /* MusicInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicInteractor.swift; sourceTree = "<group>"; };
 		DE3A81A723E87FCD00468334 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		DE3A81AD23E95F6400468334 /* noData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noData.json; sourceTree = "<group>"; };
 		DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMusicListView.xib; sourceTree = "<group>"; };
@@ -116,9 +124,9 @@
 		0B8BCB3B23C7464200EDA27F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5FAC02025AF3F4C006660B2 /* Music scene */,
 				0BA7408623C72E5E001BBBA4 /* TabBarController.swift */,
 				DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */,
-				0BA7408423C72C05001BBBA4 /* MusicViewController.swift */,
 				0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */,
 			);
 			path = Controllers;
@@ -225,6 +233,18 @@
 				7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C5FAC02025AF3F4C006660B2 /* Music scene */ = {
+			isa = PBXGroup;
+			children = (
+				C5FAC02525AF3FC6006660B2 /* MusicViewController.swift */,
+				C5FAC02625AF3FC6006660B2 /* MusicInteractor.swift */,
+				C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */,
+				C5FAC02425AF3FC6006660B2 /* MusicModels.swift */,
+				C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */,
+			);
+			path = "Music scene";
 			sourceTree = "<group>";
 		};
 		DE3AE3BA23F440480017A329 /* CoreData */ = {
@@ -434,11 +454,15 @@
 				DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */,
 				DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */,
 				DE3AE40A23F459E80017A329 /* CoreManager.swift in Sources */,
+				C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */,
+				C5FAC02B25AF3FC6006660B2 /* MusicViewController.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
 				DE3A81B423E9884000468334 /* AnimatedViewProtocl.swift in Sources */,
 				DE3AE3B923F440360017A329 /* CoreDataModel.xcdatamodeld in Sources */,
 				DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */,
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
+				C5FAC02C25AF3FC6006660B2 /* MusicInteractor.swift in Sources */,
+				C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
 				DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */,
 				DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */,
@@ -449,12 +473,12 @@
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
 				0B4D3A8724320D9400FDCD41 /* CloudCoreData.swift in Sources */,
 				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,
+				C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
 				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
 				DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,
-				0BA7408523C72C05001BBBA4 /* MusicViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

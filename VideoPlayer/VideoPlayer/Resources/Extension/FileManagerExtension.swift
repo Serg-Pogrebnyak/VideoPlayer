@@ -9,20 +9,25 @@
 import Foundation
 
 extension FileManager {
+    
+    var tempDirectory: URL {
+        FileManager.default.temporaryDirectory
+    }
+    
     func getFilesFromDocumentDirectory(withFileExtension fileExtension: String) -> [URL] {
         let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
         
         guard let documentsURL = urls(for: documentDirectory, in: .userDomainMask).first else {
-            //TODO: write error
-            return [URL]()
+            fatalError("document not found")
+            //return [URL]()
         }
         
         guard let fileURLs = try? contentsOfDirectory(at: documentsURL,
                                                       includingPropertiesForKeys: nil,
                                                       options: .skipsHiddenFiles)
         else {
-            //TODO: write error
-            return [URL]()
+            fatalError("document not found")
+            //return [URL]()
         }
         
         return fileURLs.filter{$0.lastPathComponent.contains(fileExtension)}
@@ -36,7 +41,7 @@ extension FileManager {
             return true
         } catch let error as NSError {
             if error.code == NSFileWriteFileExistsError {
-                //TODO: write error
+                fatalError(error.description)
             }
             return false
         }
@@ -48,7 +53,7 @@ extension FileManager {
             try FileManager.default.removeItem(at: url)
             return true
         } catch let error as NSError {
-            //TODO: write error
+            fatalError(error.description)
             return false
         }
     }
@@ -63,14 +68,24 @@ extension FileManager {
             let filePathAndName = FileManager.default.tempDirectory.appendingPathComponent(filename)
             try data.write(to: filePathAndName)
         } catch let error as NSError {
-            //TODO: write error
             fatalError("Can't convert data to file")
         }
         //TODO: return result of converting
     }
     
-    var tempDirectory: URL {
-        FileManager.default.temporaryDirectory
+    func removeAllFromTempDirectory() {
+        do {
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: tempDirectory,
+                                                                       includingPropertiesForKeys: nil,
+                                                                       options: .skipsHiddenFiles)
+            for fileURL in fileURLs {
+                if fileURL.pathExtension == "mp3" {
+                    try FileManager.default.removeItem(at: fileURL)
+                }
+            }
+        } catch  let error as NSError {
+            fatalError(error.description)
+        }
     }
     
 }

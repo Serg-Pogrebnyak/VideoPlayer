@@ -30,7 +30,7 @@ class CustomTableViewDataSource: NSObject, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath) as! VideoAndMusicTableViewCell
-        cell.setDataInCell(item: musicOrVideoArrayProtocol.itemsArray[indexPath.row])
+        //cell.setDataInCell(item: musicOrVideoArrayProtocol.itemsArray[indexPath.row])
         return cell
     }
 

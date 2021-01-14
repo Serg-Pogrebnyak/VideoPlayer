@@ -45,7 +45,11 @@ class CoreManager {
 
     // MARK: - Core Data Saving support
     func saveContext () {
-        guard coreManagerContext.hasChanges else {return}
+        guard coreManagerContext.hasChanges else {
+            print("❌ no changes for save")
+            return
+        }
+        
         coreManagerContext.perform {
             do {
                 try self.coreManagerContext.save()

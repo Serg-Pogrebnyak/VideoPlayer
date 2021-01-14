@@ -19,7 +19,7 @@ class VideoAndMusicTableViewCell: UITableViewCell {
     @IBOutlet private var fromLabelToSuperViewLeading: NSLayoutConstraint!
     @IBOutlet private var fromLabelToImageLeading: NSLayoutConstraint!
     
-    func setDataInCell(item: MusicOrVideoItem) {
+    func setDataInCell(item: Music.FetchLocalItems.ViewModel.MusicDisplayData) {
         fileNameLabel.text = item.fileName
         newImage.isHidden = !item.isNew
         if item.isNew {
