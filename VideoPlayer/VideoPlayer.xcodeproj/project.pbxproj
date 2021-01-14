@@ -22,6 +22,7 @@
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
 		C5FAC02B25AF3FC6006660B2 /* MusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02525AF3FC6006660B2 /* MusicViewController.swift */; };
 		C5FAC02C25AF3FC6006660B2 /* MusicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02625AF3FC6006660B2 /* MusicInteractor.swift */; };
+		C5FAC02E25B03AFB006660B2 /* PlayMusicWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02D25B03AFB006660B2 /* PlayMusicWorker.swift */; };
 		DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3A81A723E87FCD00468334 /* UIColorExtension.swift */; };
 		DE3A81AE23E95F6400468334 /* noData.json in Resources */ = {isa = PBXBuildFile; fileRef = DE3A81AD23E95F6400468334 /* noData.json */; };
 		DE3A81B023E965C600468334 /* EmptyMusicListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */; };
@@ -71,6 +72,7 @@
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
 		C5FAC02525AF3FC6006660B2 /* MusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicViewController.swift; sourceTree = "<group>"; };
 		C5FAC02625AF3FC6006660B2 /* MusicInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicInteractor.swift; sourceTree = "<group>"; };
+		C5FAC02D25B03AFB006660B2 /* PlayMusicWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayMusicWorker.swift; sourceTree = "<group>"; };
 		DE3A81A723E87FCD00468334 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		DE3A81AD23E95F6400468334 /* noData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noData.json; sourceTree = "<group>"; };
 		DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMusicListView.xib; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */,
 				C5FAC02425AF3FC6006660B2 /* MusicModels.swift */,
 				C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */,
+				C5FAC02D25B03AFB006660B2 /* PlayMusicWorker.swift */,
 			);
 			path = "Music scene";
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
 				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
+				C5FAC02E25B03AFB006660B2 /* PlayMusicWorker.swift in Sources */,
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
 				DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,

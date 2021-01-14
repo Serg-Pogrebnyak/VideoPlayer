@@ -179,24 +179,24 @@ class MusicViewController: UIViewController {
     }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
-        guard   !itemsArray.isEmpty,
-                index >= 0,
-                index < itemsArray.count
-        else {return}
-
-        indexOfCurrentItem = index
-        unNewTrackAtIndex(index)
-        let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
-
-        let playerItem = AVPlayerItem(url: url)
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlay), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
-        player = AVPlayer.init(playerItem: playerItem)
-        player.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
-
-        if autoplay {
-            player.play()
-        }
-        displayMusicInfo(fileUrl: url)
+//        guard   !itemsArray.isEmpty,
+//                index >= 0,
+//                index < itemsArray.count
+//        else {return}
+//
+//        indexOfCurrentItem = index
+//        unNewTrackAtIndex(index)
+//        let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+//
+//        let playerItem = AVPlayerItem(url: url)
+//        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlay), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
+//        player = AVPlayer.init(playerItem: playerItem)
+//        player.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
+//
+//        if autoplay {
+//            player.play()
+//        }
+//        displayMusicInfo(fileUrl: url)
     }
 
     //MARK: setup remote command for display buttons on lock screen and in menu
@@ -433,13 +433,9 @@ extension MusicViewController: UITableViewDelegate {
             let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
             selectedItems(count: countOfSelected)
         } else {
-            let item = itemsArray[indexPath.row]
-            if FileManager.default.hasLocalFile(fileName: item.fileName) {
-                tableView.deselectRow(at: indexPath, animated: true)
-                startPlay(atIndex: indexPath.row, autoPlay: true)
-            } else {
-                    tableView.deselectRow(at: indexPath, animated: true)
-            }
+            let request = Music.StartPlayOrDownload.Request(index: indexPath.row)
+            interactor?.startPlayOrDownload(request: request)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
 

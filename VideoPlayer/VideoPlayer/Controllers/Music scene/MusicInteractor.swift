@@ -14,7 +14,7 @@ import UIKit
 
 protocol MusicBusinessLogic {
     func fetchLocalItems(request: Music.FetchLocalItems.Request)
-    func startPlay(atIndex index: Int)
+    func startPlayOrDownload(request: Music.StartPlayOrDownload.Request)
 }
 
 protocol MusicDataStore {
@@ -24,7 +24,8 @@ protocol MusicDataStore {
 class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     var presenter: MusicPresentationLogic?
-    var worker: FetchFromLocalStorageWorker?
+    var fetchWorker: FetchFromLocalStorageWorker?
+    var playWorker: PlayMusicWorker?
     
     private(set) var itemsSet = Set<MusicOrVideoItem>()
     private(set) var itemsArray = [MusicOrVideoItem]()
@@ -33,8 +34,8 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     // MARK: Do something
     func fetchLocalItems(request: Music.FetchLocalItems.Request) {
-        worker = FetchFromLocalStorageWorker()
-        worker?.fetch(byTypeExtension: musicExtension)
+        fetchWorker = FetchFromLocalStorageWorker()
+        fetchWorker?.fetch(byTypeExtension: musicExtension)
         
         itemsSet = CoreManager.shared.getMediaItems()
         itemsArray = Array(itemsSet)
@@ -43,7 +44,34 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         presenter?.showMusicItems(response: response)
     }
     
-    func startPlay(atIndex index: Int) {
+    func startPlayOrDownload(request: Music.StartPlayOrDownload.Request) {
+        guard   !itemsArray.isEmpty,
+                request.index >= 0,
+                request.index < itemsArray.count
+        else {return}
         
+        let itemForPlay = itemsArray[request.index]
+        
+        guard FileManager.default.hasLocalFile(fileName: itemForPlay.fileName) else {
+            //TODO: here should call worker which download items from cloud
+            return
+        }
+        
+        if itemForPlay.isNew {
+            itemsArray[request.index].isNew = false
+            saveChanges()
+            //tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
+        }
+        
+        let url = FileManager.default.tempDirectory.appendingPathComponent(itemForPlay.fileName,
+                                                                           isDirectory: false)
+
+        playWorker = PlayMusicWorker()
+        playWorker?.playSongByURL(url: url)
+        //displayMusicInfo(fileUrl: url)
+    }
+    
+    private func saveChanges() {
+        CoreManager.shared.saveContext()
     }
 }

@@ -32,4 +32,23 @@ enum Music {
             var musicDisplayDataArray: [MusicDisplayData]
         }
     }
+    
+    enum StartPlayOrDownload {
+        struct Request {
+            let index: Int
+        }
+        
+        struct Response {
+            var musicItems: [MusicOrVideoItem]
+        }
+        
+        struct ViewModel {
+            struct MusicDisplayData {
+                var fileName: String
+                var isNew: Bool
+            }
+            
+            var musicDisplayDataArray: [MusicDisplayData]
+        }
+    }
 }
