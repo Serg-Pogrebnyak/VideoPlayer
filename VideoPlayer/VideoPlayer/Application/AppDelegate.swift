@@ -25,7 +25,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            _ = OverlayView(frame: CGRect(x: 0, y: 0, width: self.window!.frame.width, height: self.window!.frame.height), image: UIImage(named: "snowflake")!, showAlways: true)
+            guard let imageForOverlayView = UIImage(named: "snowflake") else {return}
+            let rect = CGRect(x: 0,
+                              y: 0,
+                              width: self.window!.frame.width,
+                              height: self.window!.frame.height)
+            _ = OverlayView(frame: rect,
+                            image: imageForOverlayView,
+                            showAlways: true)
         }
 
         return true

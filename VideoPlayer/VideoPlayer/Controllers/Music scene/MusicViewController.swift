@@ -84,6 +84,9 @@ class MusicViewController: UIViewController {
     }
     
     private func setupUI() {
+        let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "MusicCell")
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -117,9 +120,6 @@ class MusicViewController: UIViewController {
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
-        
-        let nib = UINib.init(nibName: "VideoAndMusicTableViewCell", bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: "MusicCell")
     }
     
     //MARK: bar batton actions
