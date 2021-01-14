@@ -165,39 +165,7 @@ class MusicViewController: UIViewController {
         }
     }
 
-    //MARK: - overrided functions
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//        let currentItem = object as! AVPlayer
-//        print(currentItem.rate)
-//        if currentItem.rate > 0.0 {
-//            playerView.changePlayButtonIcon(playNow: true)
-//            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
-//        } else {
-//            playerView.changePlayButtonIcon(playNow: false)
-//            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 0
-//        }
-//        updateInformationOnLockScreen()
-//    }
-
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
-//        guard   !itemsArray.isEmpty,
-//                index >= 0,
-//                index < itemsArray.count
-//        else {return}
-//
-//        indexOfCurrentItem = index
-//        unNewTrackAtIndex(index)
-//        let url = FileManager.default.tempDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
-//
-//        let playerItem = AVPlayerItem(url: url)
-//        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlay), name: .AVPlayerItemDidPlayToEndTime, object: playerItem)
-//        player = AVPlayer.init(playerItem: playerItem)
-//        player.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
-//
-//        if autoplay {
-//            player.play()
-//        }
-//        displayMusicInfo(fileUrl: url)
     }
 
     //MARK: setup remote command for display buttons on lock screen and in menu
@@ -287,14 +255,6 @@ class MusicViewController: UIViewController {
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds as CFNumber
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
-
-//    @objc private func playerDidFinishPlay() {
-//        guard   let index = indexOfCurrentItem,
-//                index + 1 <= itemsArray.count - 1
-//        else {return}
-//
-//        startPlay(atIndex: index+1)
-//    }
 
     private func rewindPlayerItemTo(_ rewindTo: CMTime) {
         guard player.currentItem != nil else {return}
@@ -476,7 +436,9 @@ extension MusicViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath) as! VideoAndMusicTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath) as? VideoAndMusicTableViewCell else {
+            return UITableViewCell()
+        }
         cell.setDataInCell(item: musicItemsArray[indexPath.row])
         return cell
     }
@@ -491,10 +453,11 @@ extension MusicViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let movedMusicItem = itemsArray[sourceIndexPath.row]
-        itemsArray.remove(at: sourceIndexPath.row)
-        movedMusicItem.isNew = false
-        itemsArray.insert(movedMusicItem, at: destinationIndexPath.row)
+        //TODO: add logic for save index for item and after that implement logic for move items
+//        let movedMusicItem = itemsArray[sourceIndexPath.row]
+//        itemsArray.remove(at: sourceIndexPath.row)
+//        movedMusicItem.isNew = false
+//        itemsArray.insert(movedMusicItem, at: destinationIndexPath.row)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
