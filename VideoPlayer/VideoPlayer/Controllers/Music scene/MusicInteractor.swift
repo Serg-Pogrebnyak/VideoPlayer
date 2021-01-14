@@ -14,6 +14,7 @@ import UIKit
 
 protocol MusicBusinessLogic {
     func fetchLocalItems(request: Music.FetchLocalItems.Request)
+    func startPlay(atIndex index: Int)
 }
 
 protocol MusicDataStore {
@@ -26,18 +27,23 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     var worker: FetchFromLocalStorageWorker?
     
     private(set) var itemsSet = Set<MusicOrVideoItem>()
+    private(set) var itemsArray = [MusicOrVideoItem]()
     
     private let musicExtension = ".mp3"
     
     // MARK: Do something
-    
     func fetchLocalItems(request: Music.FetchLocalItems.Request) {
         worker = FetchFromLocalStorageWorker()
         worker?.fetch(byTypeExtension: musicExtension)
         
         itemsSet = CoreManager.shared.getMediaItems()
+        itemsArray = Array(itemsSet)
         
-        let response = Music.FetchLocalItems.Response(musicItems: itemsSet)
+        let response = Music.FetchLocalItems.Response(musicItems: itemsArray)
         presenter?.showMusicItems(response: response)
+    }
+    
+    func startPlay(atIndex index: Int) {
+        
     }
 }

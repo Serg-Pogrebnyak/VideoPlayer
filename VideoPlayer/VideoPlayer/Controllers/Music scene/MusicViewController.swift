@@ -58,9 +58,14 @@ class MusicViewController: UIViewController {
         setupUI()
     }
     
-    private func fetchLocalItems() {
-        let request = Music.FetchLocalItems.Request()
-        interactor?.fetchLocalItems(request: request)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        playerView.setGradientBackground()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        playerView.finishedAnimation()
     }
     
     // MARK: Setup
@@ -71,16 +76,6 @@ class MusicViewController: UIViewController {
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        playerView.setGradientBackground()
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        playerView.finishedAnimation()
     }
     
     private func setupUI() {
@@ -120,6 +115,12 @@ class MusicViewController: UIViewController {
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
+    }
+    
+    //MARK: Do some business logic
+    private func fetchLocalItems() {
+        let request = Music.FetchLocalItems.Request()
+        interactor?.fetchLocalItems(request: request)
     }
     
     //MARK: bar batton actions
@@ -241,30 +242,6 @@ class MusicViewController: UIViewController {
             }
         }
     }
-    
-//    private func checkNewLocaltemsAndUpdateLibrary() {
-//        let musicURLS = FileManager.default.getFilesFromDocumentDirectory(withFileExtension: ".mp3")
-//
-//        var newObects = [MusicOrVideoItem]()
-//        
-//        for itemURL in musicURLS {
-//            let itemName = itemURL.lastPathComponent
-//            guard FileManager.default.replaceItemInTempFolder(from: itemURL, fileName: itemName) else {
-//                //TODO: show user error
-//                continue
-//            }
-//            
-//            let musicItem = MusicOrVideoItem.init(fileName: itemName)
-//            newObects.append(musicItem)
-//        }
-//        CoreManager.shared.saveContext()
-//        
-//        itemsSet = CoreManager.shared.getMediaItems()
-//        itemsArray = Array(itemsSet)
-//        DispatchQueue.main.async {
-//            self.tableView.reloadData()
-//        }
-//    }
 
     //MARK: setup information about track on lock screen and in menu
     private func displayMusicInfo(fileUrl: URL) {

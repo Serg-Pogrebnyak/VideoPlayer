@@ -20,7 +20,7 @@ enum Music {
         }
         
         struct Response {
-            var musicItems: Set<MusicOrVideoItem>
+            var musicItems: [MusicOrVideoItem]
         }
         
         struct ViewModel {
