@@ -14,6 +14,11 @@ import UIKit
 
 enum Music {
     // MARK: Use cases
+    //FIXME: можно ли делать так?
+    struct MusicDisplayData {
+        var fileName: String
+        var isNew: Bool
+    }
     
     enum FetchLocalItems {
         struct Request {
@@ -24,11 +29,6 @@ enum Music {
         }
         
         struct ViewModel {
-            struct MusicDisplayData {
-                var fileName: String
-                var isNew: Bool
-            }
-            
             var musicDisplayDataArray: [MusicDisplayData]
         }
     }
@@ -39,16 +39,13 @@ enum Music {
         }
         
         struct Response {
-            var musicItems: [MusicOrVideoItem]
+            var musicItem: MusicOrVideoItem
+            var atIndex: Int
         }
         
         struct ViewModel {
-            struct MusicDisplayData {
-                var fileName: String
-                var isNew: Bool
-            }
-            
-            var musicDisplayDataArray: [MusicDisplayData]
+            var musicItem: MusicDisplayData
+            var atIndex: Int
         }
     }
 }

@@ -24,11 +24,11 @@ protocol MusicDataStore {
 class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     var presenter: MusicPresentationLogic?
-    var fetchWorker: FetchFromLocalStorageWorker?
-    var playWorker: PlayMusicWorker?
     
     private(set) var itemsSet = Set<MusicOrVideoItem>()
     private(set) var itemsArray = [MusicOrVideoItem]()
+    private var fetchWorker: FetchFromLocalStorageWorker?
+    private var playWorker: PlayMusicWorker?
     
     private let musicExtension = ".mp3"
     
@@ -60,18 +60,30 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         if itemForPlay.isNew {
             itemsArray[request.index].isNew = false
             saveChanges()
-            //tableView.reloadRows(at: [IndexPath.init(row: index, section: 0)], with: .middle)
+            let response = Music.StartPlayOrDownload.Response(musicItem: itemsArray[request.index],
+                                                              atIndex: request.index)
+            presenter?.unnewMusicItem(response: response)
         }
         
         let url = FileManager.default.tempDirectory.appendingPathComponent(itemForPlay.fileName,
                                                                            isDirectory: false)
 
         playWorker = PlayMusicWorker()
-        playWorker?.playSongByURL(url: url)
-        //displayMusicInfo(fileUrl: url)
+        guard playWorker?.playSongByURL(url: url) ?? false else {return}
+        playWorker?.delegate = self
     }
     
     private func saveChanges() {
         CoreManager.shared.saveContext()
+    }
+}
+
+extension MusicInteractor: PlayMusicWorkerDelegate {
+    func didFinishPlaySong() {
+        
+    }
+    
+    func updatedPlayingState(state: PlayMusicWorker.PlayingState) {
+        
     }
 }

@@ -17,6 +17,7 @@ import MediaPlayer
 
 protocol MusicDisplayLogic: class {
     func displayMusicItemsArray(viewModel: Music.FetchLocalItems.ViewModel)
+    func unnewMusicItem(response: Music.StartPlayOrDownload.ViewModel)
 }
 
 class MusicViewController: UIViewController {
@@ -37,7 +38,7 @@ class MusicViewController: UIViewController {
     lazy private var searchBar = UISearchBar(frame: CGRect.zero)
     
     private var navigationBarState = NavigationBarButtonStateEnum.edit
-    private var musicItemsArray = [Music.FetchLocalItems.ViewModel.MusicDisplayData]()
+    private var musicItemsArray = [Music.MusicDisplayData]()
     private var itemsArray = [MusicOrVideoItem]()
     private var itemsSet = Set<MusicOrVideoItem>()
     private let rewind = CMTime(seconds: 15, preferredTimescale: 1)
@@ -165,18 +166,18 @@ class MusicViewController: UIViewController {
     }
 
     //MARK: - overrided functions
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        let currentItem = object as! AVPlayer
-        print(currentItem.rate)
-        if currentItem.rate > 0.0 {
-            playerView.changePlayButtonIcon(playNow: true)
-            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
-        } else {
-            playerView.changePlayButtonIcon(playNow: false)
-            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 0
-        }
-        updateInformationOnLockScreen()
-    }
+//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+//        let currentItem = object as! AVPlayer
+//        print(currentItem.rate)
+//        if currentItem.rate > 0.0 {
+//            playerView.changePlayButtonIcon(playNow: true)
+//            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
+//        } else {
+//            playerView.changePlayButtonIcon(playNow: false)
+//            nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 0
+//        }
+//        updateInformationOnLockScreen()
+//    }
 
     func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
 //        guard   !itemsArray.isEmpty,
@@ -287,13 +288,13 @@ class MusicViewController: UIViewController {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 
-    @objc private func playerDidFinishPlay() {
-        guard   let index = indexOfCurrentItem,
-                index + 1 <= itemsArray.count - 1
-        else {return}
-
-        startPlay(atIndex: index+1)
-    }
+//    @objc private func playerDidFinishPlay() {
+//        guard   let index = indexOfCurrentItem,
+//                index + 1 <= itemsArray.count - 1
+//        else {return}
+//
+//        startPlay(atIndex: index+1)
+//    }
 
     private func rewindPlayerItemTo(_ rewindTo: CMTime) {
         guard player.currentItem != nil else {return}
@@ -508,6 +509,14 @@ extension MusicViewController: MusicDisplayLogic {
         musicItemsArray = viewModel.musicDisplayDataArray
         DispatchQueue.main.async {
             self.tableView.reloadData()
+        }
+    }
+    
+    func unnewMusicItem(response: Music.StartPlayOrDownload.ViewModel) {
+        musicItemsArray[response.atIndex] = response.musicItem
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: response.atIndex, section: 0)
+            self.tableView.reloadRows(at: [indexPath], with: .middle)
         }
     }
 }
