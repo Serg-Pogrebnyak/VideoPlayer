@@ -17,7 +17,8 @@ import MediaPlayer
 
 protocol MusicDisplayLogic: class {
     func displayMusicItemsArray(viewModel: Music.FetchLocalItems.ViewModel)
-    func unnewMusicItem(response: Music.StartPlayOrDownload.ViewModel)
+    func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel)
+    func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
 }
 
 class MusicViewController: UIViewController {
@@ -57,6 +58,11 @@ class MusicViewController: UIViewController {
         //FileManager.default.removeAllFromTempDirectory()
         fetchLocalItems()
         setupUI()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appMovedToForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,6 +73,11 @@ class MusicViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         playerView.finishedAnimation()
+    }
+    
+    @objc private func appMovedToForeground() {
+        let request = Music.UpdatePlayingSongInfo.Request()
+        interactor?.updatePlayingSongInfo(request: request)
     }
     
     // MARK: Setup
@@ -212,55 +223,9 @@ class MusicViewController: UIViewController {
         }
     }
 
-    //MARK: setup information about track on lock screen and in menu
-    private func displayMusicInfo(fileUrl: URL) {
-        nowPlayingInfo = [String: Any]()
-        var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
-        let asset = AVAsset(url: fileUrl) as AVAsset
-
-        for metaDataItems in asset.commonMetadata {
-            switch metaDataItems.commonKey!.rawValue {
-            case "artist":
-                guard let artist = metaDataItems.value as? String else {break}
-                nowPlayingInfo[MPMediaItemPropertyArtist] = artist
-            case "albumName":
-                guard let album = metaDataItems.value as? String else {break}
-                nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
-            case "artwork":
-                guard   let imageData = metaDataItems.value as? Data,
-                        let image = UIImage(data: imageData) else {break}
-                imageForPlayerView = image
-            default:
-                continue
-            }
-        }
-
-        nowPlayingInfo[MPMediaItemPropertyTitle] = itemsArray[indexOfCurrentItem!].fileName
-        
-        let artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
-            return imageForPlayerView
-        })
-
-        nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
-
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player.currentItem!.asset.duration.seconds
-
-        playerView.updateViewWith(text: nowPlayingInfo[MPMediaItemPropertyTitle] as! String, image: imageForPlayerView)
-
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-    }
-
-    private func updateInformationOnLockScreen() {
-        print(player.currentTime().stringSeconds)
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player.currentTime().seconds as CFNumber
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-    }
-
     private func rewindPlayerItemTo(_ rewindTo: CMTime) {
         guard player.currentItem != nil else {return}
         player.seek(to: rewindTo) { [weak self] (flag) in
-            guard let self = self, flag else {return}
-            self.updateInformationOnLockScreen()
         }
     }
     
@@ -295,6 +260,10 @@ class MusicViewController: UIViewController {
         if !FileManager.default.removeFileFromTemp(withName: removedObject.fileName) {
             showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -475,11 +444,15 @@ extension MusicViewController: MusicDisplayLogic {
         }
     }
     
-    func unnewMusicItem(response: Music.StartPlayOrDownload.ViewModel) {
-        musicItemsArray[response.atIndex] = response.musicItem
+    func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel) {
+        musicItemsArray[viewModel.atIndex] = viewModel.musicItem
         DispatchQueue.main.async {
-            let indexPath = IndexPath(row: response.atIndex, section: 0)
+            let indexPath = IndexPath(row: viewModel.atIndex, section: 0)
             self.tableView.reloadRows(at: [indexPath], with: .middle)
         }
+    }
+    
+    func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel) {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = viewModel.info
     }
 }

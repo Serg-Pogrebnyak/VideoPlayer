@@ -15,6 +15,7 @@ import UIKit
 protocol MusicBusinessLogic {
     func fetchLocalItems(request: Music.FetchLocalItems.Request)
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request)
+    func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request)
 }
 
 protocol MusicDataStore {
@@ -73,6 +74,10 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         playWorker?.delegate = self
     }
     
+    func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request) {
+        playWorker?.callDelegateWithUpdatedInfoIfPossible()
+    }
+    
     private func saveChanges() {
         CoreManager.shared.saveContext()
     }
@@ -83,7 +88,8 @@ extension MusicInteractor: PlayMusicWorkerDelegate {
         
     }
     
-    func updatedPlayingState(state: PlayMusicWorker.PlayingState) {
-        
+    func updatedPlayingStateAndInfo(playingInfo: [String : Any]) {
+        let response = Music.UpdatePlayingSongInfo.Response(info: playingInfo)
+        presenter?.updatePlayingSongInfo(response: response)
     }
 }

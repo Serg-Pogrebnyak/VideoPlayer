@@ -48,4 +48,17 @@ enum Music {
             var atIndex: Int
         }
     }
+    
+    enum UpdatePlayingSongInfo {
+        struct Request {
+        }
+        
+        struct Response {
+            var info: [String: Any]
+        }
+        
+        struct ViewModel {
+            var info: [String: Any]
+        }
+    }
 }
