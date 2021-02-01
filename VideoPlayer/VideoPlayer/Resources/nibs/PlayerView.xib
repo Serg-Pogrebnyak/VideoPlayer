@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,9 +13,9 @@
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="Cpk-6I-3Yn"/>
                 <outlet property="currentTimeLabel" destination="V7M-dE-Vx7" id="sgF-oV-Ql1"/>
                 <outlet property="playAndPauseButton" destination="fjF-yH-qGO" id="4tl-7P-fBs"/>
-                <outlet property="playerLabel" destination="2fN-cY-Vbh" id="XmJ-dm-Rkq"/>
                 <outlet property="progressSlider" destination="3NZ-5S-WIi" id="RKt-3G-fIJ"/>
                 <outlet property="remainingTimeLabel" destination="vix-I8-Tr3" id="dKR-4b-ksW"/>
+                <outlet property="songTitle" destination="2fN-cY-Vbh" id="XmJ-dm-Rkq"/>
                 <outlet property="trackImage" destination="gta-ob-exR" id="mjX-gN-cnG"/>
             </connections>
         </placeholder>

@@ -61,10 +61,10 @@ class PlayMusicWorker {
     private func playerTimeChanged(_ time: CMTime) {
         guard let player = player else {return}
         
-        let songDuration = player.currentItem?.asset.duration.stringSeconds ?? "0"
+        let songDuration: Double = player.currentItem?.asset.duration.seconds ?? 0
         var nowPlayingInfo = Music.UpdatePlayingSongInfo.SongInfoForDisplay(playerRate: player.rate,
                                                                             songDuration: songDuration,
-                                                                            elapsedPlaybackTime: time.stringSeconds)
+                                                                            elapsedPlaybackTime: time.seconds)
         
         if let songUrl = playingFileURL {
             let asset = AVAsset(url: songUrl) as AVAsset

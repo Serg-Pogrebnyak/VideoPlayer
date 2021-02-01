@@ -15,7 +15,6 @@ protocol PlayerViewDelegate: class {
     func forcePlayOrPause(sender: PlayerView, shoudPlay: Bool, seekTo: Float?)
     func forwardRewindDidTap(sender: PlayerView)
     func nextTrackDidTap(sender: PlayerView)
-    func updateTimeLabel() -> (Double, Double)?
 }
 
 extension PlayerViewDelegate {
@@ -26,7 +25,7 @@ extension PlayerViewDelegate {
 class PlayerView: UIView {
 
     @IBOutlet private var backgroundView: UIView!
-    @IBOutlet private weak var playerLabel: UILabel!
+    @IBOutlet private weak var songTitle: UILabel!
     @IBOutlet private weak var playAndPauseButton: UIButton!
     @IBOutlet private weak var trackImage: UIImageView!
     @IBOutlet private weak var currentTimeLabel: UILabel!
@@ -95,11 +94,16 @@ class PlayerView: UIView {
         gradientLayer.masksToBounds = true
         backgroundView.layer.insertSublayer(gradientLayer, at:0)
     }
-
-    func updateViewWith(text: String, image: UIImage) {
-        playerLabel.text = text
-        trackImage.image = image
+    
+    func updateViewWith(info: Music.UpdatePlayingSongInfo.SongInfoForDisplay) {
+        songTitle.text = info.title
+        trackImage.image = info.imageForPlayerView
+        playAndPauseButton.isSelected = info.isPlaying
         progressSlider.isEnabled = true
+        currentTimeLabel.text = info.elapsedPlaybackTime.stringFromTimeInterval()
+        remainingTimeLabel.text = info.songDuration.stringFromTimeInterval()
+        progressSlider.maximumValue = Float(info.songDuration)
+        progressSlider.value = Float(info.elapsedPlaybackTime)
     }
 
     func changePlayButtonIcon(playNow: Bool) {
@@ -118,7 +122,7 @@ class PlayerView: UIView {
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         trackImage.alpha = 0.0
         progressSlider.setCustomThumb()
-        timerForUpdateTiemLabel = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(getNewTimeFromDelegate), userInfo: nil, repeats: true)
+        
         self.progressSlider.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: UIControl.Event.valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
@@ -213,18 +217,9 @@ class PlayerView: UIView {
 
     //TODO: fix this
     fileprivate func redrawMyView() {//greates kostul but work
-        let text = playerLabel.text!
-        playerLabel.text = playerLabel.text! + " "
-        playerLabel.text = text
-    }
-
-    @objc fileprivate func getNewTimeFromDelegate() {
-        guard let object = delegat?.updateTimeLabel(), !pausedTimer else {return}
-        let duration = round(object.1)
-        currentTimeLabel.text = object.0.stringFromTimeInterval()
-        remainingTimeLabel.text = (duration-object.0).stringFromTimeInterval()
-        progressSlider.maximumValue = Float(duration)
-        progressSlider.value = Float(object.0)
+        let text = songTitle.text!
+        songTitle.text = songTitle.text! + " "
+        songTitle.text = text
     }
 
     @objc fileprivate func onSliderValChanged(slider: UISlider, event: UIEvent) {

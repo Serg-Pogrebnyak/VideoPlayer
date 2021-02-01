@@ -54,12 +54,15 @@ enum Music {
         
         struct SongInfoForDisplay {
             var playerRate: Float
+            var isPlaying: Bool {
+                return playerRate != 0
+            }
             var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
             var artist: String?
             var album: String?
             var title: String?
-            var songDuration: String
-            var elapsedPlaybackTime: String
+            var songDuration: Double
+            var elapsedPlaybackTime: Double
             
             func getLikeDictForSystem() -> [String: Any] {
                 var nowPlayingInfo = [String: Any]()
