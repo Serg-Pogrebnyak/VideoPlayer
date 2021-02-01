@@ -10,8 +10,13 @@ import Foundation
 
 extension FileManager {
     
-    var tempDirectory: URL {
-        FileManager.default.temporaryDirectory
+    var documentDirectory: URL {
+        let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        guard let documentsURL = urls(for: documentDirectory, in: .userDomainMask).first else {
+            //TODO: handle this fatal error
+            fatalError("Can't create document directory")
+        }
+        return documentsURL
     }
     
     func getFilesFromDocumentDirectory(withFileExtension fileExtension: String) -> [URL] {
@@ -33,9 +38,9 @@ extension FileManager {
         return fileURLs.filter{$0.lastPathComponent.contains(fileExtension)}
     }
     
-    func replaceItemInTempFolder(from srcURL: URL, fileName: String) -> Bool {
+    func replaceItemInDocumentFolder(from srcURL: URL, fileName: String) -> Bool {
         do {
-            let dstURL = tempDirectory.appendingPathComponent(fileName)
+            let dstURL = documentDirectory.appendingPathComponent(fileName)
             try copyItem(at: srcURL, to: dstURL)
             try removeItem(at: srcURL)
             return true
@@ -47,9 +52,9 @@ extension FileManager {
         }
     }
     
-    func removeFileFromTemp(withName name: String) -> Bool {
+    func removeFileFromDocumentDirectory(withName name: String) -> Bool {
         do {
-            let url = FileManager.default.tempDirectory.appendingPathComponent(name, isDirectory: false)
+            let url = FileManager.default.documentDirectory.appendingPathComponent(name, isDirectory: false)
             try FileManager.default.removeItem(at: url)
             return true
         } catch let error as NSError {
@@ -59,13 +64,13 @@ extension FileManager {
     }
     
     func hasLocalFile(fileName: String) -> Bool {
-        let fileUrl = tempDirectory.appendingPathComponent(fileName).path
+        let fileUrl = documentDirectory.appendingPathComponent(fileName).path
         return FileManager.default.fileExists(atPath: fileUrl)
     }
     
     func convertToFile(data: Data, filename: String) {
         do {
-            let filePathAndName = FileManager.default.tempDirectory.appendingPathComponent(filename)
+            let filePathAndName = FileManager.default.documentDirectory.appendingPathComponent(filename)
             try data.write(to: filePathAndName)
         } catch let error as NSError {
             fatalError("Can't convert data to file")
@@ -73,9 +78,9 @@ extension FileManager {
         //TODO: return result of converting
     }
     
-    func removeAllFromTempDirectory() {
+    func removeAllFromDocumentDirectory() {
         do {
-            let fileURLs = try FileManager.default.contentsOfDirectory(at: tempDirectory,
+            let fileURLs = try FileManager.default.contentsOfDirectory(at: documentDirectory,
                                                                        includingPropertiesForKeys: nil,
                                                                        options: .skipsHiddenFiles)
             for fileURL in fileURLs {

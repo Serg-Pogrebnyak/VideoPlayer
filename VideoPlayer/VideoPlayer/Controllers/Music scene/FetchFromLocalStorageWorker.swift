@@ -24,7 +24,7 @@ class FetchFromLocalStorageWorker {
         for itemURL in musicURLS {
             let itemName = itemURL.lastPathComponent
             //TODO: add logic for store UUID in mp3 for easy match
-            guard FileManager.default.replaceItemInTempFolder(from: itemURL, fileName: itemName) else {
+            guard FileManager.default.replaceItemInDocumentFolder(from: itemURL, fileName: itemName) else {
                 //TODO: show user error
                 continue
             }

@@ -66,7 +66,7 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
             presenter?.unnewMusicItem(response: response)
         }
         
-        let url = FileManager.default.tempDirectory.appendingPathComponent(itemForPlay.fileName,
+        let url = FileManager.default.documentDirectory.appendingPathComponent(itemForPlay.fileName,
                                                                            isDirectory: false)
 
         playWorker = PlayMusicWorker()
