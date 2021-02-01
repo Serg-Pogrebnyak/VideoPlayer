@@ -453,6 +453,7 @@ extension MusicViewController: MusicDisplayLogic {
     }
     
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel) {
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = viewModel.info
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = viewModel.info.getLikeDictForSystem()
+        playerView.updateViewWith(info: viewModel.info)
     }
 }

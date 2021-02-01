@@ -12,7 +12,7 @@ import MediaPlayer
 
 protocol PlayMusicWorkerDelegate: class {
     func didFinishPlaySong()
-    func updatedPlayingStateAndInfo(playingInfo: [String: Any])
+    func updatedPlayingStateAndInfo(playingInfo: Music.UpdatePlayingSongInfo.SongInfoForDisplay)
 }
 
 class PlayMusicWorker {
@@ -59,11 +59,12 @@ class PlayMusicWorker {
     }
     
     private func playerTimeChanged(_ time: CMTime) {
-        var nowPlayingInfo = [String: Any]()
+        guard let player = player else {return}
         
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
-        
-        var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
+        let songDuration = player.currentItem?.asset.duration.stringSeconds ?? "0"
+        var nowPlayingInfo = Music.UpdatePlayingSongInfo.SongInfoForDisplay(playerRate: player.rate,
+                                                                            songDuration: songDuration,
+                                                                            elapsedPlaybackTime: time.stringSeconds)
         
         if let songUrl = playingFileURL {
             let asset = AVAsset(url: songUrl) as AVAsset
@@ -72,31 +73,21 @@ class PlayMusicWorker {
                 switch metaDataItems.commonKey {
                 case AVMetadataKey.commonKeyArtist:
                     guard let artist = metaDataItems.value as? String else {break}
-                    nowPlayingInfo[MPMediaItemPropertyArtist] = artist
+                    nowPlayingInfo.artist = artist
                 case AVMetadataKey.commonKeyAlbumName:
                     guard let album = metaDataItems.value as? String else {break}
-                    nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
+                    nowPlayingInfo.album = album
                 case AVMetadataKey.commonKeyArtwork:
                     guard   let imageData = metaDataItems.value as? Data,
                             let image = UIImage(data: imageData) else {break}
-                    imageForPlayerView = image
+                    nowPlayingInfo.imageForPlayerView = image
                 default:
                     continue
                 }
             }
             
-            nowPlayingInfo[MPMediaItemPropertyTitle] = songUrl.lastPathComponent
+            nowPlayingInfo.title = songUrl.lastPathComponent
         }
-        
-        let artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
-            return imageForPlayerView
-        })
-
-        nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
-
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.stringSeconds
-        
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = time.stringSeconds
 
         delegate?.updatedPlayingStateAndInfo(playingInfo: nowPlayingInfo)
     }

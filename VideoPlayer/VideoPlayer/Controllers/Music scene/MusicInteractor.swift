@@ -88,7 +88,7 @@ extension MusicInteractor: PlayMusicWorkerDelegate {
         
     }
     
-    func updatedPlayingStateAndInfo(playingInfo: [String : Any]) {
+    func updatedPlayingStateAndInfo(playingInfo: Music.UpdatePlayingSongInfo.SongInfoForDisplay) {
         let response = Music.UpdatePlayingSongInfo.Response(info: playingInfo)
         presenter?.updatePlayingSongInfo(response: response)
     }

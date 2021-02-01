@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 enum Music {
     // MARK: Use cases
@@ -50,15 +51,50 @@ enum Music {
     }
     
     enum UpdatePlayingSongInfo {
+        
+        struct SongInfoForDisplay {
+            var playerRate: Float
+            var imageForPlayerView: UIImage! = UIImage.init(named: "mp3")
+            var artist: String?
+            var album: String?
+            var title: String?
+            var songDuration: String
+            var elapsedPlaybackTime: String
+            
+            func getLikeDictForSystem() -> [String: Any] {
+                var nowPlayingInfo = [String: Any]()
+        
+                nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = playerRate
+        
+                nowPlayingInfo[MPMediaItemPropertyArtist] = artist
+            
+                nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = album
+    
+                nowPlayingInfo[MPMediaItemPropertyTitle] = title
+        
+                let artwork = MPMediaItemArtwork.init(boundsSize: imageForPlayerView.size, requestHandler: { (size) -> UIImage in
+                    return self.imageForPlayerView
+                })
+        
+                nowPlayingInfo[MPMediaItemPropertyArtwork] = artwork
+        
+                nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = songDuration
+        
+                nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapsedPlaybackTime
+                
+                return nowPlayingInfo
+            }
+        }
+        
         struct Request {
         }
         
         struct Response {
-            var info: [String: Any]
+            var info: SongInfoForDisplay
         }
         
         struct ViewModel {
-            var info: [String: Any]
+            var info: SongInfoForDisplay
         }
     }
 }
