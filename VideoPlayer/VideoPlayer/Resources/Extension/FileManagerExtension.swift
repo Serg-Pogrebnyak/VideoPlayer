@@ -45,9 +45,7 @@ extension FileManager {
             try removeItem(at: srcURL)
             return true
         } catch let error as NSError {
-            if error.code == NSFileWriteFileExistsError {
-                fatalError(error.description)
-            }
+            print(error.description)
             return false
         }
     }

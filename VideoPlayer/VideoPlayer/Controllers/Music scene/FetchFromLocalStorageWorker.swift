@@ -25,15 +25,14 @@ class FetchFromLocalStorageWorker {
             let musicItem = MusicOrVideoItem.init(fileName: itemURL.lastPathComponent,
                                                   fileExtension: itemExtension)
             
-            let resultOfReplacing = FileManager.default.replaceItemInDocumentFolder(from: itemURL,
+            let isSuccessReplacing = FileManager.default.replaceItemInDocumentFolder(from: itemURL,
                                                                                     fileName: musicItem.fileNameInStorage)
-            if !resultOfReplacing {
+            if isSuccessReplacing {
+                newObects.append(musicItem)
+            } else {
                 //TODO: show user error
                 continue
             }
-            
-            
-            newObects.append(musicItem)
         }
         CoreManager.shared.saveContext()
         //TODO: add logic for compare local files and count in core data and remove unused from local storage and db
