@@ -22,14 +22,17 @@ class FetchFromLocalStorageWorker {
         var newObects = [MusicOrVideoItem]()
         
         for itemURL in musicURLS {
-            let itemName = itemURL.lastPathComponent
-            //TODO: add logic for store UUID in mp3 for easy match
-            guard FileManager.default.replaceItemInDocumentFolder(from: itemURL, fileName: itemName) else {
+            let musicItem = MusicOrVideoItem.init(fileName: itemURL.lastPathComponent,
+                                                  fileExtension: itemExtension)
+            
+            let resultOfReplacing = FileManager.default.replaceItemInDocumentFolder(from: itemURL,
+                                                                                    fileName: musicItem.fileNameInStorage)
+            if !resultOfReplacing {
                 //TODO: show user error
                 continue
             }
             
-            let musicItem = MusicOrVideoItem.init(fileName: itemName)
+            
             newObects.append(musicItem)
         }
         CoreManager.shared.saveContext()

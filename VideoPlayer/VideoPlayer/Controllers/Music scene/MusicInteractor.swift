@@ -54,8 +54,11 @@ class MusicInteractor: MusicBusinessLogic {
         
         let itemForPlay = itemsArray[indexOfItemForPlay]
         
-        guard FileManager.default.hasLocalFile(fileName: itemForPlay.fileName) else {
+        let fileUrl = FileManager.default.documentDirectory.appendingPathComponent(itemForPlay.fileNameInStorage,
+                                                                                   isDirectory: false)
+        guard FileManager.default.fileExists(atPath: fileUrl.path) else {
             //TODO: here should call worker which download items from cloud
+            print("❌ file not found on device")
             return
         }
         
@@ -66,12 +69,9 @@ class MusicInteractor: MusicBusinessLogic {
                                                               atIndex: indexOfItemForPlay)
             presenter?.unnewMusicItem(response: response)
         }
-        
-        let url = FileManager.default.documentDirectory.appendingPathComponent(itemForPlay.fileName,
-                                                                           isDirectory: false)
 
         playWorker = PlayMusicWorker()
-        guard playWorker?.playSongByURL(url: url) ?? false else {return}
+        guard playWorker?.playSongByURL(url: fileUrl) ?? false else {return}
         playWorker?.delegate = self
     }
     

@@ -18,7 +18,8 @@ protocol MusicOrVideoArrayProtocol: class {
 
 final class MusicOrVideoItem: NSManagedObject {
     
-    @NSManaged public var fileName: String
+    @NSManaged public var displayFileName: String
+    @NSManaged public var fileNameInStorage: String
     @NSManaged public var isNew: Bool
     @NSManaged public var uploadedToCloud: Bool
     @NSManaged public var stoppedTime: NSNumber?
@@ -29,14 +30,16 @@ final class MusicOrVideoItem: NSManagedObject {
         super.init(entity: entity, insertInto: context)
     }
     
-    init(fileName: String) {
+    init(fileName: String, fileExtension: String) {
         let entity = NSEntityDescription.entity(forEntityName: "MusicOrVideoItem", in: CoreManager.shared.coreManagerContext)!
         super.init(entity: entity, insertInto: CoreManager.shared.coreManagerContext)
-        self.fileName = fileName
+        self.displayFileName = fileName
+        let newUUID = UUID().uuidString
+        self.fileNameInStorage = newUUID + fileExtension
         self.isNew = true
         self.remoteId = nil
         self.stoppedTime = nil
-        self.localId = UUID().uuidString
+        self.localId = newUUID
     }
 
     @nonobjc public func fetchRequest() -> NSFetchRequest<MusicOrVideoItem> {

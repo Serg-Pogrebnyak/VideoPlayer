@@ -257,7 +257,7 @@ class MusicViewController: UIViewController {
         CoreManager.shared.coreManagerContext.delete(removedObject)
         saveChanges()
         
-        if !FileManager.default.removeFileFromDocumentDirectory(withName: removedObject.fileName) {
+        if !FileManager.default.removeFileFromDocumentDirectory(withName: removedObject.displayFileName) {
             showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
         }
     }
@@ -332,7 +332,7 @@ extension MusicViewController: UISearchBarDelegate {
             self.itemsArray = Array(itemsSet)
         }else{
             self.itemsArray = self.itemsSet.filter({ (musicItem) -> Bool in
-                return musicItem.fileName.contains(trimmedString)
+                return musicItem.displayFileName.contains(trimmedString)
             })
         }
         tableView.reloadData()

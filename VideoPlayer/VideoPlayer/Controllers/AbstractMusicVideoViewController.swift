@@ -99,7 +99,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     func removeItem(atIndex index: Int) {
         do {
-            let url = FileManager.default.documentDirectory.appendingPathComponent(itemsArray[index].fileName, isDirectory: false)
+            let url = FileManager.default.documentDirectory.appendingPathComponent(itemsArray[index].displayFileName, isDirectory: false)
             try FileManager.default.removeItem(at: url)
             let removedObject = itemsArray.remove(at: index)
             filterItemsArray.remove(at: index)
@@ -217,7 +217,7 @@ extension AbstractMusicVideoViewController: UISearchBarDelegate {
             self.itemsArray = self.filterItemsArray
         }else{
             self.itemsArray = self.filterItemsArray.filter({ (musicItem) -> Bool in
-                return musicItem.fileName.contains(trimmedString)
+                return musicItem.displayFileName.contains(trimmedString)
             })
         }
         childTableView.reloadData()
