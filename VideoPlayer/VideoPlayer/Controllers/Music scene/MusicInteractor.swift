@@ -18,18 +18,17 @@ protocol MusicBusinessLogic {
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request)
 }
 
-protocol MusicDataStore {
-    var itemsSet: Set<MusicOrVideoItem> {get}
-}
-
-class MusicInteractor: MusicBusinessLogic, MusicDataStore {
+class MusicInteractor: MusicBusinessLogic {
     
     var presenter: MusicPresentationLogic?
-    
-    private(set) var itemsSet = Set<MusicOrVideoItem>()
-    private(set) var itemsArray = [MusicOrVideoItem]()
+    //workerks
     private var fetchWorker: FetchFromLocalStorageWorker?
     private var playWorker: PlayMusicWorker?
+    
+    //business logic variables
+    private(set) var itemsSet = Set<MusicOrVideoItem>()
+    private(set) var itemsArray = [MusicOrVideoItem]()
+    private var indexOfItemForPlay = 0
     
     private let musicExtension = ".mp3"
     
@@ -46,12 +45,14 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     }
     
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request) {
+        indexOfItemForPlay = request.index
+        
         guard   !itemsArray.isEmpty,
-                request.index >= 0,
-                request.index < itemsArray.count
+                indexOfItemForPlay >= 0,
+                indexOfItemForPlay < itemsArray.count
         else {return}
         
-        let itemForPlay = itemsArray[request.index]
+        let itemForPlay = itemsArray[indexOfItemForPlay]
         
         guard FileManager.default.hasLocalFile(fileName: itemForPlay.fileName) else {
             //TODO: here should call worker which download items from cloud
@@ -59,10 +60,10 @@ class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         }
         
         if itemForPlay.isNew {
-            itemsArray[request.index].isNew = false
+            itemsArray[indexOfItemForPlay].isNew = false
             saveChanges()
-            let response = Music.StartPlayOrDownload.Response(musicItem: itemsArray[request.index],
-                                                              atIndex: request.index)
+            let response = Music.StartPlayOrDownload.Response(musicItem: itemsArray[indexOfItemForPlay],
+                                                              atIndex: indexOfItemForPlay)
             presenter?.unnewMusicItem(response: response)
         }
         

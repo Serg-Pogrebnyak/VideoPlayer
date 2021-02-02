@@ -52,7 +52,7 @@ class MusicViewController: UIViewController {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupCleanCycle()
         playerView.delegat = self
         setupRemoteCommandCenter()
         //FileManager.default.removeAllFromTempDirectory()
@@ -81,7 +81,7 @@ class MusicViewController: UIViewController {
     }
     
     // MARK: Setup
-    private func setup() {
+    private func setupCleanCycle() {
         let viewController = self
         let interactor = MusicInteractor()
         let presenter = MusicPresenter()
