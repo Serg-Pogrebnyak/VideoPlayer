@@ -30,8 +30,7 @@ class FetchFromLocalStorageWorker {
             if isSuccessReplacing {
                 newObects.append(musicItem)
             } else {
-                //TODO: show user error
-                continue
+                CoreManager.shared.coreManagerContext.delete(musicItem)
             }
         }
         CoreManager.shared.saveContext()
