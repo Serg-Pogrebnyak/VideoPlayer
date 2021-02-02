@@ -21,11 +21,15 @@ extension UIColor {
         return UIColor.init(named: "thumbBackgroundColor")!
     }
 
-    static var topGradientColor : UIColor {
+    static var topGradientColor: UIColor {
         return UIColor.init(named: "topGradient")!
     }
 
-    static var bottomGradientColor : UIColor {
+    static var bottomGradientColor: UIColor {
         return UIColor.init(named: "bottomGradient")!
+    }
+    
+    static var playerButtonTintColor: UIColor {
+        return UIColor.init(named: "playerButtonTintColor")!
     }
 }

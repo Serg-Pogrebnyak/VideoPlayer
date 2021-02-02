@@ -11,7 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PlayerView" customModule="NIXPlayer" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundView" destination="iN0-l3-epB" id="Cpk-6I-3Yn"/>
+                <outlet property="backwardButton" destination="Nfg-kF-Wip" id="f5w-bY-gQN"/>
+                <outlet property="backwardEndButton" destination="m3u-Xz-dez" id="33c-fM-LFb"/>
                 <outlet property="currentTimeLabel" destination="V7M-dE-Vx7" id="sgF-oV-Ql1"/>
+                <outlet property="forwardButton" destination="2dQ-Yo-ujn" id="w5Y-7h-B7x"/>
+                <outlet property="forwardEndButton" destination="pk2-UE-sB6" id="QnT-1z-ufz"/>
                 <outlet property="playAndPauseButton" destination="fjF-yH-qGO" id="4tl-7P-fBs"/>
                 <outlet property="progressSlider" destination="3NZ-5S-WIi" id="RKt-3G-fIJ"/>
                 <outlet property="remainingTimeLabel" destination="vix-I8-Tr3" id="dKR-4b-ksW"/>
@@ -29,36 +33,42 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m3u-Xz-dez">
                             <rect key="frame" x="0.0" y="0.0" width="62.5" height="40"/>
-                            <state key="normal" image="previous"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="backward.end.fill" catalog="system"/>
                             <connections>
                                 <action selector="previousTrackButton:" destination="-1" eventType="touchUpInside" id="nhv-Yg-pqm"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nfg-kF-Wip">
                             <rect key="frame" x="77.5" y="0.0" width="62.5" height="40"/>
-                            <state key="normal" image="rewind"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="backward.fill" catalog="system"/>
                             <connections>
                                 <action selector="backRewind:" destination="-1" eventType="touchUpInside" id="zno-S9-ksR"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fjF-yH-qGO">
                             <rect key="frame" x="155" y="0.0" width="63" height="40"/>
-                            <state key="normal" image="play"/>
-                            <state key="selected" image="pause"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="play.fill" catalog="system"/>
+                            <state key="selected" image="pause.fill" catalog="system"/>
                             <connections>
                                 <action selector="playAndPauseButton:" destination="-1" eventType="touchUpInside" id="Dlv-tO-UCP"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dQ-Yo-ujn">
                             <rect key="frame" x="233" y="0.0" width="62.5" height="40"/>
-                            <state key="normal" image="fast-forward"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="forward.fill" catalog="system"/>
                             <connections>
                                 <action selector="forwardRewind:" destination="-1" eventType="touchUpInside" id="oOY-Mm-Zvb"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pk2-UE-sB6">
                             <rect key="frame" x="310.5" y="0.0" width="62.5" height="40"/>
-                            <state key="normal" image="next"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="forward.end.fill" catalog="system"/>
                             <connections>
                                 <action selector="nextTrack:" destination="-1" eventType="touchUpInside" id="Euc-EO-yNB"/>
                             </connections>
@@ -158,12 +168,12 @@
         </panGestureRecognizer>
     </objects>
     <resources>
-        <image name="fast-forward" width="18.5" height="18.5"/>
+        <image name="backward.end.fill" catalog="system" width="128" height="102"/>
+        <image name="backward.fill" catalog="system" width="128" height="79"/>
+        <image name="forward.end.fill" catalog="system" width="128" height="102"/>
+        <image name="forward.fill" catalog="system" width="128" height="79"/>
         <image name="mp3" width="75" height="75"/>
-        <image name="next" width="18.5" height="18.5"/>
-        <image name="pause" width="18.5" height="18.5"/>
-        <image name="play" width="18.5" height="18.5"/>
-        <image name="previous" width="18.5" height="18.5"/>
-        <image name="rewind" width="18.5" height="18.5"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
     </resources>
 </document>

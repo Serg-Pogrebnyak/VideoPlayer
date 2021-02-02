@@ -26,11 +26,17 @@ class PlayerView: UIView {
 
     @IBOutlet private var backgroundView: UIView!
     @IBOutlet private weak var songTitle: UILabel!
-    @IBOutlet private weak var playAndPauseButton: UIButton!
-    @IBOutlet private weak var trackImage: UIImageView!
     @IBOutlet private weak var currentTimeLabel: UILabel!
     @IBOutlet private weak var remainingTimeLabel: UILabel!
     @IBOutlet private weak var progressSlider: UISlider!
+    //buttons
+    @IBOutlet private weak var backwardEndButton: UIButton!
+    @IBOutlet private weak var backwardButton: UIButton!
+    @IBOutlet private weak var playAndPauseButton: UIButton!
+    @IBOutlet private weak var forwardButton: UIButton!
+    @IBOutlet private weak var forwardEndButton: UIButton!
+    
+    @IBOutlet private weak var trackImage: UIImageView!
 
     weak var delegat: PlayerViewDelegate?
     
@@ -122,6 +128,7 @@ class PlayerView: UIView {
         backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         trackImage.alpha = 0.0
         progressSlider.setCustomThumb()
+        setupButtonsTintColor()
         
         self.progressSlider.addTarget(self, action: #selector(onSliderValChanged(slider:event:)), for: UIControl.Event.valueChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -240,11 +247,21 @@ class PlayerView: UIView {
         }
     }
 
-    @objc fileprivate func willEnterForeground() {
+    @objc private func willEnterForeground() {
         DispatchQueue.main.async() {
             self.progressSlider.setCustomThumb()
             self.gradientLayer.colors = [UIColor.topGradientColor.cgColor,
                                          UIColor.bottomGradientColor.cgColor]
+            
+            self.setupButtonsTintColor()
         }
+    }
+    
+    private func setupButtonsTintColor() {
+        backwardEndButton.tintColor = .playerButtonTintColor
+        backwardButton.tintColor = .playerButtonTintColor
+        playAndPauseButton.tintColor = .playerButtonTintColor
+        forwardButton.tintColor = .playerButtonTintColor
+        forwardEndButton.tintColor = .playerButtonTintColor
     }
 }
