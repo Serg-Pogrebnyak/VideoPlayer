@@ -19,6 +19,7 @@ protocol MusicDisplayLogic: class {
     func displayMusicItemsArray(viewModel: Music.FetchLocalItems.ViewModel)
     func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel)
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
+    func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
 }
 
 class MusicViewController: UIViewController {
@@ -137,10 +138,14 @@ class MusicViewController: UIViewController {
     
     //MARK: bar batton actions
     @objc private func didTapDeleteButton(_ sender: Any) {
-        guard let array = tableView.indexPathsForSelectedRows else {return}
+        guard   let array = tableView.indexPathsForSelectedRows,
+                let interactor = interactor
+        else { return }
+        
         let reversedArray = array.reversed()
         for indexPath in reversedArray {
-            removeMediaItem(atIndex: indexPath.row)
+            let request = Music.DeleteMediaItem.Request(localId: musicItemsArray[indexPath.row].localId)
+            interactor.removeMediaItem(request: request)
         }
         self.navigationItem.leftBarButtonItem = syncBarButtonItem
     }
@@ -248,18 +253,6 @@ class MusicViewController: UIViewController {
     
     private func saveChanges() {
         CoreManager.shared.saveContext()
-    }
-    
-    private func removeMediaItem(atIndex index: Int) {
-        let removedObject = itemsArray.remove(at: index)
-        itemsSet.remove(removedObject)
-        tableView.reloadData()
-        CoreManager.shared.coreManagerContext.delete(removedObject)
-        saveChanges()
-        
-        if !FileManager.default.removeFileFromApplicationSupportDirectory(withName: removedObject.displayFileName) {
-            showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
-        }
     }
     
     deinit {
@@ -371,7 +364,9 @@ extension MusicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
         let deleteAction = UITableViewRowAction(style: .destructive, title: "") { [weak self] (action, indexPath) in
-            self?.removeMediaItem(atIndex: indexPath.row)
+            guard let self = self else {return}
+            let request = Music.DeleteMediaItem.Request(localId: self.musicItemsArray[indexPath.row].localId)
+            self.interactor?.removeMediaItem(request: request)
         }
         deleteAction.backgroundColor = UIColor(patternImage: UIImage(named: "trash")!)
 
@@ -423,7 +418,8 @@ extension MusicViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            removeMediaItem(atIndex: indexPath.row)
+            let request = Music.DeleteMediaItem.Request(localId: musicItemsArray[indexPath.row].localId)
+            interactor?.removeMediaItem(request: request)
         }
     }
 }
@@ -447,5 +443,12 @@ extension MusicViewController: MusicDisplayLogic {
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel) {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = viewModel.info.getLikeDictForSystem()
         playerView.updateViewWith(info: viewModel.info)
+    }
+    
+    func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel) {
+        musicItemsArray = viewModel.musicDisplayDataArray
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }

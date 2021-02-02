@@ -14,7 +14,7 @@ extension FileManager {
         let documentDirectory = FileManager.SearchPathDirectory.applicationSupportDirectory
         guard let documentsURL = urls(for: documentDirectory, in: .userDomainMask).first else {
             //TODO: handle this fatal error
-            fatalError("Can't create document directory")
+            fatalError("Can't create return Application Support Directory")
         }
         return documentsURL
     }
@@ -50,6 +50,7 @@ extension FileManager {
         }
     }
     
+    @discardableResult
     func removeFileFromApplicationSupportDirectory(withName name: String) -> Bool {
         do {
             let url = FileManager.default.applicationSupportDirectory.appendingPathComponent(name, isDirectory: false)

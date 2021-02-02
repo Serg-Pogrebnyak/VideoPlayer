@@ -19,6 +19,7 @@ enum Music {
     struct MusicDisplayData {
         var fileName: String
         var isNew: Bool
+        var localId: String
     }
     
     enum FetchLocalItems {
@@ -47,6 +48,20 @@ enum Music {
         struct ViewModel {
             var musicItem: MusicDisplayData
             var atIndex: Int
+        }
+    }
+    
+    enum DeleteMediaItem {
+        struct Request {
+            let localId: String
+        }
+        
+        struct Response {
+            var musicItems: [MusicOrVideoItem]
+        }
+        
+        struct ViewModel {
+            var musicDisplayDataArray: [MusicDisplayData]
         }
     }
     

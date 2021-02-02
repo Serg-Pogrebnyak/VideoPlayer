@@ -16,6 +16,7 @@ protocol MusicBusinessLogic {
     func fetchLocalItems(request: Music.FetchLocalItems.Request)
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request)
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request)
+    func removeMediaItem(request: Music.DeleteMediaItem.Request)
 }
 
 class MusicInteractor: MusicBusinessLogic {
@@ -27,7 +28,9 @@ class MusicInteractor: MusicBusinessLogic {
     
     //business logic variables
     private(set) var itemsSet = Set<MusicOrVideoItem>()
-    private(set) var itemsArray = [MusicOrVideoItem]()
+    private var itemsArray: [MusicOrVideoItem] {
+        return Array(itemsSet)
+    }
     private var indexOfItemForPlay = 0
     
     private let musicExtension = ".mp3"
@@ -38,7 +41,6 @@ class MusicInteractor: MusicBusinessLogic {
         fetchWorker?.fetch(byTypeExtension: musicExtension)
         
         itemsSet = CoreManager.shared.getMediaItems()
-        itemsArray = Array(itemsSet)
         
         let response = Music.FetchLocalItems.Response(musicItems: itemsArray)
         presenter?.showMusicItems(response: response)
@@ -73,6 +75,20 @@ class MusicInteractor: MusicBusinessLogic {
         playWorker = PlayMusicWorker()
         guard playWorker?.playSongByURL(url: fileUrl) ?? false else {return}
         playWorker?.delegate = self
+    }
+    
+    func removeMediaItem(request: Music.DeleteMediaItem.Request) {
+        let removedObjectOptional = itemsSet.first{ $0.localId == request.localId }
+        guard let removedObject = removedObjectOptional else { return }
+        
+        itemsSet.remove(removedObject)
+        CoreManager.shared.coreManagerContext.delete(removedObject)
+        saveChanges()
+        
+        FileManager.default.removeFileFromApplicationSupportDirectory(withName: removedObject.fileNameInStorage)
+        
+        let response = Music.DeleteMediaItem.Response(musicItems: itemsArray)
+        presenter?.updateMusicItemsAfterDeleting(response: response)
     }
     
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request) {
