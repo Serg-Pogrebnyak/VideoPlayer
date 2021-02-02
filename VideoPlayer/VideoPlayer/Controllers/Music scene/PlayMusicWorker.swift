@@ -85,8 +85,6 @@ class PlayMusicWorker {
                     continue
                 }
             }
-            
-            nowPlayingInfo.title = songUrl.lastPathComponent
         }
 
         delegate?.updatedPlayingStateAndInfo(playingInfo: nowPlayingInfo)
