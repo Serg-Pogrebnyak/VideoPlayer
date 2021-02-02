@@ -99,7 +99,7 @@ class AbstractMusicVideoViewController: UIViewController, MusicOrVideoArrayProto
 
     func removeItem(atIndex index: Int) {
         do {
-            let url = FileManager.default.documentDirectory.appendingPathComponent(itemsArray[index].displayFileName, isDirectory: false)
+            let url = FileManager.default.applicationSupportDirectory.appendingPathComponent(itemsArray[index].displayFileName, isDirectory: false)
             try FileManager.default.removeItem(at: url)
             let removedObject = itemsArray.remove(at: index)
             filterItemsArray.remove(at: index)

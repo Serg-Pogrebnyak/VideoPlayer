@@ -25,7 +25,7 @@ class FetchFromLocalStorageWorker {
             let musicItem = MusicOrVideoItem.init(fileName: itemURL.lastPathComponent,
                                                   fileExtension: itemExtension)
             
-            let isSuccessReplacing = FileManager.default.replaceItemInDocumentFolder(from: itemURL,
+            let isSuccessReplacing = FileManager.default.replaceItemInApplicationSupportFolder(from: itemURL,
                                                                                     fileName: musicItem.fileNameInStorage)
             if isSuccessReplacing {
                 newObects.append(musicItem)

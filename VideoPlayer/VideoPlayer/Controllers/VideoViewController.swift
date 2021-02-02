@@ -27,7 +27,7 @@ class VideoViewController: AbstractMusicVideoViewController {
         if index+1 <= itemsArray.count-1 {
             indexOfCurrentItem = index+1
             unNewTrackAtIndex(index+1)
-            let url = FileManager.default.documentDirectory.appendingPathComponent(itemsArray[index+1].displayFileName, isDirectory: false)
+            let url = FileManager.default.applicationSupportDirectory.appendingPathComponent(itemsArray[index+1].displayFileName, isDirectory: false)
             let player = AVPlayer(url: url)
             playerController.player = player
             player.play()
@@ -53,7 +53,7 @@ class VideoViewController: AbstractMusicVideoViewController {
         let selectedVideo = itemsArray[index]
         var autoPlayMutuable = autoPlay
 
-        let url = FileManager.default.documentDirectory.appendingPathComponent(selectedVideo.displayFileName, isDirectory: false)
+        let url = FileManager.default.applicationSupportDirectory.appendingPathComponent(selectedVideo.displayFileName, isDirectory: false)
         let player = AVPlayer(url: url)
         if let stoppedTime = selectedVideo.stoppedTime {
             let playerTimescale = player.currentItem?.asset.duration.timescale ?? 1

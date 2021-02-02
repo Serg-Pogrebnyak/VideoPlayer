@@ -257,7 +257,7 @@ class MusicViewController: UIViewController {
         CoreManager.shared.coreManagerContext.delete(removedObject)
         saveChanges()
         
-        if !FileManager.default.removeFileFromDocumentDirectory(withName: removedObject.displayFileName) {
+        if !FileManager.default.removeFileFromApplicationSupportDirectory(withName: removedObject.displayFileName) {
             showErrorAlertWithMessageByKey("Alert.Message.Can'tRemove")
         }
     }

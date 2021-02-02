@@ -54,7 +54,7 @@ class MusicInteractor: MusicBusinessLogic {
         
         let itemForPlay = itemsArray[indexOfItemForPlay]
         
-        let fileUrl = FileManager.default.documentDirectory.appendingPathComponent(itemForPlay.fileNameInStorage,
+        let fileUrl = FileManager.default.applicationSupportDirectory.appendingPathComponent(itemForPlay.fileNameInStorage,
                                                                                    isDirectory: false)
         guard FileManager.default.fileExists(atPath: fileUrl.path) else {
             //TODO: here should call worker which download items from cloud
