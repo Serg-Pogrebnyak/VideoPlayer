@@ -21,6 +21,7 @@ final class SyncMusicViewController: UIViewController {
     
     //MARK: Outlets
     @IBOutlet private weak var popUpContainerView: UIView!
+    @IBOutlet private weak var generalLoadingBorderView: UIView!
     @IBOutlet private weak var generalLoadingAnimationView: AnimationView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
@@ -35,6 +36,8 @@ final class SyncMusicViewController: UIViewController {
     private let animationSpeed: CGFloat = 1.5
     private let startLoadingFrame: CGFloat = 119
     private let endLoadingFrame: CGFloat = 238
+    private let endSuccessFrame: CGFloat = 400
+    private let showCloseButtonAnimationDuration: TimeInterval = 1
     
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -44,15 +47,22 @@ final class SyncMusicViewController: UIViewController {
         startGeneralLoadingAnimation()
     }
     
+    //MARK: Actions
+    @IBAction private func didTapCloseButton(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
+    
     //MARK: Setup
     private func configureUI() {
         titleLabel.text = "Synchronization"
         descriptionLabel.text = "Application synchronize your media files"
         
-        closeButton.setTitle("Close", for: .normal)
+        closeButton.setTitle("DONE", for: .normal)
         ButtonFabric.makeBoldColorButton(closeButton)
+        closeButton.isHidden = true
         
         popUpContainerView.layer.cornerRadius = generalViewCornerRadius
+        generalLoadingBorderView.layer.cornerRadius = generalLoadingBorderView.layer.bounds.width/2
         generalLoadingAnimationView.layer.cornerRadius = generalLoadingAnimationView.layer.bounds.width/2
     }
     
@@ -72,6 +82,21 @@ final class SyncMusicViewController: UIViewController {
         generalLoadingAnimationView.play(fromFrame: startLoadingFrame,
                                          toFrame: endLoadingFrame,
                                          loopMode: .loop)
+    }
+    
+    private func startGeneralSuccessAnimation() {
+        animatedDisplayCloseButton()
+        generalLoadingAnimationView.play(toFrame: endSuccessFrame,
+                                         loopMode: .playOnce)
+    }
+    
+    private func animatedDisplayCloseButton() {
+        closeButton.alpha = 0
+        closeButton.isHidden = false
+        
+        UIView.animate(withDuration: showCloseButtonAnimationDuration) { [weak self] in
+            self?.closeButton.alpha = 1
+        }
     }
 }
 
