@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                               y: 0,
                               width: self.window!.frame.width,
                               height: self.window!.frame.height)
-            _ = OverlayView(frame: rect,
-                            image: imageForOverlayView,
-                            showAlways: true)
+//            _ = OverlayView(frame: rect,
+//                            image: imageForOverlayView,
+//                            showAlways: true)
         }
 
         return true

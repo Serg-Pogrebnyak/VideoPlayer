@@ -57,7 +57,7 @@ extension FileManager {
             try FileManager.default.removeItem(at: url)
             return true
         } catch let error as NSError {
-            fatalError(error.description)
+            print(error.description)
             return false
         }
     }
