@@ -24,6 +24,7 @@ final class MusicOrVideoItem: NSManagedObject {
     @NSManaged public var uploadedToCloud: Bool
     @NSManaged public var stoppedTime: NSNumber?
     @NSManaged public var localId: String
+    @NSManaged public var addedDate: Date
     @NSManaged public var remoteId: String?
 
     private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
@@ -40,6 +41,7 @@ final class MusicOrVideoItem: NSManagedObject {
         self.remoteId = nil
         self.stoppedTime = nil
         self.localId = newUUID
+        self.addedDate = Date()
     }
 
     @nonobjc public func fetchRequest() -> NSFetchRequest<MusicOrVideoItem> {

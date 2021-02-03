@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="MusicOrVideoItem" representedClassName=".MusicOrVideoItem" syncable="YES">
+        <attribute name="addedDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="displayFileName" optional="YES" attributeType="String"/>
         <attribute name="fileNameInStorage" attributeType="String"/>
         <attribute name="isNew" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -10,6 +11,6 @@
         <attribute name="uploadedToCloud" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
     </entity>
     <elements>
-        <element name="MusicOrVideoItem" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="MusicOrVideoItem" positionX="-63" positionY="-18" width="128" height="163"/>
     </elements>
 </model>

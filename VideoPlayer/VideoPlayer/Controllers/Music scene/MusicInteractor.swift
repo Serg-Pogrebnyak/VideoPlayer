@@ -30,7 +30,7 @@ class MusicInteractor: MusicBusinessLogic {
     //business logic variables
     private(set) var itemsSet = Set<MusicOrVideoItem>()
     private var itemsArray: [MusicOrVideoItem] {
-        return Array(itemsSet)
+        return Array(itemsSet).sorted { $0.addedDate > $1.addedDate }
     }
     private var indexOfItemForPlay = 0
     
