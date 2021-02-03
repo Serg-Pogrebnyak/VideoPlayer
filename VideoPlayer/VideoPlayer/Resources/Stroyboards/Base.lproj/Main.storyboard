@@ -80,7 +80,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kex-vU-TYc">
-                                <rect key="frame" x="87" y="298" width="240" height="300"/>
+                                <rect key="frame" x="87" y="339" width="240" height="218.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzJ-dP-U0F">
                                         <rect key="frame" x="70" y="-50" width="100" height="100"/>
@@ -105,19 +105,34 @@
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLj-lK-3Kg">
                                         <rect key="frame" x="0.0" y="65" width="240" height="28"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="28" id="Se9-OQ-w2t"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o74-79-0Sb">
                                         <rect key="frame" x="0.0" y="108" width="240" height="20.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20.5" id="oHS-cs-uwh"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="F8O-oD-0rW">
+                                        <rect key="frame" x="0.0" y="143.5" width="240" height="0.0"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="0Yv-TX-ZVt"/>
+                                        </constraints>
+                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGi-OK-T4b">
-                                        <rect key="frame" x="30" y="231" width="180" height="39"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <rect key="frame" x="30" y="158.5" width="180" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="XU3-za-X5R"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <connections>
                                             <action selector="didTapCloseButton:" destination="Q79-ok-Rt1" eventType="touchUpInside" id="jEd-79-2Fc"/>
                                         </connections>
@@ -125,16 +140,19 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstItem="F8O-oD-0rW" firstAttribute="top" secondItem="o74-79-0Sb" secondAttribute="bottom" constant="15" id="0Od-JG-Y0B"/>
                                     <constraint firstItem="ZGi-OK-T4b" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" constant="30" id="160-D6-A1B"/>
+                                    <constraint firstItem="F8O-oD-0rW" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" id="3QP-5F-ggl"/>
                                     <constraint firstAttribute="trailing" secondItem="JLj-lK-3Kg" secondAttribute="trailing" id="6vw-Ou-IL7"/>
                                     <constraint firstItem="o74-79-0Sb" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" id="CYg-pa-VmQ"/>
                                     <constraint firstItem="xzJ-dP-U0F" firstAttribute="centerX" secondItem="Kex-vU-TYc" secondAttribute="centerX" id="D7K-7b-Z15"/>
+                                    <constraint firstItem="ZGi-OK-T4b" firstAttribute="top" secondItem="F8O-oD-0rW" secondAttribute="bottom" constant="15" id="Iy3-vz-gVd"/>
                                     <constraint firstItem="JLj-lK-3Kg" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" id="LLt-dq-NOc"/>
                                     <constraint firstAttribute="trailing" secondItem="o74-79-0Sb" secondAttribute="trailing" id="RDU-7h-cLy"/>
+                                    <constraint firstAttribute="trailing" secondItem="F8O-oD-0rW" secondAttribute="trailing" id="Xh3-Ly-QQr"/>
                                     <constraint firstAttribute="trailing" secondItem="ZGi-OK-T4b" secondAttribute="trailing" constant="30" id="Y2S-ia-vBt"/>
                                     <constraint firstAttribute="width" constant="240" id="Zlm-KE-Q5d"/>
                                     <constraint firstItem="JLj-lK-3Kg" firstAttribute="top" secondItem="xzJ-dP-U0F" secondAttribute="bottom" constant="15" id="aTZ-ll-ZKW"/>
-                                    <constraint firstAttribute="height" constant="300" id="aaL-o6-AqV"/>
                                     <constraint firstItem="xzJ-dP-U0F" firstAttribute="top" secondItem="Kex-vU-TYc" secondAttribute="top" constant="-50" id="egP-7O-m0x"/>
                                     <constraint firstAttribute="bottom" secondItem="ZGi-OK-T4b" secondAttribute="bottom" constant="30" id="gdE-EC-kpf"/>
                                     <constraint firstItem="o74-79-0Sb" firstAttribute="top" secondItem="JLj-lK-3Kg" secondAttribute="bottom" constant="15" id="qqh-RZ-Zu4"/>
@@ -150,10 +168,14 @@
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="ZGi-OK-T4b" id="5rJ-y7-03o"/>
+                        <outlet property="closeButtonHeight" destination="XU3-za-X5R" id="vKu-8l-ezw"/>
                         <outlet property="descriptionLabel" destination="o74-79-0Sb" id="ewo-63-xtY"/>
+                        <outlet property="descriptionLabelHeight" destination="oHS-cs-uwh" id="wrf-5u-IqH"/>
                         <outlet property="generalLoadingAnimationView" destination="z6O-3Z-kGX" id="5yt-K7-fBr"/>
                         <outlet property="generalLoadingBorderView" destination="xzJ-dP-U0F" id="Lrp-I3-Lxo"/>
                         <outlet property="popUpContainerView" destination="Kex-vU-TYc" id="PBv-fs-B0J"/>
+                        <outlet property="progressPerStepStackView" destination="F8O-oD-0rW" id="GJH-W1-exe"/>
+                        <outlet property="progressPerStepStackViewHeight" destination="0Yv-TX-ZVt" id="1rg-KP-qfv"/>
                         <outlet property="titleLabel" destination="JLj-lK-3Kg" id="Dfw-3k-QhE"/>
                     </connections>
                 </viewController>

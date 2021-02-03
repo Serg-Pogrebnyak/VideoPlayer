@@ -25,7 +25,11 @@ final class SyncMusicViewController: UIViewController {
     @IBOutlet private weak var generalLoadingAnimationView: AnimationView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var descriptionLabelHeight: NSLayoutConstraint!
+    @IBOutlet private weak var progressPerStepStackView: UIStackView!
+    @IBOutlet private weak var progressPerStepStackViewHeight: NSLayoutConstraint!
     @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var closeButtonHeight: NSLayoutConstraint!
     
     
     //MARK: Variables
@@ -56,10 +60,14 @@ final class SyncMusicViewController: UIViewController {
     private func configureUI() {
         titleLabel.text = "Synchronization"
         descriptionLabel.text = "Application synchronize your media files"
+        descriptionLabel.sizeToFit()
+        descriptionLabelHeight.constant = descriptionLabel.bounds.height
         
         closeButton.setTitle("DONE", for: .normal)
         ButtonFabric.makeBoldColorButton(closeButton)
         closeButton.isHidden = true
+        closeButton.sizeToFit()
+        closeButtonHeight.constant = closeButton.bounds.height
         
         popUpContainerView.layer.cornerRadius = generalViewCornerRadius
         generalLoadingBorderView.layer.cornerRadius = generalLoadingBorderView.layer.bounds.width/2
