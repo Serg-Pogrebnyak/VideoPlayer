@@ -13,20 +13,53 @@
 import UIKit
 
 protocol SyncMusicBusinessLogic {
-    func doSomething(request: SyncMusic.Something.Request)
+    func sync(request: SyncMusic.Sync.Request)
 }
 
 final class SyncMusicInteractor: SyncMusicBusinessLogic {
     
     var presenter: SyncMusicPresentationLogic?
-    var worker: SyncMusicWorker?
+    
+    private var syncState = SyncMusic.Sync.SyncProcess()
     
     // MARK: Business Logic
-    func doSomething(request: SyncMusic.Something.Request) {
-        worker = SyncMusicWorker()
-        worker?.doSomeWork()
+    func sync(request: SyncMusic.Sync.Request) {
+        syncState = SyncMusic.Sync.SyncProcess()
+        fetchFromLocalDB()
+    }
+    
+    private func fetchFromLocalDB() {
+        syncState.fetchFromLocalDB = .success
         
-        let response = SyncMusic.Something.Response()
-        presenter?.presentSomething(response: response)
+        callPresenter()
+        
+        fetchFromCloud()
+    }
+    
+    private func fetchFromCloud() {
+        syncState.fetchFromCloud = .success
+        
+        callPresenter()
+        
+        fetchFromLocalStorageNewItems()
+    }
+    
+    private func fetchFromLocalStorageNewItems() {
+        syncState.fetchFromLocalStorage = .success
+        
+        callPresenter()
+        
+        updateLocalDB()
+    }
+    
+    private func updateLocalDB() {
+        syncState.merge = .success
+        
+        callPresenter()
+    }
+    
+    private func callPresenter() {
+        let response = SyncMusic.Sync.Response(syncState: syncState)
+        presenter?.updateSyncInfo(response: response)
     }
 }

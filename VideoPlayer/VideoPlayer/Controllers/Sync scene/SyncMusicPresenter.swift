@@ -13,7 +13,7 @@
 import UIKit
 
 protocol SyncMusicPresentationLogic {
-    func presentSomething(response: SyncMusic.Something.Response)
+    func updateSyncInfo(response: SyncMusic.Sync.Response)
 }
 
 final class SyncMusicPresenter: SyncMusicPresentationLogic {
@@ -21,8 +21,31 @@ final class SyncMusicPresenter: SyncMusicPresentationLogic {
     weak var viewController: SyncMusicDisplayLogic?
     
     // MARK: Do something
-    func presentSomething(response: SyncMusic.Something.Response) {
-        let viewModel = SyncMusic.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func updateSyncInfo(response: SyncMusic.Sync.Response) {
+        let syncState = response.syncState
+        var displayArray = [SyncMusic.Sync.SyncDisplayModel]()
+        
+        let fetchFromLocalDBTitle = "Fetch from local Data Base"
+        let fetchFromLocalDB = SyncMusic.Sync.SyncDisplayModel(currentSyncState: syncState.fetchFromLocalDB,
+                                                               description: fetchFromLocalDBTitle)
+        displayArray.append(fetchFromLocalDB)
+        
+        let fetchFromCloudTitle = "Fetch from local cloud"
+        let fetchFromCloud = SyncMusic.Sync.SyncDisplayModel(currentSyncState: syncState.fetchFromCloud,
+                                                             description: fetchFromCloudTitle)
+        displayArray.append(fetchFromCloud)
+        
+        let fetchFromLocalStorageTitle = "Check new items on device"
+        let fetchFromLocalStorage = SyncMusic.Sync.SyncDisplayModel(currentSyncState: syncState.fetchFromLocalStorage,
+                                                                    description: fetchFromLocalStorageTitle)
+        displayArray.append(fetchFromLocalStorage)
+        
+        let saveNewDataTitle = "Save new data"
+        let saveNewData = SyncMusic.Sync.SyncDisplayModel(currentSyncState: syncState.allDone,
+                                                                    description: saveNewDataTitle)
+        displayArray.append(saveNewData)
+        
+        let viewModel = SyncMusic.Sync.ViewModel(arrayOfSyncProcessModel: displayArray)
+        viewController?.displaySyncState(viewModel: viewModel)
     }
 }

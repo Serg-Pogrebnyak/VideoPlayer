@@ -14,7 +14,7 @@ import UIKit
 import Lottie
 
 protocol SyncMusicDisplayLogic: class {
-    func displaySomething(viewModel: SyncMusic.Something.ViewModel)
+    func displaySyncState(viewModel: SyncMusic.Sync.ViewModel)
 }
 
 final class SyncMusicViewController: UIViewController {
@@ -109,6 +109,6 @@ final class SyncMusicViewController: UIViewController {
 }
 
 extension SyncMusicViewController: SyncMusicDisplayLogic {
-    func displaySomething(viewModel: SyncMusic.Something.ViewModel) {
+    func displaySyncState(viewModel: SyncMusic.Sync.ViewModel) {
     }
 }

@@ -19,7 +19,6 @@
 		9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */; };
 		C5C5306925CAD73C000CDF4A /* MusicRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306825CAD73C000CDF4A /* MusicRouter.swift */; };
 		C5C5307125CADB43000CDF4A /* SyncMusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306B25CADB43000CDF4A /* SyncMusicPresenter.swift */; };
-		C5C5307225CADB43000CDF4A /* SyncMusicWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306C25CADB43000CDF4A /* SyncMusicWorker.swift */; };
 		C5C5307425CADB43000CDF4A /* SyncMusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306E25CADB43000CDF4A /* SyncMusicModels.swift */; };
 		C5C5307525CADB43000CDF4A /* SyncMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306F25CADB43000CDF4A /* SyncMusicViewController.swift */; };
 		C5C5307625CADB43000CDF4A /* SyncMusicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */; };
@@ -77,7 +76,6 @@
 		BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
 		C5C5306825CAD73C000CDF4A /* MusicRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRouter.swift; sourceTree = "<group>"; };
 		C5C5306B25CADB43000CDF4A /* SyncMusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicPresenter.swift; sourceTree = "<group>"; };
-		C5C5306C25CADB43000CDF4A /* SyncMusicWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicWorker.swift; sourceTree = "<group>"; };
 		C5C5306E25CADB43000CDF4A /* SyncMusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicModels.swift; sourceTree = "<group>"; };
 		C5C5306F25CADB43000CDF4A /* SyncMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicViewController.swift; sourceTree = "<group>"; };
 		C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicInteractor.swift; sourceTree = "<group>"; };
@@ -262,7 +260,6 @@
 				C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */,
 				C5C5306B25CADB43000CDF4A /* SyncMusicPresenter.swift */,
 				C5C5306E25CADB43000CDF4A /* SyncMusicModels.swift */,
-				C5C5306C25CADB43000CDF4A /* SyncMusicWorker.swift */,
 			);
 			path = "Sync scene";
 			sourceTree = "<group>";
@@ -525,7 +522,6 @@
 				C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */,
 				C5C5307125CADB43000CDF4A /* SyncMusicPresenter.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
-				C5C5307225CADB43000CDF4A /* SyncMusicWorker.swift in Sources */,
 				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
 				C5FAC02E25B03AFB006660B2 /* PlayMusicWorker.swift in Sources */,
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
