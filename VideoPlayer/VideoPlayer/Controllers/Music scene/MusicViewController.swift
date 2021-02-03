@@ -100,7 +100,7 @@ final class MusicViewController: UIViewController {
         let viewController = self
         let interactor = MusicInteractor()
         let presenter = MusicPresenter()
-        let router = MusicRouter(viewController: self)
+        let router = MusicRouter(viewController: viewController)
         viewController.routerInput = router
         viewController.interactor = interactor
         interactor.presenter = presenter
@@ -194,7 +194,7 @@ final class MusicViewController: UIViewController {
     }
     
     @objc private func didTapSyncButton(_ sender: Any) {
-        routerInput?.presentSyncVC()
+        routerInput?.presentSyncMusicViewController()
     }
     
     @objc private func didTapEditButton(_ sender: Any) {

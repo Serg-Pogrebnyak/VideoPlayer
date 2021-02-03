@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MusicRouterInput {
-    func presentSyncVC()
+    func presentSyncMusicViewController()
 }
 
 final class MusicRouter: MusicRouterInput {
@@ -21,7 +21,7 @@ final class MusicRouter: MusicRouterInput {
     }
 
     //MARK: - Music Router Input
-    func presentSyncVC() {
+    func presentSyncMusicViewController() {
         print("😝 Sync VC was presented")
     }
 }
