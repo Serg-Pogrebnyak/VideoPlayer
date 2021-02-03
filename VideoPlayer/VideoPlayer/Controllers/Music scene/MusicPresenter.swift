@@ -20,7 +20,7 @@ protocol MusicPresentationLogic {
     func updatePlayingSongInfo(response: Music.UpdatePlayingSongInfo.Response)
 }
 
-class MusicPresenter: MusicPresentationLogic {
+final class MusicPresenter: MusicPresentationLogic {
     
     weak var viewController: MusicDisplayLogic?
     

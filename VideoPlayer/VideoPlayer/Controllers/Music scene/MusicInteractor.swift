@@ -20,7 +20,7 @@ protocol MusicBusinessLogic {
     func findMediaItems(request: Music.FindMediaItems.Request)
 }
 
-class MusicInteractor: MusicBusinessLogic {
+final class MusicInteractor: MusicBusinessLogic {
     
     var presenter: MusicPresentationLogic?
     //workerks

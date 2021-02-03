@@ -17,6 +17,7 @@
 		0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA7408623C72E5E001BBBA4 /* TabBarController.swift */; };
 		0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDEA8D523C750B7003261BB /* FileManagerExtension.swift */; };
 		9796E8AA8857BF2C0905B63E /* Pods_VideoPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */; };
+		C5C5306925CAD73C000CDF4A /* MusicRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306825CAD73C000CDF4A /* MusicRouter.swift */; };
 		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
 		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
@@ -67,6 +68,7 @@
 		2DFBBE56230AEC803DD7F8B1 /* Pods-VideoPlayer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.release.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.release.xcconfig"; sourceTree = "<group>"; };
 		7DD6A3D405670C928F7FE361 /* Pods_VideoPlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoPlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE93AD494FA9099A5723B19F /* Pods-VideoPlayer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoPlayer.debug.xcconfig"; path = "Target Support Files/Pods-VideoPlayer/Pods-VideoPlayer.debug.xcconfig"; sourceTree = "<group>"; };
+		C5C5306825CAD73C000CDF4A /* MusicRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicRouter.swift; sourceTree = "<group>"; };
 		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				C5FAC02625AF3FC6006660B2 /* MusicInteractor.swift */,
 				C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */,
 				C5FAC02425AF3FC6006660B2 /* MusicModels.swift */,
+				C5C5306825CAD73C000CDF4A /* MusicRouter.swift */,
 				C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */,
 				C5FAC02D25B03AFB006660B2 /* PlayMusicWorker.swift */,
 			);
@@ -466,6 +469,7 @@
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
 				C5FAC02C25AF3FC6006660B2 /* MusicInteractor.swift in Sources */,
 				C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */,
+				C5C5306925CAD73C000CDF4A /* MusicRouter.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
 				DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */,
 				DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */,

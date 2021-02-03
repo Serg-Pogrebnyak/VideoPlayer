@@ -49,6 +49,7 @@ final class MusicViewController: UIViewController {
         }
     }
     private var interactor: MusicBusinessLogic?
+    private var routerInput: MusicRouterInput?
     private var musicItemsArray = [Music.MusicDisplayData]()
     
     //TODO: remove variables below
@@ -65,7 +66,6 @@ final class MusicViewController: UIViewController {
         playerView.delegat = self
         setupRemoteCommandCenter()
         //FileManager.default.removeAllFromTempDirectory()
-        fetchLocalItems()
         setupUI()
         setupNavigationBarButons()
         
@@ -73,6 +73,11 @@ final class MusicViewController: UIViewController {
                                                selector: #selector(appMovedToForeground),
                                                name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchLocalItems()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,6 +100,8 @@ final class MusicViewController: UIViewController {
         let viewController = self
         let interactor = MusicInteractor()
         let presenter = MusicPresenter()
+        let router = MusicRouter(viewController: self)
+        viewController.routerInput = router
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
@@ -187,7 +194,7 @@ final class MusicViewController: UIViewController {
     }
     
     @objc private func didTapSyncButton(_ sender: Any) {
-        fetchLocalItems()
+        routerInput?.presentSyncVC()
     }
     
     @objc private func didTapEditButton(_ sender: Any) {
