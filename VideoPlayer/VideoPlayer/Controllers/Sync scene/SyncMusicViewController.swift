@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Lottie
 
 protocol SyncMusicDisplayLogic: class {
     func displaySomething(viewModel: SyncMusic.Something.ViewModel)
@@ -18,16 +19,43 @@ protocol SyncMusicDisplayLogic: class {
 
 final class SyncMusicViewController: UIViewController {
     
+    //MARK: Outlets
+    @IBOutlet private weak var popUpContainerView: UIView!
+    @IBOutlet private weak var generalLoadingAnimationView: AnimationView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var closeButton: UIButton!
+    
+    
     //MARK: Variables
     private var interactor: SyncMusicBusinessLogic?
+    
+    //MARK: Constants
+    private let generalViewCornerRadius: CGFloat = 20
+    private let animationSpeed: CGFloat = 1.5
+    private let startLoadingFrame: CGFloat = 119
+    private let endLoadingFrame: CGFloat = 238
     
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCleanCycle()
+        configureUI()
+        startGeneralLoadingAnimation()
     }
     
     //MARK: Setup
+    private func configureUI() {
+        titleLabel.text = "Synchronization"
+        descriptionLabel.text = "Application synchronize your media files"
+        
+        closeButton.setTitle("Close", for: .normal)
+        ButtonFabric.makeBoldColorButton(closeButton)
+        
+        popUpContainerView.layer.cornerRadius = generalViewCornerRadius
+        generalLoadingAnimationView.layer.cornerRadius = generalLoadingAnimationView.layer.bounds.width/2
+    }
+    
     private func setupCleanCycle() {
         let viewController = self
         let interactor = SyncMusicInteractor()
@@ -35,6 +63,15 @@ final class SyncMusicViewController: UIViewController {
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
+    }
+    
+    //MARK: Animation functions
+    private func startGeneralLoadingAnimation() {
+        generalLoadingAnimationView.backgroundBehavior = .pauseAndRestore
+        generalLoadingAnimationView.animationSpeed = animationSpeed
+        generalLoadingAnimationView.play(fromFrame: startLoadingFrame,
+                                         toFrame: endLoadingFrame,
+                                         loopMode: .loop)
     }
 }
 

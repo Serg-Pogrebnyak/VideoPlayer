@@ -23,6 +23,8 @@
 		C5C5307425CADB43000CDF4A /* SyncMusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306E25CADB43000CDF4A /* SyncMusicModels.swift */; };
 		C5C5307525CADB43000CDF4A /* SyncMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5306F25CADB43000CDF4A /* SyncMusicViewController.swift */; };
 		C5C5307625CADB43000CDF4A /* SyncMusicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */; };
+		C5C5307A25CAE5CC000CDF4A /* loadingSuccessFailSpinner.json in Resources */ = {isa = PBXBuildFile; fileRef = C5C5307925CAE5CC000CDF4A /* loadingSuccessFailSpinner.json */; };
+		C5C5307E25CAEF84000CDF4A /* ButtonFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5307D25CAEF84000CDF4A /* ButtonFabric.swift */; };
 		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
 		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
@@ -79,6 +81,8 @@
 		C5C5306E25CADB43000CDF4A /* SyncMusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicModels.swift; sourceTree = "<group>"; };
 		C5C5306F25CADB43000CDF4A /* SyncMusicViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicViewController.swift; sourceTree = "<group>"; };
 		C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicInteractor.swift; sourceTree = "<group>"; };
+		C5C5307925CAE5CC000CDF4A /* loadingSuccessFailSpinner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loadingSuccessFailSpinner.json; sourceTree = "<group>"; };
+		C5C5307D25CAEF84000CDF4A /* ButtonFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFabric.swift; sourceTree = "<group>"; };
 		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
@@ -138,8 +142,8 @@
 		0B8BCB3B23C7464200EDA27F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C5C5306A25CAD93C000CDF4A /* Sync scene */,
 				C5FAC02025AF3F4C006660B2 /* Music scene */,
+				C5C5306A25CAD93C000CDF4A /* Sync scene */,
 				0BA7408623C72E5E001BBBA4 /* TabBarController.swift */,
 				DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */,
 				0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */,
@@ -150,6 +154,7 @@
 		0B8BCB3C23C7465800EDA27F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C5C5307C25CAEF74000CDF4A /* Fabrics */,
 				DE3AE3BA23F440480017A329 /* CoreData */,
 				DE470F0E23E46E4900269440 /* Animations */,
 				DEC23BA223CF0FF4007E74FD /* Localization Manager */,
@@ -262,6 +267,14 @@
 			path = "Sync scene";
 			sourceTree = "<group>";
 		};
+		C5C5307C25CAEF74000CDF4A /* Fabrics */ = {
+			isa = PBXGroup;
+			children = (
+				C5C5307D25CAEF84000CDF4A /* ButtonFabric.swift */,
+			);
+			path = Fabrics;
+			sourceTree = "<group>";
+		};
 		C5FAC02025AF3F4C006660B2 /* Music scene */ = {
 			isa = PBXGroup;
 			children = (
@@ -289,6 +302,7 @@
 		DE470F0E23E46E4900269440 /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				C5C5307925CAE5CC000CDF4A /* loadingSuccessFailSpinner.json */,
 				DE3A81AD23E95F6400468334 /* noData.json */,
 				DE470F0F23E46E5900269440 /* emtyPopcornBox.json */,
 			);
@@ -403,6 +417,7 @@
 				0BA7407B23C71B20001BBBA4 /* LaunchScreen.storyboard in Resources */,
 				DEC23BA623CF112E007E74FD /* ApplicationText.strings in Resources */,
 				DE470F1023E46E5900269440 /* emtyPopcornBox.json in Resources */,
+				C5C5307A25CAE5CC000CDF4A /* loadingSuccessFailSpinner.json in Resources */,
 				DE6C7FE523CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib in Resources */,
 				DE3A81B023E965C600468334 /* EmptyMusicListView.xib in Resources */,
 				DE470F1423E46FF700269440 /* EmptyVideoListView.xib in Resources */,
@@ -498,6 +513,7 @@
 				C5C5306925CAD73C000CDF4A /* MusicRouter.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
 				DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */,
+				C5C5307E25CAEF84000CDF4A /* ButtonFabric.swift in Sources */,
 				DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */,
 				DECD06D423EC2B3400FFED0A /* UISliderExtension.swift in Sources */,
 				DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */,

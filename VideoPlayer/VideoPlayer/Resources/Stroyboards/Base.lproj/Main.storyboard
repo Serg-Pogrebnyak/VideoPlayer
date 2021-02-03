@@ -71,6 +71,82 @@
             </objects>
             <point key="canvasLocation" x="-197.10144927536234" y="-502.23214285714283"/>
         </scene>
+        <!--Sync Music View Controller-->
+        <scene sceneID="Lmz-yL-Roz">
+            <objects>
+                <viewController storyboardIdentifier="SyncMusicViewController" id="Q79-ok-Rt1" customClass="SyncMusicViewController" customModule="NIXPlayer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SeW-ay-4RY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kex-vU-TYc">
+                                <rect key="frame" x="87" y="298" width="240" height="300"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-3Z-kGX" customClass="AnimationView" customModule="Lottie">
+                                        <rect key="frame" x="85" y="-35" width="70" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="AeE-fp-Rov"/>
+                                            <constraint firstAttribute="width" constant="70" id="JKj-Je-kBF"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="loadingSuccessFailSpinner"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLj-lK-3Kg">
+                                        <rect key="frame" x="0.0" y="65" width="240" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o74-79-0Sb">
+                                        <rect key="frame" x="0.0" y="108" width="240" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGi-OK-T4b">
+                                        <rect key="frame" x="30" y="231" width="180" height="39"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="ZGi-OK-T4b" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" constant="30" id="160-D6-A1B"/>
+                                    <constraint firstAttribute="trailing" secondItem="JLj-lK-3Kg" secondAttribute="trailing" id="6vw-Ou-IL7"/>
+                                    <constraint firstItem="o74-79-0Sb" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" id="CYg-pa-VmQ"/>
+                                    <constraint firstItem="JLj-lK-3Kg" firstAttribute="leading" secondItem="Kex-vU-TYc" secondAttribute="leading" id="LLt-dq-NOc"/>
+                                    <constraint firstAttribute="trailing" secondItem="o74-79-0Sb" secondAttribute="trailing" id="RDU-7h-cLy"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZGi-OK-T4b" secondAttribute="trailing" constant="30" id="Y2S-ia-vBt"/>
+                                    <constraint firstItem="z6O-3Z-kGX" firstAttribute="top" secondItem="Kex-vU-TYc" secondAttribute="top" constant="-35" id="YC2-XP-siA"/>
+                                    <constraint firstAttribute="width" constant="240" id="Zlm-KE-Q5d"/>
+                                    <constraint firstAttribute="height" constant="300" id="aaL-o6-AqV"/>
+                                    <constraint firstItem="JLj-lK-3Kg" firstAttribute="top" secondItem="z6O-3Z-kGX" secondAttribute="bottom" constant="30" id="eEp-yl-Yho"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZGi-OK-T4b" secondAttribute="bottom" constant="30" id="gdE-EC-kpf"/>
+                                    <constraint firstItem="z6O-3Z-kGX" firstAttribute="centerX" secondItem="Kex-vU-TYc" secondAttribute="centerX" id="oqB-FC-M1w"/>
+                                    <constraint firstItem="o74-79-0Sb" firstAttribute="top" secondItem="JLj-lK-3Kg" secondAttribute="bottom" constant="15" id="qqh-RZ-Zu4"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Kex-vU-TYc" firstAttribute="centerX" secondItem="SeW-ay-4RY" secondAttribute="centerX" id="NZW-q9-NJb"/>
+                            <constraint firstItem="Kex-vU-TYc" firstAttribute="centerY" secondItem="SeW-ay-4RY" secondAttribute="centerY" id="vdm-p2-XSm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Her-Kd-oeS"/>
+                    </view>
+                    <connections>
+                        <outlet property="closeButton" destination="ZGi-OK-T4b" id="5rJ-y7-03o"/>
+                        <outlet property="descriptionLabel" destination="o74-79-0Sb" id="ewo-63-xtY"/>
+                        <outlet property="generalLoadingAnimationView" destination="z6O-3Z-kGX" id="5yt-K7-fBr"/>
+                        <outlet property="popUpContainerView" destination="Kex-vU-TYc" id="PBv-fs-B0J"/>
+                        <outlet property="titleLabel" destination="JLj-lK-3Kg" id="Dfw-3k-QhE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4gS-6Y-4gl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="639.13043478260875" y="-501.5625"/>
+        </scene>
         <!--Video-->
         <scene sceneID="sbj-0c-5ij">
             <objects>

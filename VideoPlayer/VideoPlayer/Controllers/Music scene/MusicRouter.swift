@@ -22,6 +22,10 @@ final class MusicRouter: MusicRouterInput {
 
     //MARK: - Music Router Input
     func presentSyncMusicViewController() {
-        print("😝 Sync VC was presented")
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let syncMusicVC = storyboard.instantiateViewController(withIdentifier: String(describing: SyncMusicViewController.self))
+        viewController?.present(syncMusicVC,
+                                animated: true,
+                                completion: nil)
     }
 }

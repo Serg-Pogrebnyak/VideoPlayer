@@ -32,4 +32,16 @@ extension UIColor {
     static var playerButtonTintColor: UIColor {
         return UIColor.init(named: "playerButtonTintColor")!
     }
+    
+    static var firstGeneralColor: UIColor {
+        return UIColor.init(named: "firstGeneralColor")!
+    }
+    
+    static var secondGeneralColor: UIColor {
+        return UIColor.init(named: "secondGeneralColor")!
+    }
+    
+    static var thirdGeneralColor: UIColor {
+        return UIColor.init(named: "thirdGeneralColor")!
+    }
 }
