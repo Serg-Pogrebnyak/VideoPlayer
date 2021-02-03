@@ -17,6 +17,7 @@ protocol MusicBusinessLogic {
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request)
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request)
     func removeMediaItem(request: Music.DeleteMediaItem.Request)
+    func findMediaItems(request: Music.FindMediaItems.Request)
 }
 
 class MusicInteractor: MusicBusinessLogic {
@@ -89,6 +90,18 @@ class MusicInteractor: MusicBusinessLogic {
         
         let response = Music.DeleteMediaItem.Response(musicItems: itemsArray)
         presenter?.updateMusicItemsAfterDeleting(response: response)
+    }
+    
+    func findMediaItems(request: Music.FindMediaItems.Request) {
+        let searchText = request.searchText
+        var resultArray = itemsArray
+        
+        if !searchText.isEmpty  {
+            resultArray = itemsSet.filter { $0.displayFileName.contains(searchText) }
+        }
+        
+        let response = Music.FindMediaItems.Response(musicItems: resultArray)
+        presenter?.updateMusicItemsAfterSearch(response: response)
     }
     
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request) {

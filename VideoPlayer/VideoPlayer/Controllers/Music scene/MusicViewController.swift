@@ -20,43 +20,43 @@ protocol MusicDisplayLogic: class {
     func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel)
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
+    func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel)
 }
 
-class MusicViewController: UIViewController {
+final class MusicViewController: UIViewController {
     
     private enum NavigationBarButtonState {
         case normal // in this mode display sync and edit buttons
         case tableViewEditing(Int) // in this mode display sync/delete and cancel buttons
         case searching // in this mode display sync and cancel buttons
-        
-        
     }
     
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var playerView: PlayerView!
     @IBOutlet private weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
     @IBOutlet private weak var playerViewHeightConstraint: NSLayoutConstraint!
-    
+    //navigation UI elements
     private var syncBarButtonItem: UIBarButtonItem!
     private var deleteBarButtonItem: UIBarButtonItem!
     private var editBarButtonItem: UIBarButtonItem!
     private var cancelBarButtonItem: UIBarButtonItem!
     lazy private var searchBar = UISearchBar(frame: CGRect.zero)
     
+    //MARK: Variables
     private var navigationBarState = NavigationBarButtonState.normal {
         didSet {
             setupNavigationBarButons()
         }
     }
+    private var interactor: MusicBusinessLogic?
     private var musicItemsArray = [Music.MusicDisplayData]()
+    
+    //TODO: remove variables below
     private var itemsArray = [MusicOrVideoItem]()
-    private var itemsSet = Set<MusicOrVideoItem>()
     private let rewind = CMTime(seconds: 15, preferredTimescale: 1)
     private var player = AVPlayer()
     private var nowPlayingInfo = [String: Any]()
     private var indexOfCurrentItem: Int?
-    
-    private var interactor: MusicBusinessLogic?
     
     // MARK: View lifecycle
     override func viewDidLoad() {
@@ -203,10 +203,13 @@ class MusicViewController: UIViewController {
     }
     
     @objc private func titleWasTapped() {
+        tableView.isEditing = false
         if navigationItem.titleView == nil {
             navigationItem.titleView = searchBar
             searchBar.becomeFirstResponder()
             navigationBarState = .searching
+        } else {
+            navigationBarState = .normal
         }
     }
     
@@ -334,30 +337,16 @@ extension MusicViewController: PlayerViewDelegate {
 //MARK: - UISearchBarDelegate
 extension MusicViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        tableView.reloadData()
+        tableView.setContentOffset(.zero, animated: true)
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let trimmedString = searchText
-        self.itemsArray.removeAll()
-
-        if trimmedString.isEmpty {
-            self.itemsArray = Array(itemsSet)
-        }else{
-            self.itemsArray = self.itemsSet.filter({ (musicItem) -> Bool in
-                return musicItem.displayFileName.contains(trimmedString)
-            })
-        }
-        tableView.reloadData()
+        let request = Music.FindMediaItems.Request(searchText: searchText)
+        interactor?.findMediaItems(request: request)
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.resignFirstResponder()
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.searchBar.resignFirstResponder()
-        tableView.reloadData()
     }
 }
 
@@ -466,6 +455,13 @@ extension MusicViewController: MusicDisplayLogic {
     }
     
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel) {
+        musicItemsArray = viewModel.musicDisplayDataArray
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel) {
         musicItemsArray = viewModel.musicDisplayDataArray
         DispatchQueue.main.async {
             self.tableView.reloadData()

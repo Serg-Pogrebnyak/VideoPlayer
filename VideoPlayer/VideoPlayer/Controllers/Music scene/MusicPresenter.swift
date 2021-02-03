@@ -16,6 +16,7 @@ protocol MusicPresentationLogic {
     func showMusicItems(response: Music.FetchLocalItems.Response)
     func unnewMusicItem(response: Music.StartPlayOrDownload.Response)
     func updateMusicItemsAfterDeleting(response: Music.DeleteMediaItem.Response)
+    func updateMusicItemsAfterSearch(response: Music.FindMediaItems.Response)
     func updatePlayingSongInfo(response: Music.UpdatePlayingSongInfo.Response)
 }
 
@@ -55,6 +56,16 @@ class MusicPresenter: MusicPresentationLogic {
                                                                              localId: $0.localId)
         }
         let viewModel = Music.DeleteMediaItem.ViewModel(musicDisplayDataArray: musicDisplayDataArray)
-        viewController?.displayMusicItemsArrayAfterDeleting(viewModel: viewModel )
+        viewController?.displayMusicItemsArrayAfterDeleting(viewModel: viewModel)
+    }
+    
+    func updateMusicItemsAfterSearch(response: Music.FindMediaItems.Response) {
+        let responseArray = Array(response.musicItems)
+        let musicDisplayDataArray = responseArray.map{Music.MusicDisplayData(fileName: $0.displayFileName,
+                                                                             isNew: $0.isNew,
+                                                                             localId: $0.localId)
+        }
+        let viewModel = Music.FindMediaItems.ViewModel(musicDisplayDataArray: musicDisplayDataArray)
+        viewController?.displayMusicItemsArrayAfterSearch(viewModel: viewModel)
     }
 }

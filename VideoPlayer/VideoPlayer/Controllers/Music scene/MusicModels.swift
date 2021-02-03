@@ -65,6 +65,20 @@ enum Music {
         }
     }
     
+    enum FindMediaItems {
+        struct Request {
+            let searchText: String
+        }
+        
+        struct Response {
+            var musicItems: [MusicOrVideoItem]
+        }
+        
+        struct ViewModel {
+            var musicDisplayDataArray: [MusicDisplayData]
+        }
+    }
+    
     enum UpdatePlayingSongInfo {
         
         struct SongInfoForDisplay {
