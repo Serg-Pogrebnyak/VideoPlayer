@@ -388,7 +388,6 @@ extension MusicViewController: UITableViewDelegate {
 }
 
 extension MusicViewController: UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if musicItemsArray.isEmpty {
             let emptyView = EmptyMusicListView.loadFromNib()
@@ -408,13 +407,9 @@ extension MusicViewController: UITableViewDataSource {
         return cell
     }
 
-    // MARK: - Table view cell moving
+    //MARK: - Table view cell editing
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
-    }
-
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
