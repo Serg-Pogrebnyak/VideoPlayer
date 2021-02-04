@@ -39,7 +39,7 @@ final class MusicRouter: MusicRouterInput, MusicDataPassing {
     
     // MARK: Passing data
     private func passDataToSyncMusicViewController(source: MusicDataStore, destination: inout SyncMusicDataStore) {
-        destination.delegate = viewController as? SyncViewControllerDelegate
+        destination.delegate = viewController as? SyncMusicViewControllerDelegate
     }
     
     // MARK: Navigation

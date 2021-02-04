@@ -472,3 +472,9 @@ extension MusicViewController: MusicDisplayLogic {
         }
     }
 }
+
+extension MusicViewController: SyncMusicViewControllerDelegate {
+    func willDisappearSyncViewController() {
+        fetchLocalItems()
+    }
+}

@@ -12,22 +12,23 @@
 
 import UIKit
 
-protocol SyncViewControllerDelegate: class {
-    func willDeinitSyncViewController()
+protocol SyncMusicViewControllerDelegate: class {
+    func willDisappearSyncViewController()
 }
 
 protocol SyncMusicBusinessLogic {
     func sync(request: SyncMusic.Sync.Request)
+    func willDisappear(request: SyncMusic.WillDisappear.Request)
 }
 
 protocol SyncMusicDataStore {
-    var delegate: SyncViewControllerDelegate? {get set}
+    var delegate: SyncMusicViewControllerDelegate? {get set}
 }
 
 final class SyncMusicInteractor: SyncMusicBusinessLogic, SyncMusicDataStore {
     
     var presenter: SyncMusicPresentationLogic?
-    weak var delegate: SyncViewControllerDelegate?
+    weak var delegate: SyncMusicViewControllerDelegate?
     
     private var syncState = SyncMusic.Sync.SyncProcess()
     private var fetchWorker: FetchFromLocalStorageWorker?
@@ -42,6 +43,11 @@ final class SyncMusicInteractor: SyncMusicBusinessLogic, SyncMusicDataStore {
         fetchFromLocalDB()
     }
     
+    func willDisappear(request: SyncMusic.WillDisappear.Request) {
+        delegate?.willDisappearSyncViewController()
+    }
+    
+    // MARK: Private functions
     private func fetchFromLocalDB() {
         fetchWorker = FetchFromLocalStorageWorker()
         fetchWorker?.fetch(byTypeExtension: musicExtension)

@@ -31,7 +31,6 @@ final class SyncMusicViewController: UIViewController {
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var closeButtonHeight: NSLayoutConstraint!
     
-    
     //MARK: Variables
     var router: SyncMusicRouter?
     
@@ -61,6 +60,12 @@ final class SyncMusicViewController: UIViewController {
         LoadingAnimationFabric.setupLoadingAnitaion(animationView: generalLoadingAnimationView)
         LoadingAnimationFabric.runLoadingAnimation(animationView: generalLoadingAnimationView)
         interactor?.sync(request: SyncMusic.Sync.Request())
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let request = SyncMusic.WillDisappear.Request()
+        interactor?.willDisappear(request: request)
     }
     
     //MARK: Actions

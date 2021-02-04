@@ -90,4 +90,15 @@ enum SyncMusic {
             let generalSyncState: SyncState
         }
     }
+    
+    enum WillDisappear {
+        struct Request {
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }
