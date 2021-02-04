@@ -14,7 +14,6 @@ import UIKit
 
 enum SyncMusic {
     // MARK: Use cases
-    
     enum Sync {
         enum SyncState {
             case loading

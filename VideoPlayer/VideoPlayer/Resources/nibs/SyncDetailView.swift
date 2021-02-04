@@ -21,14 +21,11 @@ final class SyncDetailView: UIView, SyncDetailViewProtocol, AbstractNibView {
     @IBOutlet private weak var descLabel: UILabel!
     @IBOutlet private weak var descLabelHeight: NSLayoutConstraint!
     
-    private let animationSpeed: CGFloat = 1.5
-    private let startLoadingFrame: CGFloat = 119
-    private let endLoadingFrame: CGFloat = 238
-    private let endSuccessFrame: CGFloat = 400
-    
     private var currentSyncState: SyncMusic.Sync.SyncState!
     
     func setupDataInView(viewModel: SyncMusic.Sync.SyncDisplayModel) {
+        LoadingAnimationFabric.setupLoadingAnitaion(animationView: animationView)
+        
         descLabel.text = viewModel.description
         descLabel.sizeToFit()
         descLabelHeight.constant = descLabel.bounds.height
@@ -45,28 +42,14 @@ final class SyncDetailView: UIView, SyncDetailViewProtocol, AbstractNibView {
         
         switch currentSyncState {
         case .loading:
-            startGeneralLoadingAnimation()
+            LoadingAnimationFabric.runLoadingAnimation(animationView: animationView)
         case .success:
-            startGeneralSuccessAnimation()
+            LoadingAnimationFabric.runSuccessAnimation(animationView: animationView)
         case .failed:
             //TODO: add implementation for failed
             return
         case .none:
             return
         }
-    }
-    
-    private func startGeneralLoadingAnimation() {
-        animationView.backgroundBehavior = .pauseAndRestore
-        animationView.animationSpeed = animationSpeed
-        animationView.play(fromFrame: startLoadingFrame,
-                           toFrame: endLoadingFrame,
-                           loopMode: .loop)
-    }
-    
-    private func startGeneralSuccessAnimation() {
-        animationView.animationSpeed = 3
-        animationView.play(toFrame: endSuccessFrame,
-                           loopMode: .playOnce)
     }
 }

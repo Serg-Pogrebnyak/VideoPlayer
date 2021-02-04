@@ -39,11 +39,6 @@ final class SyncMusicViewController: UIViewController {
     //MARK: Constants
     private let generalViewCornerRadius: CGFloat = 20
     private let spacingBetweenDetailView: CGFloat = 10
-    private let loadingAnimationSpeed: CGFloat = 1.5
-    private let successAnimationSpeed: CGFloat = 3
-    private let startLoadingFrame: CGFloat = 119
-    private let endLoadingFrame: CGFloat = 238
-    private let endSuccessFrame: CGFloat = 400
     private let showCloseButtonAnimationDuration: TimeInterval = 1
     
     // MARK: View lifecycle
@@ -51,7 +46,8 @@ final class SyncMusicViewController: UIViewController {
         super.viewDidLoad()
         setupCleanCycle()
         configureUI()
-        startGeneralLoadingAnimation()
+        LoadingAnimationFabric.setupLoadingAnitaion(animationView: generalLoadingAnimationView)
+        LoadingAnimationFabric.runLoadingAnimation(animationView: generalLoadingAnimationView)
     }
     
     //MARK: Actions
@@ -84,21 +80,6 @@ final class SyncMusicViewController: UIViewController {
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
-    }
-    
-    //MARK: Animation functions
-    private func startGeneralLoadingAnimation() {
-        generalLoadingAnimationView.backgroundBehavior = .pauseAndRestore
-        generalLoadingAnimationView.animationSpeed = loadingAnimationSpeed
-        generalLoadingAnimationView.play(fromFrame: startLoadingFrame,
-                                         toFrame: endLoadingFrame,
-                                         loopMode: .loop)
-    }
-    
-    private func startGeneralSuccessAnimation() {
-        generalLoadingAnimationView.animationSpeed = successAnimationSpeed
-        generalLoadingAnimationView.play(toFrame: endSuccessFrame,
-                                         loopMode: .playOnce)
     }
     
     private func animatedDisplayCloseButton() {
@@ -155,7 +136,7 @@ extension SyncMusicViewController: SyncMusicDisplayLogic {
             return
         case .success:
             animatedDisplayCloseButton()
-            startGeneralSuccessAnimation()
+            LoadingAnimationFabric.runSuccessAnimation(animationView: generalLoadingAnimationView)
         case .failed:
             //TODO: add implementation for failed
             return

@@ -20,9 +20,6 @@
                     <constraints>
                         <constraint firstAttribute="width" secondItem="gzg-Gn-dDm" secondAttribute="height" multiplier="1:1" id="wys-mw-uWV"/>
                     </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="loadingSuccessFailSpinner"/>
-                    </userDefinedRuntimeAttributes>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pcs-dz-1wq">
                     <rect key="frame" x="140" y="0.0" width="388" height="125"/>

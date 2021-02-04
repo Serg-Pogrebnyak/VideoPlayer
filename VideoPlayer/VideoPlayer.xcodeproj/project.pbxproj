@@ -27,6 +27,7 @@
 		C5C5308025CBE9EB000CDF4A /* SyncDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C5307F25CBE9EB000CDF4A /* SyncDetailView.xib */; };
 		C5C5308225CBE9FC000CDF4A /* SyncDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308125CBE9FC000CDF4A /* SyncDetailView.swift */; };
 		C5C5308425CC040F000CDF4A /* ExtensionUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */; };
+		C5C5308625CC054F000CDF4A /* LoadingAnimationFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */; };
 		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
 		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
@@ -87,6 +88,7 @@
 		C5C5307F25CBE9EB000CDF4A /* SyncDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SyncDetailView.xib; sourceTree = "<group>"; };
 		C5C5308125CBE9FC000CDF4A /* SyncDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDetailView.swift; sourceTree = "<group>"; };
 		C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIStackView.swift; sourceTree = "<group>"; };
+		C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationFabric.swift; sourceTree = "<group>"; };
 		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				C5C5307D25CAEF84000CDF4A /* ButtonFabric.swift */,
+				C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */,
 			);
 			path = Fabrics;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				C5C5308425CC040F000CDF4A /* ExtensionUIStackView.swift in Sources */,
 				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
 				C5FAC02E25B03AFB006660B2 /* PlayMusicWorker.swift in Sources */,
+				C5C5308625CC054F000CDF4A /* LoadingAnimationFabric.swift in Sources */,
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
 				DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,
