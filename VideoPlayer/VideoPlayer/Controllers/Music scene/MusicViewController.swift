@@ -192,7 +192,7 @@ final class MusicViewController: UIViewController {
             interactor.removeMediaItem(request: request)
         }
         
-        navigationBarState = .normal
+        navigationBarState = .tableViewEditing(0)
     }
     
     @objc private func didTapSyncButton(_ sender: Any) {
