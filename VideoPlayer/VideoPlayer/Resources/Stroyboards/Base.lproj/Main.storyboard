@@ -80,10 +80,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kex-vU-TYc">
-                                <rect key="frame" x="87" y="339" width="240" height="218.5"/>
+                                <rect key="frame" x="57" y="339" width="300" height="218.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xzJ-dP-U0F">
-                                        <rect key="frame" x="70" y="-50" width="100" height="100"/>
+                                        <rect key="frame" x="100" y="-50" width="100" height="100"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-3Z-kGX" customClass="AnimationView" customModule="Lottie">
                                                 <rect key="frame" x="10" y="10" width="80" height="80"/>
@@ -101,7 +101,7 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JLj-lK-3Kg">
-                                        <rect key="frame" x="0.0" y="65" width="240" height="28"/>
+                                        <rect key="frame" x="0.0" y="65" width="300" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="28" id="Se9-OQ-w2t"/>
                                         </constraints>
@@ -110,7 +110,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o74-79-0Sb">
-                                        <rect key="frame" x="0.0" y="108" width="240" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="108" width="300" height="20.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20.5" id="oHS-cs-uwh"/>
                                         </constraints>
@@ -119,13 +119,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="F8O-oD-0rW">
-                                        <rect key="frame" x="0.0" y="143.5" width="240" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="143.5" width="300" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="0Yv-TX-ZVt"/>
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZGi-OK-T4b">
-                                        <rect key="frame" x="30" y="158.5" width="180" height="30"/>
+                                        <rect key="frame" x="30" y="158.5" width="240" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="XU3-za-X5R"/>
                                         </constraints>
@@ -148,7 +148,7 @@
                                     <constraint firstAttribute="trailing" secondItem="o74-79-0Sb" secondAttribute="trailing" id="RDU-7h-cLy"/>
                                     <constraint firstAttribute="trailing" secondItem="F8O-oD-0rW" secondAttribute="trailing" id="Xh3-Ly-QQr"/>
                                     <constraint firstAttribute="trailing" secondItem="ZGi-OK-T4b" secondAttribute="trailing" constant="30" id="Y2S-ia-vBt"/>
-                                    <constraint firstAttribute="width" constant="240" id="Zlm-KE-Q5d"/>
+                                    <constraint firstAttribute="width" constant="300" id="Zlm-KE-Q5d"/>
                                     <constraint firstItem="JLj-lK-3Kg" firstAttribute="top" secondItem="xzJ-dP-U0F" secondAttribute="bottom" constant="15" id="aTZ-ll-ZKW"/>
                                     <constraint firstItem="xzJ-dP-U0F" firstAttribute="top" secondItem="Kex-vU-TYc" secondAttribute="top" constant="-50" id="egP-7O-m0x"/>
                                     <constraint firstAttribute="bottom" secondItem="ZGi-OK-T4b" secondAttribute="bottom" constant="30" id="gdE-EC-kpf"/>

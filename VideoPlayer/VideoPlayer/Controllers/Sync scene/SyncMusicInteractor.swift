@@ -25,6 +25,8 @@ final class SyncMusicInteractor: SyncMusicBusinessLogic {
     // MARK: Business Logic
     func sync(request: SyncMusic.Sync.Request) {
         syncState = SyncMusic.Sync.SyncProcess()
+        callPresenter()
+
         fetchFromLocalDB()
     }
     
