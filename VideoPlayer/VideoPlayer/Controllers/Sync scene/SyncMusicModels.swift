@@ -48,7 +48,7 @@ enum SyncMusic {
             
             
             private var counter = 0
-            private var syncSteps = 3 //when counter equal to this value all sync is compleate
+            private var syncSteps = 4 //when counter equal to this value all sync is compleate
             
             //MARK: Private functions
             private mutating func didSetFunction(state: SyncState) {
@@ -88,6 +88,7 @@ enum SyncMusic {
         
         struct ViewModel {
             let arrayOfSyncProcessModel: [SyncDisplayModel]
+            let generalSyncState: SyncState
         }
     }
 }

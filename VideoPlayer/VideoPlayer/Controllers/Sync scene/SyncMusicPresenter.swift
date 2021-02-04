@@ -41,11 +41,12 @@ final class SyncMusicPresenter: SyncMusicPresentationLogic {
         displayArray.append(fetchFromLocalStorage)
         
         let saveNewDataTitle = "Save new data"
-        let saveNewData = SyncMusic.Sync.SyncDisplayModel(currentSyncState: syncState.allDone,
+        let saveNewData = SyncMusic.Sync.SyncDisplayModel(currentSyncState: syncState.merge,
                                                                     description: saveNewDataTitle)
         displayArray.append(saveNewData)
         
-        let viewModel = SyncMusic.Sync.ViewModel(arrayOfSyncProcessModel: displayArray)
+        let viewModel = SyncMusic.Sync.ViewModel(arrayOfSyncProcessModel: displayArray,
+                                                 generalSyncState: syncState.allDone)
         viewController?.displaySyncState(viewModel: viewModel)
     }
 }

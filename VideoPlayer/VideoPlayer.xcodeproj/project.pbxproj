@@ -24,6 +24,9 @@
 		C5C5307625CADB43000CDF4A /* SyncMusicInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */; };
 		C5C5307A25CAE5CC000CDF4A /* loadingSuccessFailSpinner.json in Resources */ = {isa = PBXBuildFile; fileRef = C5C5307925CAE5CC000CDF4A /* loadingSuccessFailSpinner.json */; };
 		C5C5307E25CAEF84000CDF4A /* ButtonFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5307D25CAEF84000CDF4A /* ButtonFabric.swift */; };
+		C5C5308025CBE9EB000CDF4A /* SyncDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C5307F25CBE9EB000CDF4A /* SyncDetailView.xib */; };
+		C5C5308225CBE9FC000CDF4A /* SyncDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308125CBE9FC000CDF4A /* SyncDetailView.swift */; };
+		C5C5308425CC040F000CDF4A /* ExtensionUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */; };
 		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
 		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
@@ -81,6 +84,9 @@
 		C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicInteractor.swift; sourceTree = "<group>"; };
 		C5C5307925CAE5CC000CDF4A /* loadingSuccessFailSpinner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loadingSuccessFailSpinner.json; sourceTree = "<group>"; };
 		C5C5307D25CAEF84000CDF4A /* ButtonFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonFabric.swift; sourceTree = "<group>"; };
+		C5C5307F25CBE9EB000CDF4A /* SyncDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SyncDetailView.xib; sourceTree = "<group>"; };
+		C5C5308125CBE9FC000CDF4A /* SyncDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncDetailView.swift; sourceTree = "<group>"; };
+		C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIStackView.swift; sourceTree = "<group>"; };
 		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
@@ -231,6 +237,7 @@
 				DE3A81B523EADB4700468334 /* CMTimeExtension.swift */,
 				DECD06D323EC2B3400FFED0A /* UISliderExtension.swift */,
 				DECD06D523EC3B2D00FFED0A /* TimeIntervalExtension.swift */,
+				C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -318,6 +325,8 @@
 				DE3A81AF23E965C600468334 /* EmptyMusicListView.xib */,
 				DE3A81B123E965D800468334 /* EmptyMusicListView.swift */,
 				DE3A81B323E9884000468334 /* AnimatedViewProtocl.swift */,
+				C5C5307F25CBE9EB000CDF4A /* SyncDetailView.xib */,
+				C5C5308125CBE9FC000CDF4A /* SyncDetailView.swift */,
 			);
 			path = nibs;
 			sourceTree = "<group>";
@@ -416,6 +425,7 @@
 				DE470F1023E46E5900269440 /* emtyPopcornBox.json in Resources */,
 				C5C5307A25CAE5CC000CDF4A /* loadingSuccessFailSpinner.json in Resources */,
 				DE6C7FE523CDD8FC00D2F77C /* VideoAndMusicTableViewCell.xib in Resources */,
+				C5C5308025CBE9EB000CDF4A /* SyncDetailView.xib in Resources */,
 				DE3A81B023E965C600468334 /* EmptyMusicListView.xib in Resources */,
 				DE470F1423E46FF700269440 /* EmptyVideoListView.xib in Resources */,
 				0BA7407823C71B20001BBBA4 /* Assets.xcassets in Resources */,
@@ -514,6 +524,7 @@
 				DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */,
 				DECD06D423EC2B3400FFED0A /* UISliderExtension.swift in Sources */,
 				DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */,
+				C5C5308225CBE9FC000CDF4A /* SyncDetailView.swift in Sources */,
 				DE6C7FEF23CF097500D2F77C /* UIViewControllerExtension.swift in Sources */,
 				0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */,
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
@@ -522,6 +533,7 @@
 				C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */,
 				C5C5307125CADB43000CDF4A /* SyncMusicPresenter.swift in Sources */,
 				0BA7408723C72E5E001BBBA4 /* TabBarController.swift in Sources */,
+				C5C5308425CC040F000CDF4A /* ExtensionUIStackView.swift in Sources */,
 				DE629BEF23E1D4C3005B87A0 /* CALayerExtension.swift in Sources */,
 				C5FAC02E25B03AFB006660B2 /* PlayMusicWorker.swift in Sources */,
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,

@@ -34,10 +34,13 @@ final class SyncMusicViewController: UIViewController {
     
     //MARK: Variables
     private var interactor: SyncMusicBusinessLogic?
+    private var arrayOfSyncDetailView = [SyncDetailViewProtocol]()
     
     //MARK: Constants
     private let generalViewCornerRadius: CGFloat = 20
-    private let animationSpeed: CGFloat = 1.5
+    private let spacingBetweenDetailView: CGFloat = 10
+    private let loadingAnimationSpeed: CGFloat = 1.5
+    private let successAnimationSpeed: CGFloat = 3
     private let startLoadingFrame: CGFloat = 119
     private let endLoadingFrame: CGFloat = 238
     private let endSuccessFrame: CGFloat = 400
@@ -86,14 +89,14 @@ final class SyncMusicViewController: UIViewController {
     //MARK: Animation functions
     private func startGeneralLoadingAnimation() {
         generalLoadingAnimationView.backgroundBehavior = .pauseAndRestore
-        generalLoadingAnimationView.animationSpeed = animationSpeed
+        generalLoadingAnimationView.animationSpeed = loadingAnimationSpeed
         generalLoadingAnimationView.play(fromFrame: startLoadingFrame,
                                          toFrame: endLoadingFrame,
                                          loopMode: .loop)
     }
     
     private func startGeneralSuccessAnimation() {
-        animatedDisplayCloseButton()
+        generalLoadingAnimationView.animationSpeed = successAnimationSpeed
         generalLoadingAnimationView.play(toFrame: endSuccessFrame,
                                          loopMode: .playOnce)
     }
@@ -110,5 +113,52 @@ final class SyncMusicViewController: UIViewController {
 
 extension SyncMusicViewController: SyncMusicDisplayLogic {
     func displaySyncState(viewModel: SyncMusic.Sync.ViewModel) {
+        if  arrayOfSyncDetailView.isEmpty ||
+            viewModel.arrayOfSyncProcessModel.count != arrayOfSyncDetailView.count
+        {
+            setupDetailViews(viewModel)
+        } else {
+            updateDeilViews(viewModel)
+        }
+    }
+    
+    private func setupDetailViews(_ viewModel: SyncMusic.Sync.ViewModel) {
+        arrayOfSyncDetailView.removeAll()
+        progressPerStepStackView.removeAllArrangedSubviews()
+        
+        var totalHeightOfDetailViews: CGFloat = 0
+        for viewData in viewModel.arrayOfSyncProcessModel {
+            let syncDetailView = SyncDetailView.loadFromNib()
+            syncDetailView.setupDataInView(viewModel: viewData)
+            totalHeightOfDetailViews += syncDetailView.bounds.height
+            progressPerStepStackView.addArrangedSubview(syncDetailView)
+            arrayOfSyncDetailView.append(syncDetailView)
+        }
+        
+        
+        let totalSpacing = spacingBetweenDetailView * CGFloat(viewModel.arrayOfSyncProcessModel.count - 1)
+        progressPerStepStackViewHeight.constant = totalHeightOfDetailViews + totalSpacing
+    }
+    
+    private func updateDeilViews(_ viewModel: SyncMusic.Sync.ViewModel) {
+        for (index, detailView) in arrayOfSyncDetailView.enumerated() {
+            let viewData = viewModel.arrayOfSyncProcessModel[index]
+            detailView.updateSyncState(byState: viewData.currentSyncState)
+        }
+        
+        updateGeneralLoadingAnimation(byState: viewModel.generalSyncState)
+    }
+    
+    private func updateGeneralLoadingAnimation(byState state: SyncMusic.Sync.SyncState) {
+        switch state {
+        case .loading:
+            return
+        case .success:
+            animatedDisplayCloseButton()
+            startGeneralSuccessAnimation()
+        case .failed:
+            //TODO: add implementation for failed
+            return
+        }
     }
 }
