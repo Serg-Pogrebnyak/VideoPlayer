@@ -29,12 +29,6 @@
 		C5C5308425CC040F000CDF4A /* ExtensionUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */; };
 		C5C5308625CC054F000CDF4A /* LoadingAnimationFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */; };
 		C5CF40EF25CC4DEB00BD2D82 /* SyncMusicRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF40E925CC4DEB00BD2D82 /* SyncMusicRouter.swift */; };
-		C5CF410725CC59AC00BD2D82 /* testPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF410125CC59AC00BD2D82 /* testPresenter.swift */; };
-		C5CF410825CC59AC00BD2D82 /* testWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF410225CC59AC00BD2D82 /* testWorker.swift */; };
-		C5CF410925CC59AC00BD2D82 /* testRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF410325CC59AC00BD2D82 /* testRouter.swift */; };
-		C5CF410A25CC59AC00BD2D82 /* testModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF410425CC59AC00BD2D82 /* testModels.swift */; };
-		C5CF410B25CC59AC00BD2D82 /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF410525CC59AC00BD2D82 /* testViewController.swift */; };
-		C5CF410C25CC59AC00BD2D82 /* testInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF410625CC59AC00BD2D82 /* testInteractor.swift */; };
 		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
 		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
@@ -97,12 +91,6 @@
 		C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIStackView.swift; sourceTree = "<group>"; };
 		C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationFabric.swift; sourceTree = "<group>"; };
 		C5CF40E925CC4DEB00BD2D82 /* SyncMusicRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicRouter.swift; sourceTree = "<group>"; };
-		C5CF410125CC59AC00BD2D82 /* testPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testPresenter.swift; sourceTree = "<group>"; };
-		C5CF410225CC59AC00BD2D82 /* testWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testWorker.swift; sourceTree = "<group>"; };
-		C5CF410325CC59AC00BD2D82 /* testRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testRouter.swift; sourceTree = "<group>"; };
-		C5CF410425CC59AC00BD2D82 /* testModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testModels.swift; sourceTree = "<group>"; };
-		C5CF410525CC59AC00BD2D82 /* testViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
-		C5CF410625CC59AC00BD2D82 /* testInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testInteractor.swift; sourceTree = "<group>"; };
 		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
@@ -162,7 +150,6 @@
 		0B8BCB3B23C7464200EDA27F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C5CF410025CC59A200BD2D82 /* test */,
 				C5FAC02025AF3F4C006660B2 /* Music scene */,
 				C5C5306A25CAD93C000CDF4A /* Sync scene */,
 				0BA7408623C72E5E001BBBA4 /* TabBarController.swift */,
@@ -297,19 +284,6 @@
 				C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */,
 			);
 			path = Fabrics;
-			sourceTree = "<group>";
-		};
-		C5CF410025CC59A200BD2D82 /* test */ = {
-			isa = PBXGroup;
-			children = (
-				C5CF410125CC59AC00BD2D82 /* testPresenter.swift */,
-				C5CF410225CC59AC00BD2D82 /* testWorker.swift */,
-				C5CF410325CC59AC00BD2D82 /* testRouter.swift */,
-				C5CF410425CC59AC00BD2D82 /* testModels.swift */,
-				C5CF410525CC59AC00BD2D82 /* testViewController.swift */,
-				C5CF410625CC59AC00BD2D82 /* testInteractor.swift */,
-			);
-			path = test;
 			sourceTree = "<group>";
 		};
 		C5FAC02025AF3F4C006660B2 /* Music scene */ = {
@@ -535,7 +509,6 @@
 				DE470F1223E46FE300269440 /* EmptyVideoListView.swift in Sources */,
 				DE470F0D23E3058100269440 /* AbstractMusicVideoViewController.swift in Sources */,
 				DEC23BA423CF101B007E74FD /* LocalizationManager.swift in Sources */,
-				C5CF410A25CC59AC00BD2D82 /* testModels.swift in Sources */,
 				C5C5307625CADB43000CDF4A /* SyncMusicInteractor.swift in Sources */,
 				DE6C7FE723CE0BF300D2F77C /* CustomTableViewDelegate.swift in Sources */,
 				DE3AE40A23F459E80017A329 /* CoreManager.swift in Sources */,
@@ -543,22 +516,18 @@
 				C5C5307425CADB43000CDF4A /* SyncMusicModels.swift in Sources */,
 				C5FAC02B25AF3FC6006660B2 /* MusicViewController.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
-				C5CF410725CC59AC00BD2D82 /* testPresenter.swift in Sources */,
 				DE3A81B423E9884000468334 /* AnimatedViewProtocl.swift in Sources */,
 				DE3AE3B923F440360017A329 /* CoreDataModel.xcdatamodeld in Sources */,
 				DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */,
 				DEC23BAB23D5C6E1007E74FD /* PlayerView.swift in Sources */,
-				C5CF410C25CC59AC00BD2D82 /* testInteractor.swift in Sources */,
 				C5CF40EF25CC4DEB00BD2D82 /* SyncMusicRouter.swift in Sources */,
 				C5FAC02C25AF3FC6006660B2 /* MusicInteractor.swift in Sources */,
-				C5CF410B25CC59AC00BD2D82 /* testViewController.swift in Sources */,
 				C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */,
 				C5C5307525CADB43000CDF4A /* SyncMusicViewController.swift in Sources */,
 				C5C5306925CAD73C000CDF4A /* MusicRouter.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
 				DE3A81B623EADB4700468334 /* CMTimeExtension.swift in Sources */,
 				C5C5307E25CAEF84000CDF4A /* ButtonFabric.swift in Sources */,
-				C5CF410825CC59AC00BD2D82 /* testWorker.swift in Sources */,
 				DECD06D623EC3B2D00FFED0A /* TimeIntervalExtension.swift in Sources */,
 				DECD06D423EC2B3400FFED0A /* UISliderExtension.swift in Sources */,
 				DE3A81B223E965D800468334 /* EmptyMusicListView.swift in Sources */,
@@ -567,7 +536,6 @@
 				0BDEA8D623C750B7003261BB /* FileManagerExtension.swift in Sources */,
 				DE6C7FE923CE0D1E00D2F77C /* CustomTableViewDataSource.swift in Sources */,
 				0B4D3A8724320D9400FDCD41 /* CloudCoreData.swift in Sources */,
-				C5CF410925CC59AC00BD2D82 /* testRouter.swift in Sources */,
 				0BA7408323C72BF2001BBBA4 /* VideoViewController.swift in Sources */,
 				C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */,
 				C5C5307125CADB43000CDF4A /* SyncMusicPresenter.swift in Sources */,
