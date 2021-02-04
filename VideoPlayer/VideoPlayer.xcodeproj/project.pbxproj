@@ -269,6 +269,7 @@
 				C5C5307025CADB43000CDF4A /* SyncMusicInteractor.swift */,
 				C5C5306B25CADB43000CDF4A /* SyncMusicPresenter.swift */,
 				C5C5306E25CADB43000CDF4A /* SyncMusicModels.swift */,
+				C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */,
 			);
 			path = "Sync scene";
 			sourceTree = "<group>";
@@ -290,7 +291,6 @@
 				C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */,
 				C5FAC02425AF3FC6006660B2 /* MusicModels.swift */,
 				C5C5306825CAD73C000CDF4A /* MusicRouter.swift */,
-				C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */,
 				C5FAC02D25B03AFB006660B2 /* PlayMusicWorker.swift */,
 			);
 			path = "Music scene";

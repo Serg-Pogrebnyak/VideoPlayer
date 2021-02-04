@@ -24,7 +24,6 @@ final class MusicInteractor: MusicBusinessLogic {
     
     var presenter: MusicPresentationLogic?
     //workerks
-    private var fetchWorker: FetchFromLocalStorageWorker?
     private var playWorker: PlayMusicWorker?
     
     //business logic variables
@@ -34,13 +33,8 @@ final class MusicInteractor: MusicBusinessLogic {
     }
     private var indexOfItemForPlay = 0
     
-    private let musicExtension = ".mp3"
-    
     // MARK: Do something
     func fetchLocalItems(request: Music.FetchLocalItems.Request) {
-        fetchWorker = FetchFromLocalStorageWorker()
-        fetchWorker?.fetch(byTypeExtension: musicExtension)
-        
         itemsSet = CoreManager.shared.getMediaItems()
         
         let response = Music.FetchLocalItems.Response(musicItems: itemsArray)

@@ -21,6 +21,9 @@ final class SyncMusicInteractor: SyncMusicBusinessLogic {
     var presenter: SyncMusicPresentationLogic?
     
     private var syncState = SyncMusic.Sync.SyncProcess()
+    private var fetchWorker: FetchFromLocalStorageWorker?
+    
+    private let musicExtension = ".mp3"
     
     // MARK: Business Logic
     func sync(request: SyncMusic.Sync.Request) {
@@ -31,6 +34,8 @@ final class SyncMusicInteractor: SyncMusicBusinessLogic {
     }
     
     private func fetchFromLocalDB() {
+        fetchWorker = FetchFromLocalStorageWorker()
+        fetchWorker?.fetch(byTypeExtension: musicExtension)
         syncState.fetchFromLocalDB = .success
         
         callPresenter()

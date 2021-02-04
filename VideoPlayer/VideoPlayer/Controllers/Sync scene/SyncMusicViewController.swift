@@ -48,6 +48,7 @@ final class SyncMusicViewController: UIViewController {
         configureUI()
         LoadingAnimationFabric.setupLoadingAnitaion(animationView: generalLoadingAnimationView)
         LoadingAnimationFabric.runLoadingAnimation(animationView: generalLoadingAnimationView)
+        interactor?.sync(request: SyncMusic.Sync.Request())
     }
     
     //MARK: Actions

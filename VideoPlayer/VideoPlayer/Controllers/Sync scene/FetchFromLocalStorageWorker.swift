@@ -17,6 +17,9 @@ class FetchFromLocalStorageWorker {
         Check local storage files by extension, create Core Data objects and replase files from document directory to temp directory.
      */
     func fetch(byTypeExtension itemExtension: String) {
+        mockFetchForTestOnSimulator(itemExtension: itemExtension)
+        return
+        
         let musicURLS = FileManager.default.getFilesFromDocumentDirectory(withFileExtension: itemExtension)
 
         var newObects = [MusicOrVideoItem]()
@@ -35,5 +38,17 @@ class FetchFromLocalStorageWorker {
         }
         CoreManager.shared.saveContext()
         //TODO: add logic for compare local files and count in core data and remove unused from local storage and db
+    }
+    
+    func mockFetchForTestOnSimulator(itemExtension: String) {
+        var newObects = [MusicOrVideoItem]()
+        var counter = 0
+        for _ in 0..<3 {
+            let musicItem = MusicOrVideoItem.init(fileName: "\(counter) \(Date())",
+                fileExtension: itemExtension)
+            newObects.append(musicItem)
+            counter += 1
+        }
+        CoreManager.shared.saveContext()
     }
 }
