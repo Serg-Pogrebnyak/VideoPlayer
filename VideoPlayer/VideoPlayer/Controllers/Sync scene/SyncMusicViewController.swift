@@ -33,6 +33,8 @@ final class SyncMusicViewController: UIViewController {
     
     
     //MARK: Variables
+    var router: SyncMusicRouter?
+    
     private var interactor: SyncMusicBusinessLogic?
     private var arrayOfSyncDetailView = [SyncDetailViewProtocol]()
     
@@ -41,10 +43,20 @@ final class SyncMusicViewController: UIViewController {
     private let spacingBetweenDetailView: CGFloat = 10
     private let showCloseButtonAnimationDuration: TimeInterval = 1
     
+    // MARK: Object lifecycle
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupCleanCycle()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupCleanCycle()
+    }
+    
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCleanCycle()
         configureUI()
         LoadingAnimationFabric.setupLoadingAnitaion(animationView: generalLoadingAnimationView)
         LoadingAnimationFabric.runLoadingAnimation(animationView: generalLoadingAnimationView)
@@ -53,7 +65,7 @@ final class SyncMusicViewController: UIViewController {
     
     //MARK: Actions
     @IBAction private func didTapCloseButton(_ sender: Any) {
-        self.dismiss(animated: true)
+        router?.routeToMusicViewController()
     }
     
     //MARK: Setup
@@ -78,9 +90,13 @@ final class SyncMusicViewController: UIViewController {
         let viewController = self
         let interactor = SyncMusicInteractor()
         let presenter = SyncMusicPresenter()
+        let router = SyncMusicRouter()
         viewController.interactor = interactor
+        viewController.router = router
         interactor.presenter = presenter
         presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
     }
     
     private func animatedDisplayCloseButton() {

@@ -20,7 +20,11 @@ protocol MusicBusinessLogic {
     func findMediaItems(request: Music.FindMediaItems.Request)
 }
 
-final class MusicInteractor: MusicBusinessLogic {
+protocol MusicDataStore {
+    
+}
+
+final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     var presenter: MusicPresentationLogic?
     //workerks

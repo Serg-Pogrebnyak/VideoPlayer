@@ -100,11 +100,13 @@ final class MusicViewController: UIViewController {
         let viewController = self
         let interactor = MusicInteractor()
         let presenter = MusicPresenter()
-        let router = MusicRouter(viewController: viewController)
+        let router = MusicRouter()
         viewController.routerInput = router
         viewController.interactor = interactor
         interactor.presenter = presenter
         presenter.viewController = viewController
+        router.viewController = viewController
+        router.dataStore = interactor
     }
     
     private func setupUI() {
@@ -194,7 +196,7 @@ final class MusicViewController: UIViewController {
     }
     
     @objc private func didTapSyncButton(_ sender: Any) {
-        routerInput?.presentSyncMusicViewController()
+        routerInput?.routeToSyncMusicViewController()
     }
     
     @objc private func didTapEditButton(_ sender: Any) {

@@ -12,13 +12,22 @@
 
 import UIKit
 
+protocol SyncViewControllerDelegate: class {
+    func willDeinitSyncViewController()
+}
+
 protocol SyncMusicBusinessLogic {
     func sync(request: SyncMusic.Sync.Request)
 }
 
-final class SyncMusicInteractor: SyncMusicBusinessLogic {
+protocol SyncMusicDataStore {
+    var delegate: SyncViewControllerDelegate? {get set}
+}
+
+final class SyncMusicInteractor: SyncMusicBusinessLogic, SyncMusicDataStore {
     
     var presenter: SyncMusicPresentationLogic?
+    weak var delegate: SyncViewControllerDelegate?
     
     private var syncState = SyncMusic.Sync.SyncProcess()
     private var fetchWorker: FetchFromLocalStorageWorker?
