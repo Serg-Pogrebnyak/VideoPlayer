@@ -18,8 +18,17 @@ protocol MusicDataPassing {
 
 final class MusicRouter: MusicRouterInput, MusicDataPassing {
 
+    // MARK: Variables
     weak var viewController: UIViewController?
     var dataStore: MusicDataStore?
+    
+    private var customPresentAnimation: CustomPresentAnimation
+    
+    // MARK: Сonstructor
+    init() {
+        customPresentAnimation = CustomPresentAnimation(presentDelegate: TransperencyAnimationPresent(),
+                                                        dismissDelegate: TransperencyAnimationDissmissed())
+    }
     
     // MARK: Routing
     func routeToSyncMusicViewController() {
@@ -30,7 +39,8 @@ final class MusicRouter: MusicRouterInput, MusicDataPassing {
                 let viewController = viewController
         else { return }
         
-        destinationVC.modalPresentationStyle = .overFullScreen
+        destinationVC.modalPresentationStyle = .custom
+        destinationVC.transitioningDelegate = customPresentAnimation
         passDataToSyncMusicViewController(source: dataStore, destination: &destinationDS)
         navigateToSyncMusicViewController(source: viewController, destination: destinationVC)
     }

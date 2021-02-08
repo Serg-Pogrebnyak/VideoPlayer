@@ -29,6 +29,9 @@
 		C5C5308425CC040F000CDF4A /* ExtensionUIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */; };
 		C5C5308625CC054F000CDF4A /* LoadingAnimationFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */; };
 		C5CF40EF25CC4DEB00BD2D82 /* SyncMusicRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF40E925CC4DEB00BD2D82 /* SyncMusicRouter.swift */; };
+		C5CF411125D18C3900BD2D82 /* CustomPresentAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF411025D18C3900BD2D82 /* CustomPresentAnimation.swift */; };
+		C5CF411325D18C4E00BD2D82 /* TransperencyAnimationPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF411225D18C4E00BD2D82 /* TransperencyAnimationPresent.swift */; };
+		C5CF411525D18C6300BD2D82 /* TransperencyAnimationDissmissed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CF411425D18C6300BD2D82 /* TransperencyAnimationDissmissed.swift */; };
 		C5FAC02725AF3FC6006660B2 /* MusicPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */; };
 		C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */; };
 		C5FAC02A25AF3FC6006660B2 /* MusicModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FAC02425AF3FC6006660B2 /* MusicModels.swift */; };
@@ -91,6 +94,9 @@
 		C5C5308325CC040F000CDF4A /* ExtensionUIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionUIStackView.swift; sourceTree = "<group>"; };
 		C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationFabric.swift; sourceTree = "<group>"; };
 		C5CF40E925CC4DEB00BD2D82 /* SyncMusicRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMusicRouter.swift; sourceTree = "<group>"; };
+		C5CF411025D18C3900BD2D82 /* CustomPresentAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentAnimation.swift; sourceTree = "<group>"; };
+		C5CF411225D18C4E00BD2D82 /* TransperencyAnimationPresent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransperencyAnimationPresent.swift; sourceTree = "<group>"; };
+		C5CF411425D18C6300BD2D82 /* TransperencyAnimationDissmissed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransperencyAnimationDissmissed.swift; sourceTree = "<group>"; };
 		C5FAC02125AF3FC6006660B2 /* MusicPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPresenter.swift; sourceTree = "<group>"; };
 		C5FAC02225AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFromLocalStorageWorker.swift; sourceTree = "<group>"; };
 		C5FAC02425AF3FC6006660B2 /* MusicModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicModels.swift; sourceTree = "<group>"; };
@@ -223,6 +229,7 @@
 		0BA7406D23C71B1F001BBBA4 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				C5CF410D25D18BF500BD2D82 /* Sources */,
 				0B8BCB3A23C7463600EDA27F /* Application */,
 				0B8BCB3B23C7464200EDA27F /* Controllers */,
 				0B8BCB3C23C7465800EDA27F /* Resources */,
@@ -284,6 +291,40 @@
 				C5C5308525CC054F000CDF4A /* LoadingAnimationFabric.swift */,
 			);
 			path = Fabrics;
+			sourceTree = "<group>";
+		};
+		C5CF410D25D18BF500BD2D82 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C5CF411625D18C8300BD2D82 /* Controllers */,
+				C5CF410E25D18C0A00BD2D82 /* Models */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C5CF410E25D18C0A00BD2D82 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C5CF410F25D18C1B00BD2D82 /* Custom Present Animation */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C5CF410F25D18C1B00BD2D82 /* Custom Present Animation */ = {
+			isa = PBXGroup;
+			children = (
+				C5CF411025D18C3900BD2D82 /* CustomPresentAnimation.swift */,
+				C5CF411225D18C4E00BD2D82 /* TransperencyAnimationPresent.swift */,
+				C5CF411425D18C6300BD2D82 /* TransperencyAnimationDissmissed.swift */,
+			);
+			path = "Custom Present Animation";
+			sourceTree = "<group>";
+		};
+		C5CF411625D18C8300BD2D82 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		C5FAC02025AF3F4C006660B2 /* Music scene */ = {
@@ -516,6 +557,7 @@
 				C5C5307425CADB43000CDF4A /* SyncMusicModels.swift in Sources */,
 				C5FAC02B25AF3FC6006660B2 /* MusicViewController.swift in Sources */,
 				DE6C7FE423CDD8FC00D2F77C /* VideoAndMusicTableViewCell.swift in Sources */,
+				C5CF411325D18C4E00BD2D82 /* TransperencyAnimationPresent.swift in Sources */,
 				DE3A81B423E9884000468334 /* AnimatedViewProtocl.swift in Sources */,
 				DE3AE3B923F440360017A329 /* CoreDataModel.xcdatamodeld in Sources */,
 				DE3A81A823E87FCD00468334 /* UIColorExtension.swift in Sources */,
@@ -523,6 +565,7 @@
 				C5CF40EF25CC4DEB00BD2D82 /* SyncMusicRouter.swift in Sources */,
 				C5FAC02C25AF3FC6006660B2 /* MusicInteractor.swift in Sources */,
 				C5FAC02825AF3FC6006660B2 /* FetchFromLocalStorageWorker.swift in Sources */,
+				C5CF411525D18C6300BD2D82 /* TransperencyAnimationDissmissed.swift in Sources */,
 				C5C5307525CADB43000CDF4A /* SyncMusicViewController.swift in Sources */,
 				C5C5306925CAD73C000CDF4A /* MusicRouter.swift in Sources */,
 				DE470F1623E48E3500269440 /* LoadElementsFromNib.swift in Sources */,
@@ -547,6 +590,7 @@
 				DE629BED23E1D49B005B87A0 /* OverlayView.swift in Sources */,
 				DE6C7FED23CE30C200D2F77C /* MusicOrVideoItem.swift in Sources */,
 				0BA7406F23C71B1F001BBBA4 /* AppDelegate.swift in Sources */,
+				C5CF411125D18C3900BD2D82 /* CustomPresentAnimation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
