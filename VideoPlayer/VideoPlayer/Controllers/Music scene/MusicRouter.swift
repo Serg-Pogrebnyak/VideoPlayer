@@ -30,12 +30,10 @@ final class MusicRouter: MusicRouterInput, MusicDataPassing {
                 let viewController = viewController
         else { return }
         
-        
+        destinationVC.modalPresentationStyle = .overFullScreen
         passDataToSyncMusicViewController(source: dataStore, destination: &destinationDS)
         navigateToSyncMusicViewController(source: viewController, destination: destinationVC)
     }
-    
-    
     
     // MARK: Passing data
     private func passDataToSyncMusicViewController(source: MusicDataStore, destination: inout SyncMusicDataStore) {

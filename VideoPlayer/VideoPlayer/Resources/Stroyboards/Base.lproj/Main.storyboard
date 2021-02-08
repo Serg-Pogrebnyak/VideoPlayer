@@ -79,6 +79,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gqE-Qd-fSe">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="qew-Rq-JH6">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kex-vU-TYc">
                                 <rect key="frame" x="57" y="339" width="300" height="218.5"/>
                                 <subviews>
@@ -158,7 +166,11 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="gqE-Qd-fSe" firstAttribute="trailing" secondItem="Her-Kd-oeS" secondAttribute="trailing" id="87D-u9-ekl"/>
                             <constraint firstItem="Kex-vU-TYc" firstAttribute="centerX" secondItem="SeW-ay-4RY" secondAttribute="centerX" id="NZW-q9-NJb"/>
+                            <constraint firstItem="gqE-Qd-fSe" firstAttribute="leading" secondItem="Her-Kd-oeS" secondAttribute="leading" id="QiD-3w-yTS"/>
+                            <constraint firstItem="gqE-Qd-fSe" firstAttribute="top" secondItem="SeW-ay-4RY" secondAttribute="top" id="eSL-Dq-x5L"/>
+                            <constraint firstAttribute="bottom" secondItem="gqE-Qd-fSe" secondAttribute="bottom" id="jAi-hp-B8k"/>
                             <constraint firstItem="Kex-vU-TYc" firstAttribute="centerY" secondItem="SeW-ay-4RY" secondAttribute="centerY" id="vdm-p2-XSm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Her-Kd-oeS"/>
