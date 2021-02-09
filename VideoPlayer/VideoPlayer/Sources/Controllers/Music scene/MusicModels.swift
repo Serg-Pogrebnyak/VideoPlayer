@@ -129,4 +129,16 @@ enum Music {
             var info: SongInfoForDisplay
         }
     }
+    
+    enum Rewind {
+        struct Request {
+            let rewindTime: CMTime
+        }
+        
+        struct Response {
+        }
+        
+        struct ViewModel {
+        }
+    }
 }

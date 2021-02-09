@@ -40,7 +40,7 @@ class FetchFromLocalStorageWorker {
         //TODO: add logic for compare local files and count in core data and remove unused from local storage and db
     }
     
-    func mockFetchForTestOnSimulator(itemExtension: String) {
+    private func mockFetchForTestOnSimulator(itemExtension: String) {
         var newObects = [MusicOrVideoItem]()
         var counter = 0
         for _ in 0..<3 {

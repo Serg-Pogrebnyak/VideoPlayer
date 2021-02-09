@@ -21,6 +21,9 @@ protocol MusicDisplayLogic: class {
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
     func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel)
+    
+    //player functions
+    func updateAfterRewind(viewModel: Music.Rewind.ViewModel)
 }
 
 final class MusicViewController: UIViewController {
@@ -56,7 +59,6 @@ final class MusicViewController: UIViewController {
     
     //TODO: remove variables below
     private var itemsArray = [MusicOrVideoItem]()
-    private let rewind = CMTime(seconds: 15, preferredTimescale: 1)
     private var player = AVPlayer()
     private var nowPlayingInfo = [String: Any]()
     private var indexOfCurrentItem: Int?
@@ -230,28 +232,30 @@ final class MusicViewController: UIViewController {
         interactor?.fetchLocalItems(request: request)
     }
     
-    // MARK: setup remote command for display buttons on lock screen and in menu
+    // MARK: Setup remote command for display buttons on lock screen and in command centre
     private func setupRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
+        //rewind
         commandCenter.changePlaybackPositionCommand.isEnabled = true
-        commandCenter.changePlaybackPositionCommand.addTarget { [weak self] (object) -> MPRemoteCommandHandlerStatus in
-            guard let self = self else {return .commandFailed}
-            let event = object as! MPChangePlaybackPositionCommandEvent
-            self.rewindPlayerItemTo(CMTime.init(seconds: event.positionTime, preferredTimescale: 1))
-            return .success
-        }
+        commandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(rewind))
+        
+        //play
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget { [weak self] event in
             guard let self = self else {return .commandFailed}
             self.player.play()
             return .success
         }
+        
+        //pause
         commandCenter.pauseCommand.isEnabled = true
         commandCenter.pauseCommand.addTarget { [weak self] event in
             guard let self = self else {return .commandFailed}
             self.player.pause()
             return .success
         }
+        
+        //next track
         commandCenter.nextTrackCommand.isEnabled = true
         commandCenter.nextTrackCommand.addTarget { [weak self] event in
             guard let self = self else {return .commandFailed}
@@ -262,6 +266,8 @@ final class MusicViewController: UIViewController {
                 return .noSuchContent
             }
         }
+        
+        //previous track
         commandCenter.previousTrackCommand.isEnabled = true
         commandCenter.previousTrackCommand.addTarget { [weak self] event in
             guard let self = self else {return .commandFailed}
@@ -272,6 +278,18 @@ final class MusicViewController: UIViewController {
                 return .noSuchContent
             }
         }
+    }
+    
+    @objc private func rewind(object: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        guard   let event = object as? MPChangePlaybackPositionCommandEvent,
+                let interactor = interactor
+        else {
+            return .commandFailed
+        }
+        
+        let time = CMTimeMakeWithSeconds(event.positionTime, preferredTimescale: 1000)
+        let request = Music.Rewind.Request(rewindTime: time)
+        return interactor.rewind(request: request)
     }
     
     // TODO: remove this two functions in future
@@ -290,6 +308,7 @@ final class MusicViewController: UIViewController {
     }
 }
 
+// MARK: - PlayerViewDelegate
 extension MusicViewController: PlayerViewDelegate {
     func previousTrackDidTap(sender: PlayerView) {
         guard let index = indexOfCurrentItem, index-1 <= self.itemsArray.count - 1 else {
@@ -300,7 +319,7 @@ extension MusicViewController: PlayerViewDelegate {
     }
 
     func forwardRewindDidTap(sender: PlayerView) {
-        let rewindTo = player.currentTime() + rewind
+        let rewindTo = player.currentTime()
         rewindPlayerItemTo(rewindTo)
     }
 
@@ -328,7 +347,7 @@ extension MusicViewController: PlayerViewDelegate {
     }
 
     func backRewindDidTap(sender: PlayerView) {
-        let rewindTo = player.currentTime() - rewind
+        let rewindTo = player.currentTime()
         rewindPlayerItemTo(rewindTo)
     }
 
@@ -357,6 +376,7 @@ extension MusicViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension MusicViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
@@ -393,6 +413,7 @@ extension MusicViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension MusicViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if musicItemsArray.isEmpty {
@@ -434,6 +455,7 @@ extension MusicViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - MusicDisplayLogic
 extension MusicViewController: MusicDisplayLogic {
     func displayMusicItemsArray(viewModel: Music.FetchLocalItems.ViewModel) {
         musicItemsArray = viewModel.musicDisplayDataArray
@@ -468,8 +490,13 @@ extension MusicViewController: MusicDisplayLogic {
             self.tableView.reloadData()
         }
     }
+    
+    // MARK: Player functions
+    func updateAfterRewind(viewModel: Music.Rewind.ViewModel) {
+    }
 }
 
+// MARK: - SyncMusicViewControllerDelegate
 extension MusicViewController: SyncMusicViewControllerDelegate {
     func willDisappearSyncViewController() {
         fetchLocalItems()

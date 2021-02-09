@@ -21,6 +21,8 @@ class PlayMusicWorker {
     
     private var player: AVPlayer? = nil
     private var playingFileURL: URL? = nil
+    // isRewindingNow property uses for ignore player time observing while player didn't rewind song, because in otherwise function call with wrong data (future time)
+    private var isRewindingNow = false
     
     func playSongByURL(url: URL) -> Bool {
         let audioSession = AVAudioSession.sharedInstance()
@@ -42,11 +44,33 @@ class PlayMusicWorker {
         let intervalForUpdate = CMTime(seconds: 1, preferredTimescale: 1)
         player?.addPeriodicTimeObserver(forInterval: intervalForUpdate,
                                         queue: .main,
-                                        using: { [weak self] (time) in
-            self?.playerTimeChanged(time)
+                                        using:
+        { [weak self] (time) in
+            guard   let self = self,
+                    !self.isRewindingNow
+            else {
+                return
+            }
+            
+            self.playerTimeChanged(time)
         })
         player?.play()
         return true
+    }
+    
+    func rewind(toTime time: CMTime) -> MPRemoteCommandHandlerStatus {
+        guard   let player = player,
+                let _ = player.currentItem
+        else {
+            return .commandFailed
+        }
+        
+        isRewindingNow = true
+        player.seek(to: time) { [weak self] _ in
+            self?.callDelegateWithUpdatedInfoIfPossible()
+            self?.isRewindingNow = false
+        }
+        return .success
     }
     
     func callDelegateWithUpdatedInfoIfPossible() {

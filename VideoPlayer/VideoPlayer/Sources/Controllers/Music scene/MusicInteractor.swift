@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import MediaPlayer
 
 protocol MusicBusinessLogic {
     func fetchLocalItems(request: Music.FetchLocalItems.Request)
@@ -18,6 +19,9 @@ protocol MusicBusinessLogic {
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request)
     func removeMediaItem(request: Music.DeleteMediaItem.Request)
     func findMediaItems(request: Music.FindMediaItems.Request)
+    
+    //player functions
+    func rewind(request: Music.Rewind.Request) -> MPRemoteCommandHandlerStatus
 }
 
 protocol MusicDataStore {
@@ -106,6 +110,19 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         playWorker?.callDelegateWithUpdatedInfoIfPossible()
     }
     
+    // MARK: Player functions
+    func rewind(request: Music.Rewind.Request) -> MPRemoteCommandHandlerStatus {
+        guard let playMusicWorker = playWorker else { return .commandFailed }
+        
+        let resultOfRewind = playMusicWorker.rewind(toTime: request.rewindTime)
+        
+        let response = Music.Rewind.Response()
+        presenter?.updateAfterRewind(response: response)
+        
+        return resultOfRewind
+    }
+    
+    // MARK: Private functions
     private func saveChanges() {
         CoreManager.shared.saveContext()
     }
