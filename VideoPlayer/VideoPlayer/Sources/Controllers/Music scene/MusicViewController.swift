@@ -21,9 +21,6 @@ protocol MusicDisplayLogic: class {
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
     func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel)
-    
-    //player functions
-    func updateAfterRewind(viewModel: Music.Rewind.ViewModel)
 }
 
 final class MusicViewController: UIViewController {
@@ -489,10 +486,6 @@ extension MusicViewController: MusicDisplayLogic {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-    }
-    
-    // MARK: Player functions
-    func updateAfterRewind(viewModel: Music.Rewind.ViewModel) {
     }
 }
 

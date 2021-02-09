@@ -134,11 +134,5 @@ enum Music {
         struct Request {
             let rewindTime: CMTime
         }
-        
-        struct Response {
-        }
-        
-        struct ViewModel {
-        }
     }
 }

@@ -114,12 +114,7 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     func rewind(request: Music.Rewind.Request) -> MPRemoteCommandHandlerStatus {
         guard let playMusicWorker = playWorker else { return .commandFailed }
         
-        let resultOfRewind = playMusicWorker.rewind(toTime: request.rewindTime)
-        
-        let response = Music.Rewind.Response()
-        presenter?.updateAfterRewind(response: response)
-        
-        return resultOfRewind
+        return playMusicWorker.rewind(toTime: request.rewindTime)
     }
     
     // MARK: Private functions
