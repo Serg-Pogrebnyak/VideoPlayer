@@ -31,10 +31,13 @@ final class MusicViewController: UIViewController {
         case searching // in this mode display sync and cancel buttons
     }
     
+    // MARK: Outlets
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var playerView: PlayerView!
     @IBOutlet private weak var fromBottomToTopPlayerViewConstraint: NSLayoutConstraint!
     @IBOutlet private weak var playerViewHeightConstraint: NSLayoutConstraint!
+    
+    // MARK: Variables
     //navigation UI elements
     private var syncBarButtonItem: UIBarButtonItem!
     private var deleteBarButtonItem: UIBarButtonItem!
@@ -42,7 +45,6 @@ final class MusicViewController: UIViewController {
     private var cancelBarButtonItem: UIBarButtonItem!
     lazy private var searchBar = UISearchBar(frame: CGRect.zero)
     
-    //MARK: Variables
     private var navigationBarState = NavigationBarButtonState.normal {
         didSet {
             setupNavigationBarButons()
@@ -222,18 +224,13 @@ final class MusicViewController: UIViewController {
         }
     }
     
-    //MARK: Do some business logic
+    // MARK: Do some business logic
     private func fetchLocalItems() {
         let request = Music.FetchLocalItems.Request()
         interactor?.fetchLocalItems(request: request)
     }
     
-    //MARK: Other
-
-    func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
-    }
-
-    //MARK: setup remote command for display buttons on lock screen and in menu
+    // MARK: setup remote command for display buttons on lock screen and in menu
     private func setupRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.changePlaybackPositionCommand.isEnabled = true
@@ -276,16 +273,17 @@ final class MusicViewController: UIViewController {
             }
         }
     }
-
+    
+    // TODO: remove this two functions in future
+    func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
+    }
+    
     private func rewindPlayerItemTo(_ rewindTo: CMTime) {
         guard player.currentItem != nil else {return}
         player.seek(to: rewindTo) { [weak self] (flag) in
         }
     }
-    
-    private func saveChanges() {
-        CoreManager.shared.saveContext()
-    }
+    //
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -360,7 +358,6 @@ extension MusicViewController: UISearchBarDelegate {
 }
 
 extension MusicViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView.isEditing {
             let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
