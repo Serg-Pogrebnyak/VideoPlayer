@@ -156,8 +156,6 @@
 		0B8BCB3B23C7464200EDA27F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C5FAC02025AF3F4C006660B2 /* Music scene */,
-				C5C5306A25CAD93C000CDF4A /* Sync scene */,
 				0BA7408623C72E5E001BBBA4 /* TabBarController.swift */,
 				DE470F0C23E3058100269440 /* AbstractMusicVideoViewController.swift */,
 				0BA7408223C72BF2001BBBA4 /* VideoViewController.swift */,
@@ -229,8 +227,8 @@
 		0BA7406D23C71B1F001BBBA4 /* VideoPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				C5CF410D25D18BF500BD2D82 /* Sources */,
 				0B8BCB3A23C7463600EDA27F /* Application */,
+				C5CF410D25D18BF500BD2D82 /* Sources */,
 				0B8BCB3B23C7464200EDA27F /* Controllers */,
 				0B8BCB3C23C7465800EDA27F /* Resources */,
 			);
@@ -323,6 +321,8 @@
 		C5CF411625D18C8300BD2D82 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5FAC02025AF3F4C006660B2 /* Music scene */,
+				C5C5306A25CAD93C000CDF4A /* Sync scene */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
