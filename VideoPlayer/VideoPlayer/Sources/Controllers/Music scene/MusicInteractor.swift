@@ -22,6 +22,7 @@ protocol MusicBusinessLogic {
     
     //player functions
     func rewind(request: Music.Rewind.Request) -> MPRemoteCommandHandlerStatus
+    func pause(request: Music.Pause.Request) -> MPRemoteCommandHandlerStatus
 }
 
 protocol MusicDataStore {
@@ -115,6 +116,12 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         guard let playMusicWorker = playWorker else { return .commandFailed }
         
         return playMusicWorker.rewind(toTime: request.rewindTime)
+    }
+    
+    func pause(request: Music.Pause.Request) -> MPRemoteCommandHandlerStatus {
+        guard let playMusicWorker = playWorker else { return .commandFailed }
+        
+        return playMusicWorker.pause()
     }
     
     // MARK: Private functions

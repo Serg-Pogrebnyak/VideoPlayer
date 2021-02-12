@@ -73,11 +73,23 @@ class PlayMusicWorker {
         return .success
     }
     
+    func pause() -> MPRemoteCommandHandlerStatus {
+        guard   let player = player,
+                let _ = player.currentItem
+        else {
+            return .commandFailed
+        }
+        
+        player.pause()
+        return .success
+    }
+    
     func callDelegateWithUpdatedInfoIfPossible() {
         guard let player = player else {return}
         playerTimeChanged(player.currentTime())
     }
     
+    // MAKR: Private functions
     @objc private func playerDidFinishPlay() {
         delegate?.didFinishPlaySong()
     }

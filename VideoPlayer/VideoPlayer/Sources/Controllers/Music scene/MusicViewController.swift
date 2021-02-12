@@ -246,11 +246,7 @@ final class MusicViewController: UIViewController {
         
         //pause
         commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget { [weak self] event in
-            guard let self = self else {return .commandFailed}
-            self.player.pause()
-            return .success
-        }
+        commandCenter.pauseCommand.addTarget(self, action: #selector(pause))
         
         //next track
         commandCenter.nextTrackCommand.isEnabled = true
@@ -287,6 +283,13 @@ final class MusicViewController: UIViewController {
         let time = CMTimeMakeWithSeconds(event.positionTime, preferredTimescale: 1000)
         let request = Music.Rewind.Request(rewindTime: time)
         return interactor.rewind(request: request)
+    }
+    
+    @objc private func pause(object: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        guard let interactor = interactor else { return .commandFailed }
+        
+        let request = Music.Pause.Request()
+        return interactor.pause(request: request)
     }
     
     // TODO: remove this two functions in future
@@ -494,4 +497,4 @@ extension MusicViewController: SyncMusicViewControllerDelegate {
     func willDisappearSyncViewController() {
         fetchLocalItems()
     }
-}
+} 

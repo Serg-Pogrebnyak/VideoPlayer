@@ -135,4 +135,9 @@ enum Music {
             let rewindTime: CMTime
         }
     }
+    
+    enum Pause {
+        struct Request {
+        }
+    }
 }
