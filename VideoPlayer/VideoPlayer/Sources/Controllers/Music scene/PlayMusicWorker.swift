@@ -84,6 +84,17 @@ class PlayMusicWorker {
         return .success
     }
     
+    func play() -> MPRemoteCommandHandlerStatus {
+        guard   let player = player,
+                let _ = player.currentItem
+        else {
+            return .commandFailed
+        }
+        
+        player.play()
+        return .success
+    }
+    
     func callDelegateWithUpdatedInfoIfPossible() {
         guard let player = player else {return}
         playerTimeChanged(player.currentTime())

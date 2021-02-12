@@ -140,4 +140,9 @@ enum Music {
         struct Request {
         }
     }
+    
+    enum Play {
+        struct Request {
+        }
+    }
 }

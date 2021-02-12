@@ -238,11 +238,7 @@ final class MusicViewController: UIViewController {
         
         //play
         commandCenter.playCommand.isEnabled = true
-        commandCenter.playCommand.addTarget { [weak self] event in
-            guard let self = self else {return .commandFailed}
-            self.player.play()
-            return .success
-        }
+        commandCenter.playCommand.addTarget(self, action: #selector(play))
         
         //pause
         commandCenter.pauseCommand.isEnabled = true
@@ -290,6 +286,13 @@ final class MusicViewController: UIViewController {
         
         let request = Music.Pause.Request()
         return interactor.pause(request: request)
+    }
+    
+    @objc private func play(object: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        guard let interactor = interactor else { return .commandFailed }
+        
+        let request = Music.Play.Request()
+        return interactor.play(request: request)
     }
     
     // TODO: remove this two functions in future
