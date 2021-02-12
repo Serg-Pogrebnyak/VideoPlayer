@@ -37,7 +37,7 @@ enum Music {
     
     enum StartPlayOrDownload {
         struct Request {
-            let index: Int
+            let localId: String
         }
         
         struct Response {

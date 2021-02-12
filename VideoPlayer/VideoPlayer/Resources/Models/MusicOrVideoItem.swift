@@ -26,6 +26,11 @@ final class MusicOrVideoItem: NSManagedObject {
     @NSManaged public var localId: String
     @NSManaged public var addedDate: Date
     @NSManaged public var remoteId: String?
+    
+    public var localFileURL: URL {
+        FileManager.default.applicationSupportDirectory.appendingPathComponent(fileNameInStorage,
+                                                                               isDirectory: false)
+    }
 
     private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)

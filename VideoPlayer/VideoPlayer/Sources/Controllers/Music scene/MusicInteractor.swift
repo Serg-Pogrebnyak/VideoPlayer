@@ -52,22 +52,10 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     }
     
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request) {
-        indexOfItemForPlay = request.index
+        guard let indexOfItem = (itemsArray.firstIndex { $0.localId == request.localId }) else { return }
         
-        guard   !itemsArray.isEmpty,
-                indexOfItemForPlay >= 0,
-                indexOfItemForPlay < itemsArray.count
-        else {return}
-        
-        let itemForPlay = itemsArray[indexOfItemForPlay]
-        
-        let fileUrl = FileManager.default.applicationSupportDirectory.appendingPathComponent(itemForPlay.fileNameInStorage,
-                                                                                   isDirectory: false)
-        guard FileManager.default.fileExists(atPath: fileUrl.path) else {
-            //TODO: here should call worker which download items from cloud
-            print("❌ file not found on device")
-            return
-        }
+        indexOfItemForPlay = indexOfItem
+        let itemForPlay = itemsArray[indexOfItem]
         
         if itemForPlay.isNew {
             itemsArray[indexOfItemForPlay].isNew = false
@@ -78,7 +66,7 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         }
 
         playWorker = PlayMusicWorker()
-        guard playWorker?.playSongByURL(url: fileUrl) ?? false else {return}
+        guard playWorker?.playSongByURL(url: itemForPlay.localFileURL) ?? false else {return}
         playWorker?.delegate = self
     }
     
@@ -134,6 +122,17 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     // MARK: Private functions
     private func saveChanges() {
         CoreManager.shared.saveContext()
+    }
+    
+    private func canPlay(item: MusicOrVideoItem) -> Bool {
+        let fileUrl = item.localFileURL
+        
+        guard FileManager.default.fileExists(atPath: fileUrl.path) else {
+            print("❌ file not found on device")
+            return false
+        }
+        
+        return true
     }
 }
 
