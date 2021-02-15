@@ -52,28 +52,22 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     }
     
     func playSong(request: Music.PlaySong.Request) {
-        guard   let indexOfItem = (itemsArray.firstIndex { $0.localId == request.localId }),
-                containLocal(item: itemsArray[indexOfItem])
-        else { return }
+        guard playSong(atIndex: request.index) == .success else {
+            // TODO: show error
+            return
+        }
         
-        indexOfItemForPlay = indexOfItem
-        let itemForPlay = itemsArray[indexOfItem]
+        let itemForPlay = itemsArray[request.index]
         
-        var response = Music.PlaySong.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItem))
+        var response = Music.PlaySong.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: request.index))
         if itemForPlay.isNew {
-            itemsArray[indexOfItem].isNew = false
+            itemForPlay.isNew = false
             saveChanges()
-            response.musicItem = itemsArray[indexOfItem]
-            response.atIndex = indexOfItem
+            response.musicItem = itemForPlay
+            response.atIndex = request.index
         }
         
         presenter?.unnewMusicItem(response: response)
-        
-        let playWorker = PlayMusicWorker()
-        self.playWorker = playWorker
-        playWorker.playSongByURL(url: itemForPlay.localFileURL,
-                                 songTitle: itemsArray[indexOfItem].displayFileName)
-        playWorker.delegate = self
     }
     
     func removeMediaItem(request: Music.DeleteMediaItem.Request) {
@@ -146,6 +140,11 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     // MARK: Private functions
     private func playSong(atIndex index: Int) -> MPRemoteCommandHandlerStatus {
+        if playWorker == nil {
+            self.playWorker = PlayMusicWorker()
+            playWorker?.delegate = self
+        }
+        
         guard   itemsArray.indices.contains(index),
                 containLocal(item: itemsArray[index]),
                 let playWorker = playWorker

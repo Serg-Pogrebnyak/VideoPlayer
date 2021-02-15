@@ -42,7 +42,7 @@ enum Music {
     
     enum PlaySong {
         struct Request {
-            let localId: String
+            let index: Int
         }
         
         struct Response {

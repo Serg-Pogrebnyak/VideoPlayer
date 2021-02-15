@@ -386,8 +386,7 @@ extension MusicViewController: UITableViewDelegate {
             let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
             navigationBarState = .tableViewEditing(countOfSelected)
         } else {
-            let item = musicItemsArray[indexPath.row]
-            let request = Music.PlaySong.Request(localId: item.localId)
+            let request = Music.PlaySong.Request(index: indexPath.row)
             interactor?.playSong(request: request)
             tableView.deselectRow(at: indexPath, animated: true)
         }
