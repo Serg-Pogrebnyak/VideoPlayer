@@ -371,7 +371,9 @@ extension MusicViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let request = Music.FindMediaItems.Request(searchText: searchText)
-        interactor?.findMediaItems(request: request)
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            self?.interactor?.findMediaItems(request: request)
+        }
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
