@@ -49,33 +49,20 @@ final class MusicViewController: UIViewController {
     
     private var navigationBarState = NavigationBarButtonState.normal {
         didSet {
-            setupNavigationBarButons()
+            updateNavigationBarButtons()
         }
     }
     private var interactor: MusicBusinessLogic?
     private var routerInput: MusicRouterInput?
     private var musicItemsArray = [Music.MusicDisplayData]()
     
-    //TODO: remove variables below
-    private var itemsArray = [MusicOrVideoItem]()
-    private var player = AVPlayer()
-    private var nowPlayingInfo = [String: Any]()
-    private var indexOfCurrentItem: Int?
-    
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCleanCycle()
-        playerView.delegat = self
         setupRemoteCommandCenter()
-        //FileManager.default.removeAllFromTempDirectory()
         setupUI()
         setupNavigationBarButons()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appMovedToForeground),
-                                               name: UIApplication.willEnterForegroundNotification,
-                                               object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,44 +114,47 @@ final class MusicViewController: UIViewController {
         //setup player view
         playerView.setUpPropertyForAnimation(allHeight: playerViewHeightConstraint.constant,
                                              notVizibleHeight: playerViewHeightConstraint.constant - fromBottomToTopPlayerViewConstraint.constant)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appMovedToForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
     }
     
     private func setupNavigationBarButons() {
-        let deleteTitle = LocalizationManager.shared.getText("NavigationBar.deleteButton.title")
-        //init navigation bar buttons
-        if  syncBarButtonItem == nil ||
-            deleteBarButtonItem == nil ||
-            editBarButtonItem == nil ||
-            cancelBarButtonItem == nil
-        {
-            syncBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
-                                                 style: .done,
-                                                 target: self,
-                                                 action: #selector(didTapSyncButton))
-            syncBarButtonItem.image = UIImage.init(named: "sync")
-            syncBarButtonItem.tintColor = UIColor.barColor
-            
-            deleteBarButtonItem = UIBarButtonItem(title: deleteTitle,
-                                                  style: .done,
-                                                  target: self,
-                                                  action: #selector(didTapDeleteButton))
-            deleteBarButtonItem.tintColor = UIColor.red
-            
-            editBarButtonItem = UIBarButtonItem(title: "Edit",
-                                                style: .done,
-                                                target: self,
-                                                action: #selector(didTapEditButton))
-            editBarButtonItem.image = UIImage.init(named: "Edit")
-            editBarButtonItem.tintColor = UIColor.barColor
-            
-            cancelBarButtonItem = UIBarButtonItem(title: "Cancel",
-                                                   style: .done,
-                                                   target: self,
-                                                   action: #selector(didTapCancelButton))
-            cancelBarButtonItem.image = UIImage.init(named: "Cancel")
-            cancelBarButtonItem.tintColor = UIColor.barColor
-        }
+        syncBarButtonItem = UIBarButtonItem(title: LocalizationManager.shared.getText("NavigationBar.syncButton.title"),
+                                             style: .done,
+                                             target: self,
+                                             action: #selector(didTapSyncButton))
+        syncBarButtonItem.image = UIImage.init(named: "sync")
+        syncBarButtonItem.tintColor = UIColor.barColor
         
+        let deleteTitle = LocalizationManager.shared.getText("NavigationBar.deleteButton.title")
+        deleteBarButtonItem = UIBarButtonItem(title: deleteTitle,
+                                              style: .done,
+                                              target: self,
+                                              action: #selector(didTapDeleteButton))
+        deleteBarButtonItem.tintColor = UIColor.red
+        
+        editBarButtonItem = UIBarButtonItem(title: "Edit",
+                                            style: .done,
+                                            target: self,
+                                            action: #selector(didTapEditButton))
+        editBarButtonItem.image = UIImage.init(named: "Edit")
+        editBarButtonItem.tintColor = UIColor.barColor
+        
+        cancelBarButtonItem = UIBarButtonItem(title: "Cancel",
+                                               style: .done,
+                                               target: self,
+                                               action: #selector(didTapCancelButton))
+        cancelBarButtonItem.image = UIImage.init(named: "Cancel")
+        cancelBarButtonItem.tintColor = UIColor.barColor
+        
+        updateNavigationBarButtons()
+    }
+    
+    // MARK: Navigation title and buttons actions
+    private func updateNavigationBarButtons() {
         switch navigationBarState {
         case .normal:
             navigationItem.leftBarButtonItem = syncBarButtonItem
@@ -176,6 +166,7 @@ final class MusicViewController: UIViewController {
             if count <= 0 {
                 navigationItem.leftBarButtonItem = nil
             } else {
+                let deleteTitle = LocalizationManager.shared.getText("NavigationBar.deleteButton.title")
                 deleteBarButtonItem.title = deleteTitle + " " + String(count)
                 navigationItem.leftBarButtonItem = deleteBarButtonItem
             }
@@ -183,7 +174,6 @@ final class MusicViewController: UIViewController {
         }
     }
     
-    //MARK: navigation title and button actions
     @objc private func didTapDeleteButton(_ sender: Any) {
         guard   let array = tableView.indexPathsForSelectedRows,
                 let interactor = interactor
@@ -295,71 +285,8 @@ final class MusicViewController: UIViewController {
         return interactor.previousTrack(request: request)
     }
     
-    // TODO: remove this two functions in future
-    func startPlay(atIndex index: Int, autoPlay autoplay: Bool = true) {
-    }
-    
-    private func rewindPlayerItemTo(_ rewindTo: CMTime) {
-        guard player.currentItem != nil else {return}
-        player.seek(to: rewindTo) { [weak self] (flag) in
-        }
-    }
-    //
-    
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-}
-
-// MARK: - PlayerViewDelegate
-extension MusicViewController: PlayerViewDelegate {
-    func previousTrackDidTap(sender: PlayerView) {
-        guard let index = indexOfCurrentItem, index-1 <= self.itemsArray.count - 1 else {
-            self.startPlay(atIndex: 0)
-            return
-        }
-        self.startPlay(atIndex: index-1)
-    }
-
-    func forwardRewindDidTap(sender: PlayerView) {
-        let rewindTo = player.currentTime()
-        rewindPlayerItemTo(rewindTo)
-    }
-
-    func playAndPauseDidTap(sender: PlayerView) {
-        guard player.currentItem != nil else {
-            startPlay(atIndex: 0)
-            return
-        }
-        if player.rate > 0.0 {
-            player.pause()
-        } else {
-            player.play()
-        }
-    }
-
-    func forcePlayOrPause(sender: PlayerView, shoudPlay: Bool, seekTo: Float?) {
-        guard player.currentItem != nil else {return}
-
-        if shoudPlay {
-            rewindPlayerItemTo(CMTime.init(seconds: Double(seekTo!), preferredTimescale: 1))
-            player.play()
-        } else {
-            player.pause()
-        }
-    }
-
-    func backRewindDidTap(sender: PlayerView) {
-        let rewindTo = player.currentTime()
-        rewindPlayerItemTo(rewindTo)
-    }
-
-    func nextTrackDidTap(sender: PlayerView) {
-        guard let index = indexOfCurrentItem, index+1 <= self.itemsArray.count - 1 else {
-            self.startPlay(atIndex: 0)
-            return
-        }
-        self.startPlay(atIndex: index+1)
     }
 }
 
