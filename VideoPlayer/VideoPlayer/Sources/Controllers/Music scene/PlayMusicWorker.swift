@@ -23,8 +23,15 @@ class PlayMusicWorker {
     private var playingFileURL: URL? = nil
     // isRewindingNow property uses for ignore player time observing while player didn't rewind song, because in otherwise function call with wrong data (future time)
     private var isRewindingNow = false
+    private var playerPeriodicalTimerToken: Any?
     
     func playSongByURL(url: URL) -> Bool {
+        if  let token = playerPeriodicalTimerToken,
+            let player = player
+        {
+            player.removeTimeObserver(token)
+        }
+        
         let audioSession = AVAudioSession.sharedInstance()
 
         do {
@@ -40,21 +47,14 @@ class PlayMusicWorker {
                                                selector: #selector(playerDidFinishPlay),
                                                name: .AVPlayerItemDidPlayToEndTime,
                                                object: playerItem)
-        player = AVPlayer.init(playerItem: playerItem)
+        
+        let player = AVPlayer.init(playerItem: playerItem)
+        self.player = player
         let intervalForUpdate = CMTime(seconds: 1, preferredTimescale: 1)
-        player?.addPeriodicTimeObserver(forInterval: intervalForUpdate,
-                                        queue: .main,
-                                        using:
-        { [weak self] (time) in
-            guard   let self = self,
-                    !self.isRewindingNow
-            else {
-                return
-            }
-            
-            self.playerTimeChanged(time)
-        })
-        player?.play()
+        playerPeriodicalTimerToken = player.addPeriodicTimeObserver(forInterval: intervalForUpdate,
+                                                                    queue: .main,
+                                                                    using: notifyDelegateThatPlayerTimeChanged)
+        player.play()
         return true
     }
     
@@ -97,7 +97,7 @@ class PlayMusicWorker {
     
     func callDelegateWithUpdatedInfoIfPossible() {
         guard let player = player else {return}
-        playerTimeChanged(player.currentTime())
+        notifyDelegateThatPlayerTimeChanged(player.currentTime())
     }
     
     // MAKR: Private functions
@@ -105,8 +105,10 @@ class PlayMusicWorker {
         delegate?.didFinishPlaySong()
     }
     
-    private func playerTimeChanged(_ time: CMTime) {
-        guard let player = player else {return}
+    private func notifyDelegateThatPlayerTimeChanged(_ time: CMTime) {
+        guard   !self.isRewindingNow,
+                let player = player else
+        { return }
         
         let songDuration: Double = player.currentItem?.asset.duration.seconds ?? 0
         var nowPlayingInfo = Music.UpdatePlayingSongInfo.SongInfoForDisplay(playerRate: player.rate,
