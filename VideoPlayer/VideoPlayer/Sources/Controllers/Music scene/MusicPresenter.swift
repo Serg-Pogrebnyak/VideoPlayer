@@ -14,7 +14,7 @@ import UIKit
 
 protocol MusicPresentationLogic {
     func showMusicItems(response: Music.FetchLocalItems.Response)
-    func unnewMusicItem(response: Music.StartPlayOrDownload.Response)
+    func unnewMusicItem(response: Music.PlaySong.Response)
     func updateMusicItemsAfterDeleting(response: Music.DeleteMediaItem.Response)
     func updateMusicItemsAfterSearch(response: Music.FindMediaItems.Response)
     func updatePlayingSongInfo(response: Music.UpdatePlayingSongInfo.Response)
@@ -37,8 +37,8 @@ final class MusicPresenter: MusicPresentationLogic {
         viewController?.displayMusicItemsArray(viewModel: viewModel )
     }
     
-    func unnewMusicItem(response: Music.StartPlayOrDownload.Response) {
-        var viewModel = Music.StartPlayOrDownload.ViewModel(playerButtonState: response.playerButtonState)
+    func unnewMusicItem(response: Music.PlaySong.Response) {
+        var viewModel = Music.PlaySong.ViewModel(playerButtonState: response.playerButtonState)
         if let musicItem = response.musicItem, let atIndex = response.atIndex {
             let musicDisplayData = Music.MusicDisplayData(fileName: musicItem.displayFileName,
                                                           isNew: musicItem.isNew,

@@ -15,7 +15,7 @@ import MediaPlayer
 
 protocol MusicBusinessLogic {
     func fetchLocalItems(request: Music.FetchLocalItems.Request)
-    func startPlayOrDownload(request: Music.StartPlayOrDownload.Request)
+    func playSong(request: Music.PlaySong.Request)
     func updatePlayingSongInfo(request: Music.UpdatePlayingSongInfo.Request)
     func removeMediaItem(request: Music.DeleteMediaItem.Request)
     func findMediaItems(request: Music.FindMediaItems.Request)
@@ -51,7 +51,7 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         presenter?.showMusicItems(response: response)
     }
     
-    func startPlayOrDownload(request: Music.StartPlayOrDownload.Request) {
+    func playSong(request: Music.PlaySong.Request) {
         guard   let indexOfItem = (itemsArray.firstIndex { $0.localId == request.localId }),
                 containLocal(item: itemsArray[indexOfItem])
         else { return }
@@ -59,7 +59,7 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         indexOfItemForPlay = indexOfItem
         let itemForPlay = itemsArray[indexOfItem]
         
-        var response = Music.StartPlayOrDownload.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItem))
+        var response = Music.PlaySong.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItem))
         if itemForPlay.isNew {
             itemsArray[indexOfItem].isNew = false
             saveChanges()

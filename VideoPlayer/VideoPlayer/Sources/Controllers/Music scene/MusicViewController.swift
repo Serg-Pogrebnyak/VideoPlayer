@@ -17,7 +17,7 @@ import MediaPlayer
 
 protocol MusicDisplayLogic: class {
     func displayMusicItemsArray(viewModel: Music.FetchLocalItems.ViewModel)
-    func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel)
+    func unnewMusicItem(viewModel: Music.PlaySong.ViewModel)
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
     func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel)
@@ -387,8 +387,8 @@ extension MusicViewController: UITableViewDelegate {
             navigationBarState = .tableViewEditing(countOfSelected)
         } else {
             let item = musicItemsArray[indexPath.row]
-            let request = Music.StartPlayOrDownload.Request(localId: item.localId)
-            interactor?.startPlayOrDownload(request: request)
+            let request = Music.PlaySong.Request(localId: item.localId)
+            interactor?.playSong(request: request)
             tableView.deselectRow(at: indexPath, animated: true)
         }
     }
@@ -468,7 +468,7 @@ extension MusicViewController: MusicDisplayLogic {
         }
     }
     
-    func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel) {
+    func unnewMusicItem(viewModel: Music.PlaySong.ViewModel) {
         updatePlayerButtons(state: viewModel.playerButtonState)
         if let musicItem = viewModel.musicItem, let index = viewModel.atIndex {
             musicItemsArray[index] = musicItem

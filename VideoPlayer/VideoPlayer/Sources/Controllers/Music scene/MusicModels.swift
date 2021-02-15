@@ -40,7 +40,7 @@ enum Music {
         }
     }
     
-    enum StartPlayOrDownload {
+    enum PlaySong {
         struct Request {
             let localId: String
         }
