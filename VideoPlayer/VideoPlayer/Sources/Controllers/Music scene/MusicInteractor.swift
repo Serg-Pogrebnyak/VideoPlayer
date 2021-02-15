@@ -25,6 +25,7 @@ protocol MusicBusinessLogic {
     func pause(request: Music.Pause.Request) -> MPRemoteCommandHandlerStatus
     func play(request: Music.Play.Request) -> MPRemoteCommandHandlerStatus
     func nextTrack(request: Music.NextTrack.Request) -> MPRemoteCommandHandlerStatus
+    func previousTrack(request: Music.PreviousTrack.Request) -> MPRemoteCommandHandlerStatus
 }
 
 protocol MusicDataStore {
@@ -137,6 +138,24 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         
         let response = Music.NextTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItemForPlay))
         presenter?.prepareDataAfterTapOnNextTrackButton(response: response)
+        
+        return resultOfStartPlay ? .success : .commandFailed
+    }
+    
+    func previousTrack(request: Music.PreviousTrack.Request) -> MPRemoteCommandHandlerStatus {
+        let nextIndexOfItemForPlay = indexOfItemForPlay - 1
+        
+        guard   nextIndexOfItemForPlay >= 0,
+                canPlay(item: itemsArray[nextIndexOfItemForPlay]),
+                let playWorker = playWorker
+        else { return .commandFailed }
+        
+        indexOfItemForPlay = nextIndexOfItemForPlay
+        let itemForPlay = itemsArray[nextIndexOfItemForPlay]
+        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL)
+        
+        let response = Music.PreviousTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItemForPlay))
+        presenter?.prepareDataAfterTapOnPreviousTrackButton(response: response)
         
         return resultOfStartPlay ? .success : .commandFailed
     }

@@ -167,4 +167,17 @@ enum Music {
             var playerButtonState: PlayerButtonState
         }
     }
+    
+    enum PreviousTrack {
+        struct Request {
+        }
+        
+        struct Response {
+            var playerButtonState: PlayerButtonState
+        }
+        
+        struct ViewModel {
+            var playerButtonState: PlayerButtonState
+        }
+    }
 }

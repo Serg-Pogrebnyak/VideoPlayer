@@ -22,6 +22,7 @@ protocol MusicDisplayLogic: class {
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
     func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel)
     func updateAfterTapNextTrackButton(viewModel: Music.NextTrack.ViewModel)
+    func updateAfterTapPreviousTrackButton(viewModel: Music.PreviousTrack.ViewModel)
 }
 
 final class MusicViewController: UIViewController {
@@ -251,15 +252,7 @@ final class MusicViewController: UIViewController {
         
         //previous track
         commandCenter.previousTrackCommand.isEnabled = false
-        commandCenter.previousTrackCommand.addTarget { [weak self] event in
-            guard let self = self else {return .commandFailed}
-            if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
-                self.startPlay(atIndex: self.indexOfCurrentItem!-1)
-                return .success
-            } else {
-                return .noSuchContent
-            }
-        }
+        commandCenter.previousTrackCommand.addTarget(self, action: #selector(previousTrack))
     }
     
     @objc private func rewind(object: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
@@ -293,6 +286,13 @@ final class MusicViewController: UIViewController {
         
         let request = Music.NextTrack.Request()
         return interactor.nextTrack(request: request)
+    }
+    
+    @objc private func previousTrack(object: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        guard let interactor = interactor else { return .commandFailed }
+        
+        let request = Music.PreviousTrack.Request()
+        return interactor.previousTrack(request: request)
     }
     
     // TODO: remove this two functions in future
@@ -499,6 +499,10 @@ extension MusicViewController: MusicDisplayLogic {
     }
     
     func updateAfterTapNextTrackButton(viewModel: Music.NextTrack.ViewModel) {
+        updatePlayerButtons(state: viewModel.playerButtonState)
+    }
+    
+    func updateAfterTapPreviousTrackButton(viewModel: Music.PreviousTrack.ViewModel) {
         updatePlayerButtons(state: viewModel.playerButtonState)
     }
     
