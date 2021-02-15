@@ -21,6 +21,7 @@ protocol MusicDisplayLogic: class {
     func updatePlaynigSongInfo(viewModel: Music.UpdatePlayingSongInfo.ViewModel)
     func displayMusicItemsArrayAfterDeleting(viewModel: Music.DeleteMediaItem.ViewModel)
     func displayMusicItemsArrayAfterSearch(viewModel: Music.FindMediaItems.ViewModel)
+    func updateAfterTapNextTrackButton(viewModel: Music.NextTrack.ViewModel)
 }
 
 final class MusicViewController: UIViewController {
@@ -246,15 +247,7 @@ final class MusicViewController: UIViewController {
         
         //next track
         commandCenter.nextTrackCommand.isEnabled = false
-        commandCenter.nextTrackCommand.addTarget { [weak self] event in
-            guard let self = self else {return .commandFailed}
-            if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
-                self.startPlay(atIndex: self.indexOfCurrentItem!+1)
-                return .success
-            } else {
-                return .noSuchContent
-            }
-        }
+        commandCenter.nextTrackCommand.addTarget(self, action: #selector(nextTrack))
         
         //previous track
         commandCenter.previousTrackCommand.isEnabled = false
@@ -293,6 +286,13 @@ final class MusicViewController: UIViewController {
         
         let request = Music.Play.Request()
         return interactor.play(request: request)
+    }
+    
+    @objc private func nextTrack(object: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        guard let interactor = interactor else { return .commandFailed }
+        
+        let request = Music.NextTrack.Request()
+        return interactor.nextTrack(request: request)
     }
     
     // TODO: remove this two functions in future
@@ -496,6 +496,10 @@ extension MusicViewController: MusicDisplayLogic {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    func updateAfterTapNextTrackButton(viewModel: Music.NextTrack.ViewModel) {
+        updatePlayerButtons(state: viewModel.playerButtonState)
     }
     
     private func updatePlayerButtons(state: Music.PlayerButtonState) {

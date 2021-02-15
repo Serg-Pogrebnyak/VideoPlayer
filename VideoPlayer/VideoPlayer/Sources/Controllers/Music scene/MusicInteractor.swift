@@ -24,6 +24,7 @@ protocol MusicBusinessLogic {
     func rewind(request: Music.Rewind.Request) -> MPRemoteCommandHandlerStatus
     func pause(request: Music.Pause.Request) -> MPRemoteCommandHandlerStatus
     func play(request: Music.Play.Request) -> MPRemoteCommandHandlerStatus
+    func nextTrack(request: Music.NextTrack.Request) -> MPRemoteCommandHandlerStatus
 }
 
 protocol MusicDataStore {
@@ -38,21 +39,21 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     //business logic variables
     private(set) var itemsSet = Set<MusicOrVideoItem>()
-    private var itemsArray: [MusicOrVideoItem] {
-        return Array(itemsSet).sorted { $0.addedDate > $1.addedDate }
-    }
+    private var itemsArray = [MusicOrVideoItem]()
     private var indexOfItemForPlay = 0
     
     // MARK: Do something
     func fetchLocalItems(request: Music.FetchLocalItems.Request) {
         itemsSet = CoreManager.shared.getMediaItems()
-        
+        itemsArray = Array(itemsSet).sorted { $0.addedDate > $1.addedDate }
         let response = Music.FetchLocalItems.Response(musicItems: itemsArray)
         presenter?.showMusicItems(response: response)
     }
     
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request) {
-        guard let indexOfItem = (itemsArray.firstIndex { $0.localId == request.localId }) else { return }
+        guard   let indexOfItem = (itemsArray.firstIndex { $0.localId == request.localId }),
+                canPlay(item: itemsArray[indexOfItem])
+        else { return }
         
         indexOfItemForPlay = indexOfItem
         let itemForPlay = itemsArray[indexOfItem]
@@ -88,12 +89,13 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     func findMediaItems(request: Music.FindMediaItems.Request) {
         let searchText = request.searchText
-        var resultArray = itemsArray
+        var resultArray = Array(itemsSet).sorted { $0.addedDate > $1.addedDate }
         
         if !searchText.isEmpty  {
             resultArray = itemsSet.filter { $0.displayFileName.contains(searchText) }
+            
         }
-        
+        itemsArray = resultArray
         let response = Music.FindMediaItems.Response(musicItems: resultArray)
         presenter?.updateMusicItemsAfterSearch(response: response)
     }
@@ -119,6 +121,24 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         guard let playMusicWorker = playWorker else { return .commandFailed }
         
         return playMusicWorker.play()
+    }
+    
+    func nextTrack(request: Music.NextTrack.Request) -> MPRemoteCommandHandlerStatus {
+        let nextIndexOfItemForPlay = indexOfItemForPlay + 1
+        
+        guard   nextIndexOfItemForPlay < itemsArray.count,
+                canPlay(item: itemsArray[nextIndexOfItemForPlay]),
+                let playWorker = playWorker
+        else { return .commandFailed }
+        
+        indexOfItemForPlay = nextIndexOfItemForPlay
+        let itemForPlay = itemsArray[nextIndexOfItemForPlay]
+        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL)
+        
+        let response = Music.NextTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItemForPlay))
+        presenter?.prepareDataAfterTapOnNextTrackButton(response: response)
+        
+        return resultOfStartPlay ? .success : .commandFailed
     }
     
     // MARK: Private functions

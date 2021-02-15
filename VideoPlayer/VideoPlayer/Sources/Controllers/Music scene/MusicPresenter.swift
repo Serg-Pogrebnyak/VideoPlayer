@@ -18,6 +18,7 @@ protocol MusicPresentationLogic {
     func updateMusicItemsAfterDeleting(response: Music.DeleteMediaItem.Response)
     func updateMusicItemsAfterSearch(response: Music.FindMediaItems.Response)
     func updatePlayingSongInfo(response: Music.UpdatePlayingSongInfo.Response)
+    func prepareDataAfterTapOnNextTrackButton(response: Music.NextTrack.Response)
 }
 
 final class MusicPresenter: MusicPresentationLogic {
@@ -71,5 +72,10 @@ final class MusicPresenter: MusicPresentationLogic {
         }
         let viewModel = Music.FindMediaItems.ViewModel(musicDisplayDataArray: musicDisplayDataArray)
         viewController?.displayMusicItemsArrayAfterSearch(viewModel: viewModel)
+    }
+    
+    func prepareDataAfterTapOnNextTrackButton(response: Music.NextTrack.Response) {
+        let viewModel = Music.NextTrack.ViewModel(playerButtonState: response.playerButtonState)
+        viewController?.updateAfterTapNextTrackButton(viewModel: viewModel)
     }
 }
