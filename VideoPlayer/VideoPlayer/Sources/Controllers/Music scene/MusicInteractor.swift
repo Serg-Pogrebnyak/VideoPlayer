@@ -53,7 +53,7 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     
     func startPlayOrDownload(request: Music.StartPlayOrDownload.Request) {
         guard   let indexOfItem = (itemsArray.firstIndex { $0.localId == request.localId }),
-                canPlay(item: itemsArray[indexOfItem])
+                containLocal(item: itemsArray[indexOfItem])
         else { return }
         
         indexOfItemForPlay = indexOfItem
@@ -61,17 +61,19 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         
         var response = Music.StartPlayOrDownload.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItem))
         if itemForPlay.isNew {
-            itemsArray[indexOfItemForPlay].isNew = false
+            itemsArray[indexOfItem].isNew = false
             saveChanges()
-            response.musicItem = itemsArray[indexOfItemForPlay]
-            response.atIndex = indexOfItemForPlay
+            response.musicItem = itemsArray[indexOfItem]
+            response.atIndex = indexOfItem
         }
         
         presenter?.unnewMusicItem(response: response)
         
-        playWorker = PlayMusicWorker()
-        guard playWorker?.playSongByURL(url: itemForPlay.localFileURL) ?? false else {return}
-        playWorker?.delegate = self
+        let playWorker = PlayMusicWorker()
+        self.playWorker = playWorker
+        playWorker.playSongByURL(url: itemForPlay.localFileURL,
+                                 songTitle: itemsArray[indexOfItem].displayFileName)
+        playWorker.delegate = self
     }
     
     func removeMediaItem(request: Music.DeleteMediaItem.Request) {
@@ -127,16 +129,17 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     func nextTrack(request: Music.NextTrack.Request) -> MPRemoteCommandHandlerStatus {
         let nextIndexOfItemForPlay = indexOfItemForPlay + 1
         
-        guard   nextIndexOfItemForPlay < itemsArray.count,
-                canPlay(item: itemsArray[nextIndexOfItemForPlay]),
+        guard   itemsArray.indices.contains(nextIndexOfItemForPlay),
+                containLocal(item: itemsArray[nextIndexOfItemForPlay]),
                 let playWorker = playWorker
         else { return .commandFailed }
         
         indexOfItemForPlay = nextIndexOfItemForPlay
         let itemForPlay = itemsArray[nextIndexOfItemForPlay]
-        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL)
+        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL,
+                                                         songTitle: itemForPlay.displayFileName)
         
-        let response = Music.NextTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItemForPlay))
+        let response = Music.NextTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: nextIndexOfItemForPlay))
         presenter?.prepareDataAfterTapOnNextTrackButton(response: response)
         
         return resultOfStartPlay ? .success : .commandFailed
@@ -145,16 +148,17 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     func previousTrack(request: Music.PreviousTrack.Request) -> MPRemoteCommandHandlerStatus {
         let nextIndexOfItemForPlay = indexOfItemForPlay - 1
         
-        guard   nextIndexOfItemForPlay >= 0,
-                canPlay(item: itemsArray[nextIndexOfItemForPlay]),
+        guard   itemsArray.indices.contains(nextIndexOfItemForPlay),
+                containLocal(item: itemsArray[nextIndexOfItemForPlay]),
                 let playWorker = playWorker
         else { return .commandFailed }
         
         indexOfItemForPlay = nextIndexOfItemForPlay
         let itemForPlay = itemsArray[nextIndexOfItemForPlay]
-        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL)
+        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL,
+                                                         songTitle: itemForPlay.displayFileName)
         
-        let response = Music.PreviousTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItemForPlay))
+        let response = Music.PreviousTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: nextIndexOfItemForPlay))
         presenter?.prepareDataAfterTapOnPreviousTrackButton(response: response)
         
         return resultOfStartPlay ? .success : .commandFailed
@@ -165,7 +169,7 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         CoreManager.shared.saveContext()
     }
     
-    private func canPlay(item: MusicOrVideoItem) -> Bool {
+    private func containLocal(item: MusicOrVideoItem) -> Bool {
         let fileUrl = item.localFileURL
         
         guard FileManager.default.fileExists(atPath: fileUrl.path) else {
@@ -206,7 +210,6 @@ extension MusicInteractor: PlayMusicWorkerDelegate {
     
     func updatedPlayingStateAndInfo(playingInfo: Music.UpdatePlayingSongInfo.SongInfoForDisplay) {
         var response = Music.UpdatePlayingSongInfo.Response(info: playingInfo)
-        response.info.title = itemsArray[indexOfItemForPlay].displayFileName
         presenter?.updatePlayingSongInfo(response: response)
     }
 }

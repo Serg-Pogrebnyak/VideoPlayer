@@ -24,8 +24,11 @@ class PlayMusicWorker {
     // isRewindingNow property uses for ignore player time observing while player didn't rewind song, because in otherwise function call with wrong data (future time)
     private var isRewindingNow = false
     private var playerPeriodicalTimerToken: Any?
+    private var songTitle: String!
     
-    func playSongByURL(url: URL) -> Bool {
+    @discardableResult
+    func playSongByURL(url: URL, songTitle: String) -> Bool {
+        self.songTitle = songTitle
         if  let token = playerPeriodicalTimerToken,
             let player = player
         {
@@ -112,6 +115,7 @@ class PlayMusicWorker {
         
         let songDuration: Double = player.currentItem?.asset.duration.seconds ?? 0
         var nowPlayingInfo = Music.UpdatePlayingSongInfo.SongInfoForDisplay(playerRate: player.rate,
+                                                                            title: songTitle,
                                                                             songDuration: songDuration,
                                                                             elapsedPlaybackTime: time.seconds)
         
