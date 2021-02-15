@@ -129,42 +129,35 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
     func nextTrack(request: Music.NextTrack.Request) -> MPRemoteCommandHandlerStatus {
         let nextIndexOfItemForPlay = indexOfItemForPlay + 1
         
-        guard   itemsArray.indices.contains(nextIndexOfItemForPlay),
-                containLocal(item: itemsArray[nextIndexOfItemForPlay]),
-                let playWorker = playWorker
-        else { return .commandFailed }
-        
-        indexOfItemForPlay = nextIndexOfItemForPlay
-        let itemForPlay = itemsArray[nextIndexOfItemForPlay]
-        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL,
-                                                         songTitle: itemForPlay.displayFileName)
-        
         let response = Music.NextTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: nextIndexOfItemForPlay))
         presenter?.prepareDataAfterTapOnNextTrackButton(response: response)
         
-        return resultOfStartPlay ? .success : .commandFailed
+        return playSong(atIndex: nextIndexOfItemForPlay)
     }
     
     func previousTrack(request: Music.PreviousTrack.Request) -> MPRemoteCommandHandlerStatus {
         let nextIndexOfItemForPlay = indexOfItemForPlay - 1
         
-        guard   itemsArray.indices.contains(nextIndexOfItemForPlay),
-                containLocal(item: itemsArray[nextIndexOfItemForPlay]),
-                let playWorker = playWorker
-        else { return .commandFailed }
-        
-        indexOfItemForPlay = nextIndexOfItemForPlay
-        let itemForPlay = itemsArray[nextIndexOfItemForPlay]
-        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL,
-                                                         songTitle: itemForPlay.displayFileName)
-        
         let response = Music.PreviousTrack.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: nextIndexOfItemForPlay))
         presenter?.prepareDataAfterTapOnPreviousTrackButton(response: response)
         
-        return resultOfStartPlay ? .success : .commandFailed
+        return playSong(atIndex: nextIndexOfItemForPlay)
     }
     
     // MARK: Private functions
+    private func playSong(atIndex index: Int) -> MPRemoteCommandHandlerStatus {
+        guard   itemsArray.indices.contains(index),
+                containLocal(item: itemsArray[index]),
+                let playWorker = playWorker
+        else { return .commandFailed }
+        
+        indexOfItemForPlay = index
+        let itemForPlay = itemsArray[index]
+        let resultOfStartPlay = playWorker.playSongByURL(url: itemForPlay.localFileURL,
+                                                         songTitle: itemForPlay.displayFileName)
+        return resultOfStartPlay ? .success : .commandFailed
+    }
+    
     private func saveChanges() {
         CoreManager.shared.saveContext()
     }
