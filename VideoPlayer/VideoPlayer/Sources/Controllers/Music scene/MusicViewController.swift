@@ -233,19 +233,19 @@ final class MusicViewController: UIViewController {
     private func setupRemoteCommandCenter() {
         let commandCenter = MPRemoteCommandCenter.shared()
         //rewind
-        commandCenter.changePlaybackPositionCommand.isEnabled = true
+        commandCenter.changePlaybackPositionCommand.isEnabled = false
         commandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(rewind))
         
         //play
-        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.isEnabled = false
         commandCenter.playCommand.addTarget(self, action: #selector(play))
         
         //pause
-        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.isEnabled = false
         commandCenter.pauseCommand.addTarget(self, action: #selector(pause))
         
         //next track
-        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.isEnabled = false
         commandCenter.nextTrackCommand.addTarget { [weak self] event in
             guard let self = self else {return .commandFailed}
             if (self.indexOfCurrentItem ?? -1) + 1 <= self.itemsArray.count - 1 {
@@ -257,7 +257,7 @@ final class MusicViewController: UIViewController {
         }
         
         //previous track
-        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.previousTrackCommand.isEnabled = false
         commandCenter.previousTrackCommand.addTarget { [weak self] event in
             guard let self = self else {return .commandFailed}
             if (self.indexOfCurrentItem ?? +1) - 1 >= 0 {
@@ -386,7 +386,7 @@ extension MusicViewController: UITableViewDelegate {
             let countOfSelected = tableView.indexPathsForSelectedRows?.count ?? 0
             navigationBarState = .tableViewEditing(countOfSelected)
         } else {
-            let item = itemsArray[indexPath.row]
+            let item = musicItemsArray[indexPath.row]
             let request = Music.StartPlayOrDownload.Request(localId: item.localId)
             interactor?.startPlayOrDownload(request: request)
             tableView.deselectRow(at: indexPath, animated: true)
@@ -469,10 +469,13 @@ extension MusicViewController: MusicDisplayLogic {
     }
     
     func unnewMusicItem(viewModel: Music.StartPlayOrDownload.ViewModel) {
-        musicItemsArray[viewModel.atIndex] = viewModel.musicItem
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: viewModel.atIndex, section: 0)
-            self.tableView.reloadRows(at: [indexPath], with: .middle)
+        updatePlayerButtons(state: viewModel.playerButtonState)
+        if let musicItem = viewModel.musicItem, let index = viewModel.atIndex {
+            musicItemsArray[index] = musicItem
+            DispatchQueue.main.async {
+                let indexPath = IndexPath(row: index, section: 0)
+                self.tableView.reloadRows(at: [indexPath], with: .middle)
+            }
         }
     }
     
@@ -493,6 +496,16 @@ extension MusicViewController: MusicDisplayLogic {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    private func updatePlayerButtons(state: Music.PlayerButtonState) {
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.changePlaybackPositionCommand.isEnabled = true
+        
+        commandCenter.playCommand.isEnabled = state.playPause
+        commandCenter.pauseCommand.isEnabled = state.playPause
+        commandCenter.nextTrackCommand.isEnabled = state.nextTrack
+        commandCenter.previousTrackCommand.isEnabled = state.previousTrack
     }
 }
 

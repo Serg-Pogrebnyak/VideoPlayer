@@ -21,6 +21,11 @@ enum Music {
         var isNew: Bool
         var localId: String
     }
+    struct PlayerButtonState {
+        var previousTrack: Bool
+        var playPause: Bool
+        var nextTrack: Bool
+    }
     
     enum FetchLocalItems {
         struct Request {
@@ -41,13 +46,17 @@ enum Music {
         }
         
         struct Response {
-            var musicItem: MusicOrVideoItem
-            var atIndex: Int
+            var musicItem: MusicOrVideoItem?
+            var atIndex: Int?
+            
+            var playerButtonState: PlayerButtonState
         }
         
         struct ViewModel {
-            var musicItem: MusicDisplayData
-            var atIndex: Int
+            var musicItem: MusicDisplayData?
+            var atIndex: Int?
+            
+            var playerButtonState: PlayerButtonState
         }
     }
     

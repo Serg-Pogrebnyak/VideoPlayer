@@ -36,11 +36,15 @@ final class MusicPresenter: MusicPresentationLogic {
     }
     
     func unnewMusicItem(response: Music.StartPlayOrDownload.Response) {
-        let musicDisplayData = Music.MusicDisplayData(fileName: response.musicItem.displayFileName,
-                                                      isNew: response.musicItem.isNew,
-                                                      localId: response.musicItem.localId)
-        let viewModel = Music.StartPlayOrDownload.ViewModel(musicItem: musicDisplayData,
-                                                            atIndex: response.atIndex)
+        var viewModel = Music.StartPlayOrDownload.ViewModel(playerButtonState: response.playerButtonState)
+        if let musicItem = response.musicItem, let atIndex = response.atIndex {
+            let musicDisplayData = Music.MusicDisplayData(fileName: musicItem.displayFileName,
+                                                          isNew: musicItem.isNew,
+                                                          localId: musicItem.localId)
+            viewModel.atIndex = atIndex
+            viewModel.musicItem = musicDisplayData
+        }
+        
         viewController?.unnewMusicItem(viewModel: viewModel)
     }
     

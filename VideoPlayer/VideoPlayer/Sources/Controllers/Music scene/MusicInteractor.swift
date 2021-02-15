@@ -57,14 +57,16 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         indexOfItemForPlay = indexOfItem
         let itemForPlay = itemsArray[indexOfItem]
         
+        var response = Music.StartPlayOrDownload.Response(playerButtonState: isEnabledPlayerButtons(indexOfSong: indexOfItem))
         if itemForPlay.isNew {
             itemsArray[indexOfItemForPlay].isNew = false
             saveChanges()
-            let response = Music.StartPlayOrDownload.Response(musicItem: itemsArray[indexOfItemForPlay],
-                                                              atIndex: indexOfItemForPlay)
-            presenter?.unnewMusicItem(response: response)
+            response.musicItem = itemsArray[indexOfItemForPlay]
+            response.atIndex = indexOfItemForPlay
         }
-
+        
+        presenter?.unnewMusicItem(response: response)
+        
         playWorker = PlayMusicWorker()
         guard playWorker?.playSongByURL(url: itemForPlay.localFileURL) ?? false else {return}
         playWorker?.delegate = self
@@ -133,6 +135,28 @@ final class MusicInteractor: MusicBusinessLogic, MusicDataStore {
         }
         
         return true
+    }
+    
+    private func isEnabledPlayerButtons(indexOfSong: Int) -> Music.PlayerButtonState {
+        let playPauseButton = true
+        
+        var previousTrackButton: Bool!
+        if indexOfSong == 0 {
+            previousTrackButton = false
+        } else {
+            previousTrackButton = true
+        }
+        
+        var nextTrackButton: Bool!
+        if indexOfSong == itemsArray.count-1 {
+            nextTrackButton = false
+        } else {
+            nextTrackButton = true
+        }
+        
+        return Music.PlayerButtonState(previousTrack: previousTrackButton,
+                                       playPause: playPauseButton,
+                                       nextTrack: nextTrackButton)
     }
 }
 
